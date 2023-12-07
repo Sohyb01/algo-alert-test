@@ -30,3 +30,7 @@ background: linear-gradient(to bottom right, #2CDBBE, #669CE9)
 .btn-1{
   @apply py-4 px-8 text-center rounded-full
 }
+.shadowy-bg{
+  background-image: url(../public/TopGainersBackground.png);
+  @apply bg-cover bg-no-repeat
+}

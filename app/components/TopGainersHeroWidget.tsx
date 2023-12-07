@@ -18,7 +18,6 @@ const TopGainersWidget = () => {
         {fakeTopGainersData.map((row, index) => {
           // These are for the background progress styling for each of the rows, they are based
           // on the "width" property which is statically set in an array
-          const widthString = "w-[" + row.width + "%]";
           const opacityString =
             parseInt(row.width) >= 85
               ? "opacity-100"
@@ -38,7 +37,7 @@ const TopGainersWidget = () => {
               <div className="w-full z-[1]">${row.trade_value}</div>
               {/* Background (Stop at 94% Width) */}
               <div
-                className={`absolute h-[39px] bg-teal-500 rounded-[12px] -left-0.5 ${widthString} ${opacityString} max-w-full`}
+                className={`absolute h-[39px] bg-teal-500 rounded-[12px] -left-0.5 ${row.widthString} ${opacityString}`}
               ></div>
             </div>
           );
