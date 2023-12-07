@@ -7,6 +7,11 @@
   line-height: 144%;
 }
 
+.blur-bg {
+  backdrop-filter: blur(8px);
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
 .bodybg{
   background-image: url(../public/AllBGs.png);
   background-position: top center;
@@ -22,15 +27,22 @@
 }
 
 /* Gradient BG but sign up button */
+
 .gradient-bg-1{
-background: linear-gradient(to bottom right, #2CDBBE, #669CE9)
+  background: linear-gradient(to bottom right, #2CDBBE, #669CE9);
+}
+
+
+.glow-shadow {
+  box-shadow:  24px 24px 50px #178a8c27, -24px -24px 50px #3bffff27;
 }
 
 .membership{
-  background-image: url(../public/membershipbg.png);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  border-radius: 64px;
+  @apply bg-slate-900
 }
 
 .btn-1{

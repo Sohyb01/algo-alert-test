@@ -11,13 +11,13 @@ const MembershipSection = () => {
         <span className="text-teal-400"> All-Inclusive</span> Membership
       </h2>
       {/* Memberships Container */}
-      <div className="flex flex-row flex-wrap lg:flex-nowrap gap-4 lg:gap-8 items-center justify-center w-full">
+      <div className="flex flex-row flex-wrap lg:flex-nowrap gap-4 lg:gap-8 gap-y-10 items-center justify-center w-full">
         {MembershipSectionData.memberships.map(
           (membership: any, index: number) => (
             // Membership
             <div
               key={index}
-              className="membership flex flex-col items-center px-8 py-12 w-full gap-4"
+              className="flex flex-col items-center px-8 py-12 gap-8 rounded-[64px] w-[320px] lg:w-full  lg:min-w-[0px] membership glow-shadow"
             >
               {/* Title Row */}
               <div className="flex items-center text-center justify-between w-full">
@@ -53,6 +53,9 @@ const MembershipSection = () => {
                 ))}
               </div>
               <div className="w-full h-0.5 bg-slate-600"></div>
+              <a href="#" className="btn-1 gradient-bg-1">
+                Purchase
+              </a>
             </div>
           )
         )}

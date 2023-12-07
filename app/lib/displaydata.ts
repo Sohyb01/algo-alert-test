@@ -73,6 +73,7 @@ export const MembershipSectionData = {
 };
 export const DiscordSectionData = {
   sub: "Connect with other traders and ask questions in our Discord Communty",
+  imageUrl: "/white-discord.svg",
 };
 export const FooterData = {
   paragraph:
