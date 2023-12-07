@@ -94,3 +94,19 @@ export const socialMedias = [
   //     socialUrl: "",
   //   },
 ];
+
+export const fakeTopGainersData = [
+  {
+    symbol: "SPXW",
+    contract: "CALL",
+    trade_value: 375534680,
+    width: "100",
+  },
+  { symbol: "NVDA", contract: "CALL", trade_value: 10180000, width: "73" },
+  { symbol: "MRNA", contract: "PUT", trade_value: 8583900, width: "66" },
+  { symbol: "SPX", contract: "CALL", trade_value: 7808000, width: "57" },
+  { symbol: "FSLR", contract: "PUT", trade_value: 7017500, width: "50" },
+  { symbol: "IWM", contract: "PUT", trade_value: 6936960, width: "44" },
+  { symbol: "TSLA", contract: "PUT", trade_value: 6019500, width: "40" },
+  { symbol: "QQQ", contract: "CALL", trade_value: 4809999, width: "33" },
+];
