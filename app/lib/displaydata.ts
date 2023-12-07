@@ -2,10 +2,10 @@ export const logoImgPath = "/logo.png";
 export const businessName = "Alert Algo";
 export const discordUrl = "#";
 
-export const NavbarData = [
+export const NavbarLinks = [
+  { link_text: "Home", href: "#home" },
   { link_text: "Features", href: "#features" },
   { link_text: "Pricing", href: "#pricing" },
-  { link_text: "About", href: "#about" },
 ];
 export const HeroSectionData = {
   sub: "Stop overpaying for market data and become a member now. Starting at only $14.99 a month ",

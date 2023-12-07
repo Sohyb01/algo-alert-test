@@ -7,6 +7,12 @@
   line-height: 144%;
 }
 
+.bodybg{
+  background-image: url(../public/AllBGs.png);
+  background-position: top center;
+  @apply bg-cover
+}
+
 .title{
   @apply tracking-[-2px] leading-[110%]
 }
