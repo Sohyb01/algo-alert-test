@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${poppins.className} bg-[#121F2D] bodybg flex flex-col items-center bg-center`}
+        className={`${poppins.className} bg-[#121F2D] bodybg flex flex-col items-center bg-center bg-cover`}
       >
         <Navbar />
         {children}

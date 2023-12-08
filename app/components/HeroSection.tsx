@@ -4,7 +4,7 @@ import TopGainersHeroWidget from "./TopGainersHeroWidget";
 
 const HeroSection = () => {
   return (
-    <section className="section flex flex-col items-start md:flex-row gap-8 py-20 md:min-h-[707px] lg:min-h-[none] md:items-center overflow-hidden lg:overflow-visible">
+    <section className="section flex flex-col items-start md:flex-row gap-8 py-20 pt-36 md:min-h-[707px] lg:min-h-[none] md:items-center">
       {/* Header, Subheader, Buttons */}
       <div className="flex flex-col items-start text-white text-start gap-10 md:min-w-[332px] lg:max-w-[547px] xl:max-w-[743px]">
         {/* Header and Subheader */}

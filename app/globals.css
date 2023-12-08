@@ -5,6 +5,8 @@
 /* Basics like Line height, Title Spacing, etc */
 * {
   line-height: 144%;
+  scroll-behavior: smooth;
+
 }
 
 .blur-bg {
@@ -14,8 +16,6 @@
 
 .bodybg{
   background-image: url(../public/AllBGs.png);
-  background-position: top center;
-  @apply bg-cover
 }
 
 .title{

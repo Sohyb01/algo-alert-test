@@ -80,22 +80,35 @@ export const DiscordSectionData = {
 export const FooterData = {
   paragraph:
     "Massa blandit semper varius faucibus. Suspendisse viverra venenatis placerat nam ut. Pellentesque sit id tempor turpis.",
-  columns: [{ columnTitle: "", columnLinks: [{ text: "", href: "" }] }],
+  columns: [
+    {
+      columnTitle: "Links",
+      columnLinks: [
+        { text: "Home", href: "/#" },
+        { text: "Features", href: "/#features" },
+        { text: "Pricing", href: "/#pricing" },
+        { text: "Discord", href: discordUrl },
+      ],
+    },
+  ],
 };
 
 export const socialMedias = [
-  //   {
-  //     imgPath: "/youtube.svg",
-  //     socialUrl: "",
-  //   },
-  //   {
-  //     imgPath: "/twitter.svg",
-  //     socialUrl: "",
-  //   },
-  //   {
-  //     imgPath: "/facebook.svg",
-  //     socialUrl: "",
-  //   },
+  {
+    name: "Youtube",
+    imageUrl: "/youtube.svg",
+    href: "#",
+  },
+  {
+    name: "Twitter",
+    imageUrl: "/twitter.svg",
+    href: "#",
+  },
+  {
+    name: "Facebook",
+    imageUrl: "/facebook.svg",
+    href: "#",
+  },
 ];
 
 export const fakeTopGainersData: TopGainersRowProps[] = [

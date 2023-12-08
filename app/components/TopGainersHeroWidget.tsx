@@ -11,8 +11,7 @@ const fetchApiData = async () => {
       "https://alphasweeps-ae44af8990fe.herokuapp.com/api/data/largest_trades?date=2023-12-01"
     );
     if (!response.ok) {
-      return "Error";
-      // throw new Error(`Error fetching API Data: ${response.status}`); will fix later
+      throw new Error(`Error fetching API Data: ${response.status}`);
     }
     const data = await response.json();
     return data.data;
@@ -22,6 +21,8 @@ const fetchApiData = async () => {
 };
 
 const TopGainersWidget = () => {
+  const [apiData, setApiData] = useState<any>([]);
+
   const [activeIndex, setActiveIndex] = useState(0);
   const [topPremium, setTopPremium] = useState<any>([]); // The top 8 Options based on premium after sorting
 
@@ -45,24 +46,23 @@ const TopGainersWidget = () => {
     // Dependencies array is empty to run the effect only once when the component mounts
   }, [activeIndex]);
 
-  fetchApiData().then((resp) => {
-    if (resp == "Error") {
-      console.log("Error");
-    } else {
-      const objects = // The top 8 Objects with only the required properties to be displayed
-        filterUniqueSymbolsWhileKeepingHighestTradeValueOfEachSymbol([...resp]); // Make a copy to avoid mutating original
+  fetchApiData().then((realdata) => {
+    setApiData(realdata); // Store it in the UseState
 
-      objects.sort((a, b) => b.trade_value - a.trade_value); // Sort by trade_value property value
+    const objects = // The top 8 Objects with only the required properties to be displayed
+      filterUniqueSymbolsWhileKeepingHighestTradeValueOfEachSymbol([
+        ...apiData,
+      ]); // Make a copy to avoid mutating original
 
-      const top8 = objects.slice(0, 8).map((item) => ({
-        symbol: item["a: Symbol"],
-        contract: item["c: C/P"],
-        premium: item["trade_value"],
-      })); // The top 8 which will be displayed
+    objects.sort((a, b) => b.trade_value - a.trade_value); // Sort by trade_value property value
 
-      setTopPremium(top8); // Store them in a UseState
-      console.log(top8);
-    }
+    const top8 = objects.slice(0, 8).map((item) => ({
+      symbol: item["a: Symbol"],
+      contract: item["c: C/P"],
+      premium: item["trade_value"],
+    })); // The top 8 which will be displayed
+
+    setTopPremium(top8); // Store them in a UseState which will be displayed in the top gainers widget
   });
 
   return (
