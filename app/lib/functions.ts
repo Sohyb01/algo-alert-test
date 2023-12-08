@@ -44,4 +44,40 @@ function getOptionsMarketStatus() {
 const marketStatusDate = getOptionsMarketStatus();
 console.log(`The options market status date is: ${marketStatusDate}`);
 
-////////////
+// Fetch Data from the API
+export const fetchApiData = async () => {
+  try {
+    const response = await fetch(
+      "https://alphasweeps-ae44af8990fe.herokuapp.com/api/data/largest_trades?date=2023-12-01"
+    );
+    if (!response.ok) {
+      throw new Error(`Error fetching API Data: ${response.status}`);
+    }
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};
+
+// Filter For top Gainers Widget
+export const filterUniqueSymbolsWhileKeepingHighestTradeValueOfEachSymbol = (
+  objects: object[]
+) => {
+  const groupedObjects = objects.reduce((groups: any, obj: any) => {
+    const symbol = obj["a: Symbol"];
+    groups[symbol] = groups[symbol] || [];
+    groups[symbol].push(obj);
+    return groups;
+  }, {});
+
+  const filteredObjects = Object.values(groupedObjects).map((group: any) => {
+    const maxTradeValueObj = group.reduce((maxObj: any, obj: any) => {
+      return obj["trade_value"] > maxObj["trade_value"] ? obj : maxObj;
+    }, group[0]);
+
+    return maxTradeValueObj;
+  });
+
+  return filteredObjects;
+};

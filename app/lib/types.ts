@@ -29,8 +29,11 @@ export type GreenOrRedWidgetProps = {
 };
 
 export type TopGainersRowProps = {
-  symbol: String;
-  contract: "CALL" | "PUT";
-  premium: String;
-  percentage: String; // For the background progress bar styling
+  item: {
+    symbol: String;
+    contract: "CALL" | "PUT";
+    premium: String;
+  };
+  width: number;
+  isActive?: boolean;
 };

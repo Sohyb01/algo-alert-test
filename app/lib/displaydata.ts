@@ -1,3 +1,5 @@
+import { TopGainersRowProps } from "./types";
+
 export const logoImgPath = "/logo.png";
 export const businessName = "Alert Algo";
 export const discordUrl = "#";
@@ -96,61 +98,80 @@ export const socialMedias = [
   //   },
 ];
 
-export const fakeTopGainersData = [
+export const fakeTopGainersData: TopGainersRowProps[] = [
   {
-    symbol: "SPXW",
-    contract: "CALL",
-    trade_value: 375534680,
-    width: "100",
-    widthString: "w-[100%]",
+    item: {
+      symbol: "FAKE",
+      contract: "CALL",
+      premium: "375534680",
+    },
+    width: 100,
   },
   {
-    symbol: "NVDA",
-    contract: "CALL",
-    trade_value: 10180000,
-    width: "73",
-    widthString: "w-[73%]",
+    item: {
+      symbol: "NVDA",
+      contract: "CALL",
+      premium: "10180000",
+    },
+    width: 73,
   },
   {
-    symbol: "MRNA",
-    contract: "PUT",
-    trade_value: 8583900,
-    width: "66",
-    widthString: "w-[66%]",
+    item: {
+      symbol: "MRNA",
+      contract: "PUT",
+      premium: "8583900",
+    },
+    width: 66,
   },
   {
-    symbol: "SPX",
-    contract: "CALL",
-    trade_value: 7808000,
-    width: "57",
-    widthString: "w-[57%]",
+    item: {
+      symbol: "SPX",
+      contract: "CALL",
+      premium: "7808000",
+    },
+    width: 57,
   },
   {
-    symbol: "FSLR",
-    contract: "PUT",
-    trade_value: 7017500,
-    width: "50",
-    widthString: "w-[50%]",
+    item: {
+      symbol: "FSLR",
+      contract: "PUT",
+      premium: "7017500",
+    },
+    width: 50,
   },
   {
-    symbol: "IWM",
-    contract: "PUT",
-    trade_value: 6936960,
-    width: "44",
-    widthString: "w-[44%]",
+    item: {
+      symbol: "IWM",
+      contract: "PUT",
+      premium: "6936960",
+    },
+    width: 44,
   },
   {
-    symbol: "TSLA",
-    contract: "PUT",
-    trade_value: 6019500,
-    width: "40",
-    widthString: "w-[40%]",
+    item: {
+      symbol: "TSLA",
+      contract: "PUT",
+      premium: "6019500",
+    },
+    width: 40,
   },
   {
-    symbol: "QQQ",
-    contract: "CALL",
-    trade_value: 4809999,
-    width: "33",
-    widthString: "w-[33%]",
+    item: {
+      symbol: "QQQ",
+      contract: "CALL",
+      premium: "4809999",
+    },
+    width: 33,
   },
+];
+
+export const randomWidths = [
+  "w-[90%]",
+  "w-[82%]",
+  "w-[80%]",
+  "w-[70%]",
+  "w-[60%]",
+  "w-[52%]",
+  "w-[33%]",
+  "w-[27%]",
 ];
