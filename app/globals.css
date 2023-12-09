@@ -17,6 +17,10 @@
 .bodybg{
   background-image: url(../public/AllBGs.png);
 }
+.glowbg{
+  background-image: url(../public/bodybg3.png);
+  @apply bg-cover
+}
 
 .title{
   @apply tracking-[-2px] leading-[110%]
@@ -51,4 +55,52 @@
 .shadowy-bg{
   background-image: url(../public/TopGainersBackground.png);
   @apply bg-cover bg-no-repeat
+}
+
+.bubble-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background-color: #3498db; /* Set your desired background color */
+}
+
+.bubble {
+  position: absolute;
+  background-color: #ffffff; /* Set your bubble color */
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  animation: floatBubble linear infinite;
+}
+
+@keyframes floatBubble {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20vh);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/* Create multiple bubbles using pseudo-elements */
+.bubble::before,
+.bubble::after {
+  content: '';
+  position: absolute;
+  background-color: #ffffff; /* Set your bubble color */
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  animation: floatBubble linear infinite;
+}
+
+.bubble::before {
+  animation-delay: -1s;
+}
+
+.bubble::after {
+  animation-delay: 1s;
 }

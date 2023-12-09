@@ -1,8 +1,8 @@
 // This function will return the last date which the options market was open
 function getOptionsMarketStatus() {
   // Set the options market hours in Eastern Time (ET)
-  const optionsMarketOpenHour = 9;
-  const optionsMarketCloseHour = 16;
+  const optionsMarketOpenHour = 9; // 9 AM
+  const optionsMarketCloseHour = 16.5; // 4:30 PM
   const optionsMarketTimeZoneOffset = -5; // Eastern Time (ET) is UTC-5
 
   // Get the current date and time
@@ -41,15 +41,17 @@ function getOptionsMarketStatus() {
 }
 
 // Example usage
-const marketStatusDate = getOptionsMarketStatus();
-console.log(`The options market status date is: ${marketStatusDate}`);
+// const marketStatusDate = getOptionsMarketStatus();
+// console.log(`The options market status date is: ${marketStatusDate}`);
 
 // Fetch Data from the API
 export const fetchApiData = async () => {
+  const lastMarketDate = getOptionsMarketStatus();
   try {
     const response = await fetch(
-      "https://alphasweeps-ae44af8990fe.herokuapp.com/api/data/largest_trades?date=2023-12-01"
+      `https://alphasweeps-ae44af8990fe.herokuapp.com/api/data/largest_trades?date=${lastMarketDate}`
     );
+
     if (!response.ok) {
       throw new Error(`Error fetching API Data: ${response.status}`);
     }

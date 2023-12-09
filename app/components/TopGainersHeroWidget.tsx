@@ -4,21 +4,7 @@ import { fakeTopGainersData, randomWidths } from "../lib/displaydata";
 import React, { useEffect, useState } from "react";
 import TopGainersHeroWidgetRow from "./TopGainersHeroWidgetRow";
 import { TopGainersRowProps } from "../lib/types";
-
-const fetchApiData = async () => {
-  try {
-    const response = await fetch(
-      "https://alphasweeps-ae44af8990fe.herokuapp.com/api/data/largest_trades?date=2023-12-01"
-    );
-    if (!response.ok) {
-      throw new Error(`Error fetching API Data: ${response.status}`);
-    }
-    const data = await response.json();
-    return data.data;
-  } catch (error) {
-    console.error("Error:", error);
-  }
-};
+import { fetchApiData } from "../lib/functions";
 
 const TopGainersWidget = () => {
   const [apiData, setApiData] = useState<any>([]);
@@ -84,7 +70,7 @@ const TopGainersWidget = () => {
                 key={index}
                 item={item}
                 isActive={activeIndex === index}
-                width={item.width}
+                width={randomWidths[index]}
               />
             );
           })}
@@ -98,7 +84,7 @@ const TopGainersWidget = () => {
                 key={index}
                 item={item.item}
                 isActive={activeIndex === index}
-                width={item.width}
+                width={randomWidths[index]}
               />
             );
           })}

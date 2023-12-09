@@ -5,9 +5,9 @@ export const businessName = "Alert Algo";
 export const discordUrl = "#";
 
 export const NavbarLinks = [
-  { link_text: "Home", href: "#home" },
-  { link_text: "Features", href: "#features" },
-  { link_text: "Pricing", href: "#pricing" },
+  { link_text: "Home", href: "/#home" },
+  { link_text: "Features", href: "/#features" },
+  { link_text: "Pricing", href: "/#pricing" },
 ];
 export const HeroSectionData = {
   sub: "Stop overpaying for market data and become a member now. Starting at only $14.99 a month ",
@@ -178,13 +178,4 @@ export const fakeTopGainersData: TopGainersRowProps[] = [
   },
 ];
 
-export const randomWidths = [
-  "w-[90%]",
-  "w-[82%]",
-  "w-[80%]",
-  "w-[70%]",
-  "w-[60%]",
-  "w-[52%]",
-  "w-[33%]",
-  "w-[27%]",
-];
+export const randomWidths = [90, 82, 80, 70, 60, 52, 33, 27];
