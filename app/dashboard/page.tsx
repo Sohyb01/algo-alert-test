@@ -34,17 +34,19 @@ const DashboardPage = () => {
 
     setTopPremium(top8); // Store them in a UseState which will be displayed in the top gainers widget
   };
+  // Get hottest option data
   const getHottestOptionsData = () => {
     const objects = // The top Objects with only the required properties to be displayed
       getTopHottestOptionsByTotalSize([...secondApiData]); // Make a copy to avoid mutating original
     setHottestOptions(objects);
   };
+  // Format API data into an object
 
   // Fetch the Main API data (not the hottest options!)
   fetchApiData().then((data) => {
     setBaseApiData(data);
     getTopGainersWidgetData(); // Organizes and stores the required Data for the TopGainersWidget in the usestate called "topPremium"
-    return;
+    console.log("baseapidata: ", baseApiData);
   });
   fetchHottestOptionsApiData().then((data) => {
     setSecondApiData(data);
@@ -61,7 +63,7 @@ const DashboardPage = () => {
       {/* Right Side - Refresh/Filters Widget, Contract (Green/Red) Widgets, Main Data Table */}
       <div className="flex flex-col gap-4 w-full">
         {/* Filters Widget */}
-        <div className="flex items-center justify-between p-6 glowbg rounded-[8px] text-white glow-shadow-white">
+        <div className="flex items-center justify-between p-6 glowbg rounded-[16px] text-white glow-shadow-white">
           <h2 className="text-lg font-bold">Options Order Flow</h2>
           {/* Buttons (Refresh and Filters) */}
           <div className="flex items-center gap-8 text-base">
@@ -76,7 +78,7 @@ const DashboardPage = () => {
           </div>
         </div>
         <DashboardContractsWidget />
-        <DashboardMainDataTable />
+        <DashboardMainDataTable data={baseApiData} />
       </div>
     </main>
   );

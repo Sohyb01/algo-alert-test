@@ -64,11 +64,11 @@ td, th, td, tbody, table {
 }
 
 .scroll-styling::-webkit-scrollbar {
-@apply h-1 rounded-[12px]
+@apply h-1 w-1 rounded-[12px]
 }
 .scroll-styling::-webkit-scrollbar-track{
 @apply bg-slate-900 rounded-full
 }
 .scroll-styling::-webkit-scrollbar-thumb {
-  @apply h-[3px] bg-slate-500 rounded-full
+  @apply h-[3px] w-[3px] bg-slate-500 rounded-full
 }
