@@ -6,7 +6,6 @@
 * {
   line-height: 144%;
   scroll-behavior: smooth;
-
 }
 
 .blur-bg {
@@ -40,6 +39,12 @@
 .glow-shadow {
   box-shadow: 2px 2px 30px #178a8c27, -2px -2px 30px #3bffff27;
 }
+.glow-shadow-red{
+  box-shadow: 2px 2px 30px #ae00ff27, -2px -2px 30px #ff929227;
+}
+.glow-shadow-white{
+  box-shadow: 2px 2px 30px #ffffff27, -2px -2px 30px #ffffff27;
+}
 
 .membership{
   background-size: cover;
@@ -52,55 +57,18 @@
 .btn-1{
   @apply py-4 px-8 text-center rounded-full
 }
-.shadowy-bg{
-  background-image: url(../public/TopGainersBackground.png);
-  @apply bg-cover bg-no-repeat
+
+td, th, td, tbody, table {
+  background: none !important;
+  @apply w-full
 }
 
-.bubble-container {
-  position: relative;
-  width: 100vw;
-  height: 100vh;
-  background-color: #3498db; /* Set your desired background color */
+.scroll-styling::-webkit-scrollbar {
+@apply h-1 rounded-[12px]
 }
-
-.bubble {
-  position: absolute;
-  background-color: #ffffff; /* Set your bubble color */
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  animation: floatBubble linear infinite;
+.scroll-styling::-webkit-scrollbar-track{
+@apply bg-slate-900 rounded-full
 }
-
-@keyframes floatBubble {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-20vh);
-  }
-  100% {
-    transform: translateY(0);
-  }
-}
-
-/* Create multiple bubbles using pseudo-elements */
-.bubble::before,
-.bubble::after {
-  content: '';
-  position: absolute;
-  background-color: #ffffff; /* Set your bubble color */
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  animation: floatBubble linear infinite;
-}
-
-.bubble::before {
-  animation-delay: -1s;
-}
-
-.bubble::after {
-  animation-delay: 1s;
+.scroll-styling::-webkit-scrollbar-thumb {
+  @apply h-[3px] bg-slate-500 rounded-full
 }

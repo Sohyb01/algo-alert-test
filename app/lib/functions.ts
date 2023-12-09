@@ -1,3 +1,5 @@
+import { TopPurchasesRowProps } from "./types";
+
 // This function will return the last date which the options market was open
 function getOptionsMarketStatus() {
   // Set the options market hours in Eastern Time (ET)
@@ -61,6 +63,22 @@ export const fetchApiData = async () => {
     console.error("Error:", error);
   }
 };
+export const fetchHottestOptionsApiData = async () => {
+  const lastMarketDate = getOptionsMarketStatus();
+  try {
+    const response = await fetch(
+      `https://alphasweeps-ae44af8990fe.herokuapp.com/api/data/top-options?date=${lastMarketDate}`
+    );
+
+    if (!response.ok) {
+      throw new Error(`Error fetching API Data: ${response.status}`);
+    }
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};
 
 // Filter For top Gainers Widget
 export const filterUniqueSymbolsWhileKeepingHighestTradeValueOfEachSymbol = (
@@ -82,4 +100,17 @@ export const filterUniqueSymbolsWhileKeepingHighestTradeValueOfEachSymbol = (
   });
 
   return filteredObjects;
+};
+
+// Filte For Hottest Options / Top Purchases Widget
+export const getTopHottestOptionsByTotalSize = (
+  objects: TopPurchasesRowProps[]
+) => {
+  // Sort the array of objects based on the "total_size" property in descending order
+  const sortedArray = objects.sort((a, b) => b.total_size - a.total_size);
+
+  // Take the top 5 objects
+  const top5Objects = sortedArray.slice(0, 5);
+
+  return top5Objects;
 };

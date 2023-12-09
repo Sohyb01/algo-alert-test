@@ -5,7 +5,7 @@ import { DashboardTopGainersWidgetRow } from "./DashboardTopGainersWidgetRow";
 
 const DashboardTopGainersWidget = (data: any) => {
   return (
-    <div className="z-10 flex flex-col items-center text-start text-white rounded-[16px] bg-slate-700 px-4 py-6 shadowy-bg gap-4">
+    <div className="z-10 flex flex-col items-center text-start text-white rounded-[16px] bg-slate-700 px-4 py-6 glowbg gap-4 glow-shadow">
       <h5 className="text-lg font-bold w-full">Top Gainers</h5>
       {/* Title row */}
       <div className="flex items-center text-start w-full text-neutral-200">

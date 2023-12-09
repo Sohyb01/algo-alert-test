@@ -1,14 +1,14 @@
 export type DatatableRowProps = {
-  date_and_time: String; // "b: Time" -
-  symbol: String; // "a: Symbol" -
-  expiration_date: String; // "e: Exp Date" -
-  strike_price: String; // "d: Strike" -
+  date_and_time: string; // "b: Time" -
+  symbol: string; // "a: Symbol" -
+  expiration_date: string; // "e: Exp Date" -
+  strike_price: string; // "d: Strike" -
   contract: "CALL" | "PUT"; // "c: C/P" -
-  size: String; // "g: Size" -
-  price: String; // "h: Price" -
-  premium: String; // "trade_value" -
+  size: string; // "g: Size" -
+  price: string; // "h: Price" -
+  premium: string; // "trade_value" -
   execution: "BID" | "MID" | "ASK"; // "f: Side" -
-  DTE: String; // "j: DTE" -
+  DTE: string; // "j: DTE" -
 };
 
 export type DatatableProps = {
@@ -16,23 +16,32 @@ export type DatatableProps = {
 };
 
 export type TopPurchasesRowProps = {
-  symbol: String;
-  strike_price: String;
-  expiration: Date;
-  size: String;
-  contract: "CALL" | "PUT";
+  symbol: string;
+  strike: string;
+  expiration_date: string;
+  total_size: number;
+  calls: number;
+  puts: number;
 };
 
+// {
+//   symbol: string;
+//   strike_price: string;
+//   expiration: Date;
+//   size: string;
+//   contract: "CALL" | "PUT";
+// };
+
 export type GreenOrRedWidgetProps = {
-  amount: String;
+  amount: string;
   percentage: Number;
 };
 
 export type TopGainersRowProps = {
   item: {
-    symbol: String;
+    symbol: string;
     contract: "CALL" | "PUT";
-    premium: String;
+    premium: string;
   };
   width: number;
   isActive?: boolean;

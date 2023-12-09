@@ -178,4 +178,23 @@ export const fakeTopGainersData: TopGainersRowProps[] = [
   },
 ];
 
+export const fakeHottestOptionsData = [
+  {
+    calls: 0,
+    expiration_date: "2024-03-15",
+    puts: 10000,
+    strike: "73.00",
+    symbol: "HYG",
+    total_size: 10000,
+  },
+  {
+    calls: 8150,
+    expiration_date: "2024-01-19",
+    puts: 0,
+    strike: "98.00",
+    symbol: "TLT",
+    total_size: 8150,
+  },
+];
+
 export const randomWidths = [90, 82, 80, 70, 60, 52, 33, 27];

@@ -6,11 +6,17 @@ import DashboardMainDataTable from "../components/DashboardMainDataTable";
 import DashboardContractsWidget from "../components/DashboardContractsWidget";
 import {
   fetchApiData,
+  fetchHottestOptionsApiData,
   filterUniqueSymbolsWhileKeepingHighestTradeValueOfEachSymbol,
+  getTopHottestOptionsByTotalSize,
 } from "../lib/functions";
 import Image from "next/image";
 
 const DashboardPage = () => {
+  const [baseApiData, setBaseApiData] = useState<any>([]);
+  const [secondApiData, setSecondApiData] = useState<any>([]); // Data for the second API, which includes the hottest options
+  const [topPremium, setTopPremium] = useState<any>([]); // Data for Top Gainers Widget, The top 8 Options based on Premium after sorting
+  const [hottestOptions, setHottestOptions] = useState<any>([]);
   // Get the Top Gainers Widget Data, set it in the topPremium useState
   const getTopGainersWidgetData = () => {
     const objects = // The top 8 Objects with only the required properties to be displayed
@@ -28,27 +34,34 @@ const DashboardPage = () => {
 
     setTopPremium(top8); // Store them in a UseState which will be displayed in the top gainers widget
   };
+  const getHottestOptionsData = () => {
+    const objects = // The top Objects with only the required properties to be displayed
+      getTopHottestOptionsByTotalSize([...secondApiData]); // Make a copy to avoid mutating original
+    setHottestOptions(objects);
+  };
 
-  const [baseApiData, setBaseApiData] = useState<any>([]);
-  const [topPremium, setTopPremium] = useState<any>([]); // Data for Top Gainers Widget, The top 8 Options based on Premium after sorting
-
-  fetchApiData().then((realdata) => {
-    setBaseApiData(realdata);
+  // Fetch the Main API data (not the hottest options!)
+  fetchApiData().then((data) => {
+    setBaseApiData(data);
     getTopGainersWidgetData(); // Organizes and stores the required Data for the TopGainersWidget in the usestate called "topPremium"
     return;
   });
+  fetchHottestOptionsApiData().then((data) => {
+    setSecondApiData(data);
+    getHottestOptionsData();
+  });
 
   return (
-    <main className="min-h-[100vh] py-8 pt-[164px] flex flex-col lg:flex-row items-center lg:items-start w-full overflow-hidden section gap-x-4">
+    <main className="min-h-[100vh] py-8 pt-[164px] flex flex-col lg:flex-row items-center lg:items-start w-full overflow-hidden section gap-4">
       {/* Left Side - Top Gainers, Hottest Options*/}
       <div className="flex flex-col gap-4 w-full lg:max-w-[404px]">
         <DashboardTopGainersWidget data={topPremium} />
-        <DashboardHottestOptionsWidget />
+        <DashboardHottestOptionsWidget data={hottestOptions} />
       </div>
       {/* Right Side - Refresh/Filters Widget, Contract (Green/Red) Widgets, Main Data Table */}
       <div className="flex flex-col gap-4 w-full">
         {/* Filters Widget */}
-        <div className="flex items-center justify-between p-6 glowbg rounded-[8px] text-white">
+        <div className="flex items-center justify-between p-6 glowbg rounded-[8px] text-white glow-shadow-white">
           <h2 className="text-lg font-bold">Options Order Flow</h2>
           {/* Buttons (Refresh and Filters) */}
           <div className="flex items-center gap-8 text-base">
