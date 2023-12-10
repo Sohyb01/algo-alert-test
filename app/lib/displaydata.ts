@@ -2,7 +2,7 @@ import { TopGainersRowProps } from "./types";
 
 export const logoImgPath = "/logo.png";
 export const businessName = "Alert Algo";
-export const discordUrl = "#";
+export const discordUrl = "https://discord.gg/W7Uund2DyV";
 
 export const NavbarLinks = [
   { link_text: "Home", href: "/#home" },
@@ -97,7 +97,7 @@ export const socialMedias = [
   {
     name: "Youtube",
     imageUrl: "/youtube.svg",
-    href: "#",
+    href: "https://www.youtube.com/@AlphaSweeps",
   },
   {
     name: "Twitter",
