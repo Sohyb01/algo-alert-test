@@ -13,6 +13,7 @@ const DashboardContractsWidget = (data: any) => {
         <div
           className="radial-progress text-green-400"
           style={{
+            // @ts-ignore
             "--value": `${data.data.callFlowsPercentage}`,
             "--size": "80px",
           }}
@@ -30,6 +31,7 @@ const DashboardContractsWidget = (data: any) => {
         <div
           className="radial-progress text-red-400"
           style={{
+            // @ts-ignore
             "--value": `${data.data.putFlowsPercentage}`,
             "--size": "80px",
           }}
@@ -47,6 +49,7 @@ const DashboardContractsWidget = (data: any) => {
         <div
           className="radial-progress text-green-400"
           style={{
+            // @ts-ignore
             "--value": `${data.data.callPremiumPercentage}`,
             "--size": "80px",
           }}
@@ -64,6 +67,7 @@ const DashboardContractsWidget = (data: any) => {
         <div
           className="radial-progress text-red-400"
           style={{
+            // @ts-ignore
             "--value": `${data.data.putPremiumPercentage}`,
             "--size": "80px",
           }}
