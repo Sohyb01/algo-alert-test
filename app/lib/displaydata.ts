@@ -118,7 +118,7 @@ export const fakeTopGainersData: TopGainersRowProps[] = [
       contract: "CALL",
       premium: "375534680",
     },
-    width: 100,
+    width: { number: 90, string: "w-[90%]" },
   },
   {
     item: {
@@ -126,7 +126,7 @@ export const fakeTopGainersData: TopGainersRowProps[] = [
       contract: "CALL",
       premium: "10180000",
     },
-    width: 73,
+    width: { number: 73, string: "w-[73%]" },
   },
   {
     item: {
@@ -134,7 +134,7 @@ export const fakeTopGainersData: TopGainersRowProps[] = [
       contract: "PUT",
       premium: "8583900",
     },
-    width: 66,
+    width: { number: 66, string: "w-[66%]" },
   },
   {
     item: {
@@ -142,7 +142,7 @@ export const fakeTopGainersData: TopGainersRowProps[] = [
       contract: "CALL",
       premium: "7808000",
     },
-    width: 57,
+    width: { number: 57, string: "w-[57%]" },
   },
   {
     item: {
@@ -150,7 +150,7 @@ export const fakeTopGainersData: TopGainersRowProps[] = [
       contract: "PUT",
       premium: "7017500",
     },
-    width: 50,
+    width: { number: 50, string: "w-[50%]" },
   },
   {
     item: {
@@ -158,7 +158,7 @@ export const fakeTopGainersData: TopGainersRowProps[] = [
       contract: "PUT",
       premium: "6936960",
     },
-    width: 44,
+    width: { number: 44, string: "w-[44%]" },
   },
   {
     item: {
@@ -166,7 +166,7 @@ export const fakeTopGainersData: TopGainersRowProps[] = [
       contract: "PUT",
       premium: "6019500",
     },
-    width: 40,
+    width: { number: 40, string: "w-[40%]" },
   },
   {
     item: {
@@ -174,7 +174,7 @@ export const fakeTopGainersData: TopGainersRowProps[] = [
       contract: "CALL",
       premium: "4809999",
     },
-    width: 33,
+    width: { number: 33, string: "w-[33%]" },
   },
 ];
 
