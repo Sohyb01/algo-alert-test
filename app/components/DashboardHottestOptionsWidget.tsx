@@ -13,7 +13,7 @@ const DashboardHottestOptionsWidget = (data: any) => {
       </div>
       {/* Actual Table */}
       <div className="overflow-x-scroll w-full scroll-styling">
-        <table className="table-pin-cols">
+        <table className="table-pin-cols w-full">
           <tbody>
             {/* row 1 */}
             {data.data.map((item: any, index: any) => {

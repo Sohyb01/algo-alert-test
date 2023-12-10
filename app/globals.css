@@ -60,7 +60,6 @@
 
 td, th, td, tbody, table {
   background: none !important;
-  @apply w-full
 }
 
 .scroll-styling::-webkit-scrollbar {
