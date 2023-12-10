@@ -4,7 +4,10 @@ import Image from "next/image";
 
 const OptionsFlowSection = () => {
   return (
-    <section className="section flex flex-col items-center md:flex-row gap-8 py-20 text-white">
+    <section
+      id="features"
+      className="section flex flex-col items-center md:flex-row gap-8 py-20 text-white"
+    >
       {/* Header, Subheader, Feature Bubbles */}
       <div className="flex flex-col gap-8 items-start w-full lg:max-w-[492px] xl:max-w-[733px]">
         {/* Header and Subheader */}

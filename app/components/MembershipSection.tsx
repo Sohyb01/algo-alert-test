@@ -1,10 +1,12 @@
 import React from "react";
 import { MembershipSectionData } from "../lib/displaydata";
-import Image from "next/image";
 
 const MembershipSection = () => {
   return (
-    <section className="section flex flex-col items-center gap-12 py-20 text-white">
+    <section
+      id="#pricing"
+      className="section flex flex-col items-center gap-12 py-20 text-white"
+    >
       {/* Header */}
       <h2 className="font-bold title text-3xl lg:text-4xl max-w-[20ch] text-center">
         Choose your plan with our{" "}
