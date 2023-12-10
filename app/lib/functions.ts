@@ -114,3 +114,58 @@ export const getTopHottestOptionsByTotalSize = (
 
   return top5Objects;
 };
+
+export const analyzeTrades = (trades: any) => {
+  // Initialize counters and sums
+  let callCount = 0;
+  let putCount = 0;
+  let callTradeSum = 0;
+  let putTradeSum = 0;
+
+  // Iterate through the array of objects
+  for (const trade of trades) {
+    // Check the value of the "c: C/P" property
+    if (trade["c: C/P"] === "CALL") {
+      callCount++;
+      callTradeSum += parseInt(trade["g: Size"]);
+    } else if (trade["c: C/P"] === "PUT") {
+      putCount++;
+      putTradeSum += parseInt(trade["g: Size"]);
+    }
+  }
+
+  let totalFlows = callCount + putCount;
+  const callFlowPercentage = Math.round(1000 * (callCount / totalFlows)) / 10;
+  const putFlowPercentage = Math.round(1000 * (putCount / totalFlows)) / 10;
+
+  let totalPremiums = callTradeSum + putTradeSum;
+  const callPremiumPercentage =
+    Math.round(1000 * (callTradeSum / totalPremiums)) / 10;
+  const putPremiumPercentage =
+    Math.round(1000 * (putTradeSum / totalPremiums)) / 10;
+
+  // Create and return the result object
+  const result = {
+    callFlows: callCount,
+    callFlowsPercentage: callFlowPercentage,
+    callPremiumSum: callTradeSum,
+    callPremiumPercentage: callPremiumPercentage,
+    putFlows: putCount,
+    putFlowsPercentage: putFlowPercentage,
+    putPremiumSum: putTradeSum,
+    putPremiumPercentage: putPremiumPercentage,
+  };
+
+  return result;
+};
+
+// Example usage:
+// const trades = [
+//   { "c: C/P": "CALL", trade_value: 100 },
+//   { "c: C/P": "PUT", trade_value: 200 },
+//   { "c: C/P": "CALL", trade_value: 150 },
+//   // Add more objects as needed
+// ];
+
+// const analysisResult = analyzeTrades(trades);
+// console.log(analysisResult);

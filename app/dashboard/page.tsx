@@ -5,6 +5,7 @@ import DashboardHottestOptionsWidget from "../components/DashboardHottestOptions
 import DashboardMainDataTable from "../components/DashboardMainDataTable";
 import DashboardContractsWidget from "../components/DashboardContractsWidget";
 import {
+  analyzeTrades,
   fetchApiData,
   fetchHottestOptionsApiData,
   filterUniqueSymbolsWhileKeepingHighestTradeValueOfEachSymbol,
@@ -17,6 +18,7 @@ const DashboardPage = () => {
   const [secondApiData, setSecondApiData] = useState<any>([]); // Data for the second API, which includes the hottest options
   const [topPremium, setTopPremium] = useState<any>([]); // Data for Top Gainers Widget, The top 8 Options based on Premium after sorting
   const [hottestOptions, setHottestOptions] = useState<any>([]);
+  const [contractsData, setContractsData] = useState<any>({});
   // Get the Top Gainers Widget Data, set it in the topPremium useState
   const getTopGainersWidgetData = () => {
     const objects = // The top 8 Objects with only the required properties to be displayed
@@ -46,7 +48,8 @@ const DashboardPage = () => {
   fetchApiData().then((data) => {
     setBaseApiData(data);
     getTopGainersWidgetData(); // Organizes and stores the required Data for the TopGainersWidget in the usestate called "topPremium"
-    console.log("baseapidata: ", baseApiData);
+    setContractsData(analyzeTrades(baseApiData));
+    console.log("new anal:", analyzeTrades(baseApiData));
   });
   fetchHottestOptionsApiData().then((data) => {
     setSecondApiData(data);
@@ -61,7 +64,7 @@ const DashboardPage = () => {
         <DashboardHottestOptionsWidget data={hottestOptions} />
       </div>
       {/* Right Side - Refresh/Filters Widget, Contract (Green/Red) Widgets, Main Data Table */}
-      <div className="flex flex-col gap-4 w-full">
+      <div className="flex flex-col gap-4 w-full lg:max-w-[596px] xl:max-w-[860px]">
         {/* Filters Widget */}
         <div className="flex items-center justify-between p-6 glowbg rounded-[16px] text-white glow-shadow-white">
           <h2 className="text-lg font-bold">Options Order Flow</h2>
@@ -77,7 +80,7 @@ const DashboardPage = () => {
             </button>
           </div>
         </div>
-        <DashboardContractsWidget />
+        <DashboardContractsWidget data={contractsData} />
         <DashboardMainDataTable data={baseApiData} />
       </div>
     </main>

@@ -90,7 +90,7 @@ const DashboardMainDataTable = (data: any) => {
     //     </table>
     //   </div>
     // </div>
-    <div className="overflow-x-auto lg:max-w-[596px] xl:max-w-[860px] max-h-[80vh] scroll-styling">
+    <div className="overflow-x-auto w-full lg:max-w-[596px] xl:max-w-[860px] max-h-[80vh] scroll-styling">
       <table className="table table-pin-rows table-pin-cols">
         <thead>
           <tr className="w-full py-4 px-6 glowbg text-neutral-300 text-base">

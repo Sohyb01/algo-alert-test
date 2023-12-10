@@ -34,13 +34,25 @@
 .gradient-bg-1{
   background: linear-gradient(to bottom right, #2CDBBE, #669CE9);
 }
-
-
+.greenbg{
+  background-image: url(../public/greenbg.png);
+  @apply object-cover bg-cover
+}
+.redbg{
+  background-image: url(../public/redbg.png);
+  @apply object-cover bg-cover
+}
 .glow-shadow {
   box-shadow: 2px 2px 30px #178a8c27, -2px -2px 30px #3bffff27;
 }
-.glow-shadow-red{
+.glow-shadow-purple{
   box-shadow: 2px 2px 30px #ae00ff27, -2px -2px 30px #ff929227;
+}
+.glow-shadow-green{
+  box-shadow: 2px 2px 30px #00ff4027, -2px -2px 30px #00ff4027;
+}
+.glow-shadow-red{
+  box-shadow: 2px 2px 30px #ff000027, -2px -2px 30px #ff000027;
 }
 .glow-shadow-white{
   box-shadow: 2px 2px 30px #ffffff27, -2px -2px 30px #ffffff27;
