@@ -20,7 +20,10 @@
   background-image: url(../public/bodybg3.png);
   @apply bg-cover
 }
-
+.lightglowbg{
+  background-image: url(../public/lightbg.png);
+  @apply bg-cover
+}
 .title{
   @apply tracking-[-2px] leading-[110%]
 }
@@ -101,4 +104,8 @@ td, th, td, tbody, table {
 }
 .MID{
   @apply px-2 py-1 bg-blue-900 border-[1px] border-sky-200 border-solid text-base rounded-[3px]
+}
+
+.zebrabg:nth-child(1){
+  background: rgb(30 41 59 ) !important
 }

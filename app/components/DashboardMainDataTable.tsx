@@ -2,10 +2,10 @@ import React from "react";
 
 const DashboardMainDataTable = (data: any) => {
   return (
-    <div className="overflow-x-auto w-full lg:max-w-[596px] xl:max-w-[860px] max-h-[80vh] scroll-styling">
+    <div className="overflow-x-auto w-full lg:max-w-[596px] xl:max-w-[860px] max-h-[80vh] scroll-styling rounded-[16px] glow-shadow-white">
       <table className="table table-pin-rows table-pin-cols">
         <thead>
-          <tr className="w-full py-4 px-6 glowbg text-neutral-300 text-base">
+          <tr className="w-full py-4 px-6 text-neutral-300 text-base lightglowbg">
             <td className="w-[120px] text-start">Time</td>
             <td className="w-[120px] text-start">Ticker</td>
             <td className="w-[120px] text-start">Expiration</td>
@@ -17,7 +17,7 @@ const DashboardMainDataTable = (data: any) => {
             <td className="w-[120px] text-start">DTE</td>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="zebrabgs">
           {data.data.map((item: any, index: any) => {
             return (
               <tr

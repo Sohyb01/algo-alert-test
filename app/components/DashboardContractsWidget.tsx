@@ -3,6 +3,7 @@ import React from "react";
 import LoadingSmall from "./LoadingSmall";
 
 const DashboardContractsWidget = (data: any) => {
+  console.log(data);
   {
     return Object.values(data.data).some((value) => Number.isNaN(value)) ? (
       <LoadingSmall />
