@@ -75,11 +75,30 @@ td, th, td, tbody, table {
 }
 
 .scroll-styling::-webkit-scrollbar {
-@apply h-1 w-1 rounded-[12px]
+@apply h-2 w-2 rounded-[12px]
 }
 .scroll-styling::-webkit-scrollbar-track{
 @apply bg-slate-900 rounded-full
 }
 .scroll-styling::-webkit-scrollbar-thumb {
   @apply h-[3px] w-[3px] bg-slate-500 rounded-full
+}
+
+
+/* Data table styles! */
+.PUT{
+  @apply px-2 py-1 bg-red-950 border-[1px] border-red-500 border-solid text-base rounded-[3px]
+}
+.CALL{
+  @apply px-2 py-1 bg-green-950 border-[1px] border-green-400 border-solid text-base rounded-[3px]
+
+}
+.ASK{
+  @apply px-2 py-1 bg-amber-950 border-[1px] border-yellow-600 border-solid text-base rounded-[3px]
+}
+.BID{
+  @apply px-2 py-1 bg-amber-500 border-[1px] border-slate-200 border-solid text-base rounded-[3px]
+}
+.MID{
+  @apply px-2 py-1 bg-blue-900 border-[1px] border-sky-200 border-solid text-base rounded-[3px]
 }

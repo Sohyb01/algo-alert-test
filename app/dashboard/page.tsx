@@ -12,6 +12,7 @@ import {
   getTopHottestOptionsByTotalSize,
 } from "../lib/functions";
 import Image from "next/image";
+import Loading from "../components/loading";
 
 const DashboardPage = () => {
   const [baseApiData, setBaseApiData] = useState<any>([]);
@@ -49,7 +50,6 @@ const DashboardPage = () => {
     setBaseApiData(data);
     getTopGainersWidgetData(); // Organizes and stores the required Data for the TopGainersWidget in the usestate called "topPremium"
     setContractsData(analyzeTrades(baseApiData));
-    console.log("new anal:", analyzeTrades(baseApiData));
   });
   fetchHottestOptionsApiData().then((data) => {
     setSecondApiData(data);
@@ -58,31 +58,37 @@ const DashboardPage = () => {
 
   return (
     <main className="min-h-[100vh] py-8 pt-[164px] flex flex-col lg:flex-row items-center lg:items-start w-full overflow-hidden section gap-4">
-      {/* Left Side - Top Gainers, Hottest Options*/}
-      <div className="flex flex-col gap-4 w-full lg:max-w-[404px]">
-        <DashboardTopGainersWidget data={topPremium} />
-        <DashboardHottestOptionsWidget data={hottestOptions} />
-      </div>
-      {/* Right Side - Refresh/Filters Widget, Contract (Green/Red) Widgets, Main Data Table */}
-      <div className="flex flex-col gap-4 w-full lg:max-w-[596px] xl:max-w-[860px]">
-        {/* Filters Widget */}
-        <div className="flex items-center justify-between p-6 glowbg rounded-[16px] text-white glow-shadow-white">
-          <h2 className="text-lg font-bold">Options Order Flow</h2>
-          {/* Buttons (Refresh and Filters) */}
-          <div className="flex items-center gap-8 text-base">
-            <button className="underline flex items-center gap-1.5">
-              Refresh
-              <Image src="/Refresh.svg" width={16} height={16} alt="" />
-            </button>
-            <button className="px-6 py-2 rounded-full bg-teal-500 flex items-center gap-1">
-              Filter
-              <Image src="/Filter.svg" width={24} height={24} alt="" />
-            </button>
+      {baseApiData.length > 0 ? (
+        <>
+          {/* Left Side - Top Gainers, Hottest Options*/}
+          <div className="flex flex-col gap-4 w-full lg:max-w-[404px]">
+            <DashboardTopGainersWidget data={topPremium} />
+            <DashboardHottestOptionsWidget data={hottestOptions} />
           </div>
-        </div>
-        <DashboardContractsWidget data={contractsData} />
-        <DashboardMainDataTable data={baseApiData} />
-      </div>
+          {/* Right Side - Refresh/Filters Widget, Contract (Green/Red) Widgets, Main Data Table */}
+          <div className="flex flex-col gap-4 w-full lg:max-w-[596px] xl:max-w-[860px]">
+            {/* Filters Widget */}
+            <div className="flex items-center justify-between p-6 glowbg rounded-[16px] text-white glow-shadow-white">
+              <h2 className="text-lg font-bold">Options Order Flow</h2>
+              {/* Buttons (Refresh and Filters) */}
+              <div className="flex items-center gap-8 text-base">
+                <button className="underline flex items-center gap-1.5">
+                  Refresh
+                  <Image src="/Refresh.svg" width={16} height={16} alt="" />
+                </button>
+                <button className="px-6 py-2 rounded-full bg-teal-500 flex items-center gap-1">
+                  Filter
+                  <Image src="/Filter.svg" width={24} height={24} alt="" />
+                </button>
+              </div>
+            </div>
+            <DashboardContractsWidget data={contractsData} />
+            <DashboardMainDataTable data={baseApiData} />
+          </div>
+        </>
+      ) : (
+        <Loading />
+      )}
     </main>
   );
 };
