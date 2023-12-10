@@ -17,13 +17,12 @@ const TopGainersHeroWidgetRow = ({
     },
   };
 
-  const widthString = "w-[" + width + "%]";
   const opacityString =
-    width >= 85
+    width.number >= 85
       ? "opacity-100"
-      : width >= 60
+      : width.number >= 60
       ? "opacity-80"
-      : width >= 45
+      : width.number >= 45
       ? "opacity-60"
       : "opacity-25";
 
@@ -54,7 +53,7 @@ const TopGainersHeroWidgetRow = ({
       {/* Background (Stop at 94% Width) */}
       <div
         className={`absolute h-[39px] bg-teal-500 rounded-[12px] -left-0.5 duration-[400] ${
-          isActive ? `w-full -translate-x-[5%] h-[50px]` : widthString
+          isActive ? `w-full -translate-x-[5%] h-[50px]` : width.string
         } ${isActive ? `` : opacityString}`}
       ></div>
     </motion.div>

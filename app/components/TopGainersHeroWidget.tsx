@@ -52,7 +52,7 @@ const TopGainersWidget = () => {
   });
 
   return (
-    <div className="z-10 flex flex-col items-center text-start text-white rounded-[16px] bg-slate-700 px-4 py-6 shadowy-bg min-w-[437px] lg:w-full gap-4 lg:max-w-[544px]">
+    <div className="z-10 flex flex-col items-center text-start text-white rounded-[16px] bg-slate-700 px-4 py-6 glowbg min-w-[437px] lg:w-full gap-4 lg:max-w-[544px]">
       <h5 className="text-lg font-bold w-full">Top Gainers</h5>
       {/* Title row */}
       <div className="flex items-center text-start w-full text-neutral-200">

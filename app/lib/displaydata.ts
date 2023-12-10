@@ -197,4 +197,13 @@ export const fakeHottestOptionsData = [
   },
 ];
 
-export const randomWidths = [90, 82, 80, 70, 60, 52, 33, 27];
+export const randomWidths = [
+  { number: 90, string: "w-[90%]" },
+  { number: 82, string: "w-[82%]" },
+  { number: 80, string: "w-[80%]" },
+  { number: 70, string: "w-[70%]" },
+  { number: 60, string: "w-[60%]" },
+  { number: 52, string: "w-[52%]" },
+  { number: 33, string: "w-[33%]" },
+  { number: 27, string: "w-[27%]" },
+];

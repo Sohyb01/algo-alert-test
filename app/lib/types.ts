@@ -43,6 +43,9 @@ export type TopGainersRowProps = {
     contract: "CALL" | "PUT";
     premium: string;
   };
-  width: number;
+  width: {
+    number: number;
+    string: string;
+  };
   isActive?: boolean;
 };
