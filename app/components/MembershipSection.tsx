@@ -4,7 +4,7 @@ import { MembershipSectionData } from "../lib/displaydata";
 const MembershipSection = () => {
   return (
     <section
-      id="#pricing"
+      id="pricing"
       className="section flex flex-col items-center gap-12 py-20 text-white"
     >
       {/* Header */}
