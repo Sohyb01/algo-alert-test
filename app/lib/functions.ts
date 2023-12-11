@@ -1,50 +1,5 @@
 import { TopPurchasesRowProps } from "./types";
 
-// This function will return the last date which the options market was open
-function getOptionsMarketStatus() {
-  // Set the options market hours in Eastern Time (ET)
-  const optionsMarketOpenHour = 9; // 9 AM
-  const optionsMarketCloseHour = 16.5; // 4:30 PM
-  const optionsMarketTimeZoneOffset = -5; // Eastern Time (ET) is UTC-5
-
-  // Get the current date and time
-  const now = new Date();
-
-  // Adjust for the Eastern Time Zone
-  const currentHourInET = now.getUTCHours() + optionsMarketTimeZoneOffset;
-
-  // Get the current day of the week (0 is Sunday, 1 is Monday, ..., 6 is Saturday)
-  const currentDay = now.getUTCDay();
-
-  // Check if it's a weekday and within the options market hours
-  const isWeekday = currentDay >= 1 && currentDay <= 5;
-  const isOptionsMarketHours =
-    isWeekday &&
-    currentHourInET >= optionsMarketOpenHour &&
-    currentHourInET < optionsMarketCloseHour;
-
-  // Find the date of the last open market day
-  let lastOpenMarketDate = new Date(now);
-  if (!isOptionsMarketHours || currentHourInET >= optionsMarketCloseHour) {
-    // If today is not a weekday or the market has closed for the day,
-    // find the most recent weekday (Monday to Friday)
-    if (lastOpenMarketDate.getUTCHours() - 5 < 9) {
-      lastOpenMarketDate.setDate(lastOpenMarketDate.getUTCDate() - 1);
-    }
-    while (
-      lastOpenMarketDate.getUTCDay() > 5 ||
-      lastOpenMarketDate.getUTCDay() < 1
-    ) {
-      lastOpenMarketDate.setDate(lastOpenMarketDate.getUTCDate() - 1);
-    }
-  }
-
-  // Format the date as 'YYYY-MM-DD'
-  const formattedDate = lastOpenMarketDate.toISOString().split("T")[0];
-
-  return formattedDate;
-}
-
 // Fetch Data from the API
 // export const fetchApiData = async () => {
 //   const lastMarketDate = getOptionsMarketStatus();
@@ -163,10 +118,6 @@ export const formatNumberWithCommas = (number: number | string) => {
   return parts.join(".");
 };
 
-// Example usage:
-let numberWithCommas = formatNumberWithCommas(1234567890.12345);
-console.log(numberWithCommas); // Output: "1,234,567,890.12345"
-
 // Filter For Hottest Options / Top Purchases Widget
 export const getTopHottestOptionsByTotalSize = (
   objects: TopPurchasesRowProps[]
@@ -179,58 +130,3 @@ export const getTopHottestOptionsByTotalSize = (
 
   return top5Objects;
 };
-
-export const analyzeTrades = (trades: any) => {
-  // Initialize counters and sums
-  let callCount = 0;
-  let putCount = 0;
-  let callTradeSum = 0;
-  let putTradeSum = 0;
-
-  // Iterate through the array of objects
-  for (const trade of trades) {
-    // Check the value of the "c: C/P" property
-    if (trade["c: C/P"] === "CALL") {
-      callCount++;
-      callTradeSum += parseInt(trade["g: Size"]);
-    } else if (trade["c: C/P"] === "PUT") {
-      putCount++;
-      putTradeSum += parseInt(trade["g: Size"]);
-    }
-  }
-
-  let totalFlows = callCount + putCount;
-  const callFlowPercentage = Math.round(1000 * (callCount / totalFlows)) / 10;
-  const putFlowPercentage = Math.round(1000 * (putCount / totalFlows)) / 10;
-
-  let totalPremiums = callTradeSum + putTradeSum;
-  const callPremiumPercentage =
-    Math.round(1000 * (callTradeSum / totalPremiums)) / 10;
-  const putPremiumPercentage =
-    Math.round(1000 * (putTradeSum / totalPremiums)) / 10;
-
-  // Create and return the result object
-  const result = {
-    callFlows: callCount,
-    callFlowsPercentage: callFlowPercentage,
-    callPremiumSum: callTradeSum,
-    callPremiumPercentage: callPremiumPercentage,
-    putFlows: putCount,
-    putFlowsPercentage: putFlowPercentage,
-    putPremiumSum: putTradeSum,
-    putPremiumPercentage: putPremiumPercentage,
-  };
-
-  return result;
-};
-
-// Example usage:
-// const trades = [
-//   { "c: C/P": "CALL", trade_value: 100 },
-//   { "c: C/P": "PUT", trade_value: 200 },
-//   { "c: C/P": "CALL", trade_value: 150 },
-//   // Add more objects as needed
-// ];
-
-// const analysisResult = analyzeTrades(trades);
-// console.log(analysisResult);
