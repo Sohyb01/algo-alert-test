@@ -6,6 +6,7 @@ import {
   fetchApiData,
   fetchHottestOptionsApiData,
   filterUniqueSymbolsWhileKeepingHighestTradeValueOfEachSymbol,
+  getOptionsMarketStatus,
   getTopHottestOptionsByTotalSize,
 } from "../lib/functions";
 import Image from "next/image";
@@ -100,7 +101,12 @@ const DashboardPage = async () => {
           <div className="flex flex-col gap-4 w-full lg:max-w-[596px] xl:max-w-[860px]">
             {/* Filters Widget */}
             <div className="flex items-center justify-between p-6 glowbg rounded-[16px] text-white glow-shadow-white">
-              <h2 className="text-lg font-bold">Options Order Flow</h2>
+              <h2 className="text-lg font-bold">
+                Options Order Flow{" "}
+                <span className="text-neutral-300">
+                  {getOptionsMarketStatus()}
+                </span>
+              </h2>
               {/* Buttons (Refresh and Filters) */}
               <div className="flex items-center gap-8 text-base">
                 <button className="underline flex items-center gap-1.5">
