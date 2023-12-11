@@ -3,13 +3,13 @@ import DashboardHottestOptionsWidget from "../components/DashboardHottestOptions
 import DashboardMainDataTable from "../components/DashboardMainDataTable";
 import DashboardContractsWidget from "../components/DashboardContractsWidget";
 import {
+  fetchApiData,
+  fetchHottestOptionsApiData,
   filterUniqueSymbolsWhileKeepingHighestTradeValueOfEachSymbol,
   getTopHottestOptionsByTotalSize,
 } from "../lib/functions";
 import Image from "next/image";
 import Loading from "../components/Loading";
-import { fetchApiDataOnServer } from "../lib/actions/fetchMainApiData";
-import { fetchHottestOptionsApiDataOnServer } from "../lib/actions/fetchHottestOptionsData";
 
 const getTopGainersWidgetData = async (data: any) => {
   const objects = // The top 8 Objects with only the required properties to be displayed
@@ -77,9 +77,9 @@ const analyzeTrades = async (trades: any) => {
 // Main component
 const DashboardPage = async () => {
   // Fetch the Main API data (not the hottest options!)
-  const baseApiData = await fetchApiDataOnServer();
+  const baseApiData = await fetchApiData();
 
-  const secondApiData = await fetchHottestOptionsApiDataOnServer();
+  const secondApiData = await fetchHottestOptionsApiData();
 
   const topPremium = await getTopGainersWidgetData(baseApiData);
 
