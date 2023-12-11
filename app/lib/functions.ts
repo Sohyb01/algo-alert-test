@@ -76,7 +76,7 @@ export async function fetchApiData() {
 
     // console.log("done fetching pages!");
 
-    return allPagesData;
+    return allPagesData.reverse();
   } catch (error) {
     console.error("Error:", error);
   }
@@ -93,7 +93,27 @@ export const fetchHottestOptionsApiData = async () => {
       throw new Error(`Error fetching API Data: ${response.status}`);
     }
     const data = await response.json();
-    return data.data;
+
+    // console.log("data:", data);
+    let allPagesData = [...data["data"]];
+    // console.log("length before looping: ", allPagesData.length);
+    // console.log("remaining before looping: ", data["remaining_pages"]);
+
+    if (data["remaining_pages"] > 0) {
+      for (let i = 2; i < data["remaining_pages"] + 2; i++) {
+        // console.log("fetching page no.", i);
+        const additionalPageOfData = await fetch(
+          `https://alphasweeps-ae44af8990fe.herokuapp.com/api/data/top-options?date=${lastMarketDate}&page=${lastMarketDate}`
+        );
+        // console.log("fetched page no.", i, "!");
+        const additionalPageJSON = await additionalPageOfData.json();
+        allPagesData = allPagesData.concat(additionalPageJSON["data"]);
+        // console.log("length: ", allPagesData.length);
+        // console.log("remaining pages: ", additionalPageJSON["remaining_pages"]);
+      }
+    }
+
+    return allPagesData.reverse();
   } catch (error) {
     console.error("Error:", error);
   }

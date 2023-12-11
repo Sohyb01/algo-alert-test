@@ -101,9 +101,9 @@ const DashboardPage = async () => {
           <div className="flex flex-col gap-4 w-full lg:max-w-[596px] xl:max-w-[860px]">
             {/* Filters Widget */}
             <div className="flex items-center justify-between p-6 glowbg rounded-[16px] text-white glow-shadow-white">
-              <h2 className="text-lg font-bold">
+              <h2 className="flex items-center text-lg font-bold gap-4">
                 Options Order Flow{" "}
-                <span className="text-neutral-300">
+                <span className="text-neutral-300 text-sm">
                   {getOptionsMarketStatus()}
                 </span>
               </h2>
