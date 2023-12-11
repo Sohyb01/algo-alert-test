@@ -6,13 +6,15 @@ import DashboardMainDataTable from "../components/DashboardMainDataTable";
 import DashboardContractsWidget from "../components/DashboardContractsWidget";
 import {
   analyzeTrades,
-  fetchApiData,
-  fetchHottestOptionsApiData,
+  // fetchApiData,
+  // fetchHottestOptionsApiData,
   filterUniqueSymbolsWhileKeepingHighestTradeValueOfEachSymbol,
   getTopHottestOptionsByTotalSize,
 } from "../lib/functions";
 import Image from "next/image";
 import Loading from "../components/Loading";
+import { fetchApiDataOnServer } from "../lib/actions/fetchMainApiData";
+import { fetchHottestOptionsApiDataOnServer } from "../lib/actions/fetchHottestOptionsData";
 
 const DashboardPage = () => {
   const [baseApiData, setBaseApiData] = useState<any>([]);
@@ -43,15 +45,15 @@ const DashboardPage = () => {
       getTopHottestOptionsByTotalSize([...secondApiData]); // Make a copy to avoid mutating original
     setHottestOptions(objects);
   };
-  // Format API data into an object
 
   // Fetch the Main API data (not the hottest options!)
-  fetchApiData().then((data) => {
+  fetchApiDataOnServer().then((data) => {
+    console.log("data received on front end! length:");
     setBaseApiData(data);
     getTopGainersWidgetData(); // Organizes and stores the required Data for the TopGainersWidget in the usestate called "topPremium"
     setContractsData(analyzeTrades(baseApiData));
   });
-  fetchHottestOptionsApiData().then((data) => {
+  fetchHottestOptionsApiDataOnServer().then((data) => {
     setSecondApiData(data);
     getHottestOptionsData();
   });

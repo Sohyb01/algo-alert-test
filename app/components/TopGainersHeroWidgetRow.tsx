@@ -2,6 +2,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { TopGainersRowProps } from "../lib/types";
+import { formatNumberWithCommas } from "../lib/functions";
 
 const TopGainersHeroWidgetRow = ({
   item,
@@ -48,7 +49,7 @@ const TopGainersHeroWidgetRow = ({
         {item.contract}
       </div>
       <div className={`w-full z-[1] ${isActive && `font-bold`}`}>
-        ${item.premium}
+        ${formatNumberWithCommas(item.premium)}
       </div>
       {/* Background (Stop at 94% Width) */}
       <div

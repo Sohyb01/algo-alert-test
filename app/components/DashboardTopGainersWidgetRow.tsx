@@ -1,5 +1,6 @@
 import React from "react";
 import { TopGainersRowProps } from "../lib/types";
+import { formatNumberWithCommas } from "../lib/functions";
 
 export const DashboardTopGainersWidgetRow = ({
   item,
@@ -20,7 +21,9 @@ export const DashboardTopGainersWidgetRow = ({
     >
       <div className={`w-full z-[1]`}>{item.symbol}</div>
       <div className={`w-full z-[1]`}>{item.contract}</div>
-      <div className={`w-full z-[1]`}>${item.premium}</div>
+      <div className={`w-full z-[1]`}>
+        ${formatNumberWithCommas(item.premium)}
+      </div>
       {/* Background (Stop at 94% Width) */}
       <div
         className={`absolute h-[39px] bg-teal-500 rounded-[12px] -left-0.5 duration-[400] w-full ${width.string} ${opacityString}`}

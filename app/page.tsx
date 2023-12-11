@@ -6,11 +6,13 @@ import TrackTradesSection from "./components/TrackTradesSection";
 import MembershipSection from "./components/MembershipSection";
 import DiscordSection from "./components/DiscordSection";
 import Footer from "./components/Footer";
+import ParticleEffect from "./components/ParticlesBackground/ParticlesBackground";
 
 export default function Home() {
   return (
     <main className="min-h-[100vh] flex flex-col items-center w-full overflow-hidden">
       <HeroSection />
+      <ParticleEffect />
       <OptionsFlowSection />
       <FeaturesSection />
       <HistoricalFlowSection />

@@ -4,7 +4,7 @@ import { fakeTopGainersData, randomWidths } from "../lib/displaydata";
 import React, { useEffect, useState } from "react";
 import TopGainersHeroWidgetRow from "./TopGainersHeroWidgetRow";
 import { TopGainersRowProps } from "../lib/types";
-import { fetchApiData } from "../lib/functions";
+import { fetchApiDataOnServer } from "../lib/actions/fetchMainApiData";
 
 const TopGainersWidget = () => {
   const [apiData, setApiData] = useState<any>([]);
@@ -32,7 +32,7 @@ const TopGainersWidget = () => {
     // Dependencies array is empty to run the effect only once when the component mounts
   }, [activeIndex]);
 
-  fetchApiData().then((realdata) => {
+  fetchApiDataOnServer().then((realdata) => {
     setApiData(realdata); // Store it in the UseState
 
     const objects = // The top 8 Objects with only the required properties to be displayed

@@ -1,6 +1,7 @@
 // Hottest Options / Top Purchases
 import React from "react";
 import LoadingSmall from "./LoadingSmall";
+import { formatNumberWithCommas } from "../lib/functions";
 
 const DashboardHottestOptionsWidget = (data: any) => {
   return (
@@ -46,7 +47,9 @@ const DashboardHottestOptionsWidget = (data: any) => {
                         ? `${item.calls}, Call`
                         : `${item.puts}, Put`}
                     </td>
-                    <td className="p-0 w-full">{item.total_size}</td>
+                    <td className="p-0 w-full">
+                      {formatNumberWithCommas(item.total_size)}
+                    </td>
                     <td className="p-0 w-full">
                       {callsRatio}% / {putsRatio}%
                     </td>

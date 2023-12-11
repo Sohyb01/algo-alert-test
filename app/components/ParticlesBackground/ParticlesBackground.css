@@ -11,8 +11,7 @@ body{
   position: absolute;
   width: 100%;
   height: 100vh;
-  z-index: -1;
-  overflow: hidden;
+  overflow: visible;
   top: 0;
   left: 0;
 }
@@ -20,13 +19,27 @@ body{
 .bubble {
   position: absolute;
   bottom: -100px;
-  width: 3px;
-  height: 3px;
+  width: 6px;
+  height: 6px;
   background: #8be7e8;
   border-radius: 50%;
   opacity: 0.5;
   animation: rise 10s infinite ease-in;
 }
+@keyframes rise {
+  0% {
+    bottom: -100px;
+    transform: translateX(0);
+  }
+  50% {
+    transform: translate(100px);
+  }
+  100% {
+    bottom: 1080px;
+    transform: translateX(-200px);
+  }
+}
+
 .bubble:nth-child(1) {
   width: 3px;
   height: 3px;
@@ -256,17 +269,4 @@ body{
   left: 25%;
   animation-duration: 10s;
   animation-delay: 4s;
-}
-@keyframes rise {
-  0% {
-    bottom: -100px;
-    transform: translateX(0);
-  }
-  50% {
-    transform: translate(100px);
-  }
-  100% {
-    bottom: 1080px;
-    transform: translateX(-200px);
-  }
 }

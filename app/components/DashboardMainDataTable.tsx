@@ -1,4 +1,5 @@
 import React from "react";
+import { formatNumberWithCommas } from "../lib/functions";
 
 const DashboardMainDataTable = (data: any) => {
   return (
@@ -52,7 +53,7 @@ const DashboardMainDataTable = (data: any) => {
                     item["c: C/P"] == "CALL" ? `text-green-400` : `text-red-400`
                   }`}
                 >
-                  ${item["trade_value"]}
+                  ${formatNumberWithCommas(item["trade_value"])}
                 </td>
                 {/* Execution */}
                 <td className="w-[120px] text-start">

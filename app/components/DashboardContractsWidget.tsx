@@ -1,9 +1,9 @@
 // This is the Green / Red Widget on the dashboard
 import React from "react";
 import LoadingSmall from "./LoadingSmall";
+import { formatNumberWithCommas } from "../lib/functions";
 
 const DashboardContractsWidget = (data: any) => {
-  console.log(data);
   {
     return Object.values(data.data).some((value) => Number.isNaN(value)) ? (
       <LoadingSmall />
@@ -13,7 +13,7 @@ const DashboardContractsWidget = (data: any) => {
         <div className="flex items-center justify-between min-w-[240px] max-w-[240px] gap-4 p-4 greenbg rounded-[8px] text-white">
           <div className="flex flex-col text-center gap-2">
             <p className="text-sm font-bold text-neutral-200">CALLS FLOW</p>
-            <p>{data.data.callFlows}</p>
+            <p>{formatNumberWithCommas(data.data.callFlows)}</p>
           </div>
           <div
             className="radial-progress text-green-400"
@@ -31,7 +31,7 @@ const DashboardContractsWidget = (data: any) => {
         <div className="flex items-center justify-between min-w-[240px] max-w-[240px] gap-4 p-4 redbg rounded-[8px] text-white">
           <div className="flex flex-col text-center gap-2">
             <p className="text-sm font-bold text-neutral-200">PUTS FLOW</p>
-            <p>{data.data.putFlows}</p>
+            <p>{formatNumberWithCommas(data.data.putFlows)}</p>
           </div>
           <div
             className="radial-progress text-red-400"
@@ -49,7 +49,7 @@ const DashboardContractsWidget = (data: any) => {
         <div className="flex items-center justify-between min-w-[240px] max-w-[240px] gap-4 p-4 greenbg rounded-[8px] text-white">
           <div className="flex flex-col text-center gap-2">
             <p className="text-sm font-bold text-neutral-200">CALLS PREMIUM</p>
-            <p>{data.data.callPremiumSum}</p>
+            <p>{formatNumberWithCommas(data.data.callPremiumSum)}</p>
           </div>
           <div
             className="radial-progress text-green-400"
@@ -69,7 +69,7 @@ const DashboardContractsWidget = (data: any) => {
         <div className="flex items-center justify-between min-w-[240px] max-w-[240px] gap-4 p-4 redbg rounded-[8px] text-white">
           <div className="flex flex-col text-center gap-2">
             <p className="text-sm font-bold text-neutral-200">PUTS PREMIUM</p>
-            <p>{data.data.putPremiumSum}</p>
+            <p>{formatNumberWithCommas(data.data.putPremiumSum)}</p>
           </div>
           <div
             className="radial-progress text-red-400"

@@ -9,6 +9,11 @@ const ParticleEffect = () => {
           <div key={index} className="bubble"></div>
         ))}
       </div>
+      <div className="bubbles">
+        {Array.from({ length: 100 }).map((_, index) => (
+          <div key={index} className="bubble"></div>
+        ))}
+      </div>
     </section>
   );
 };
