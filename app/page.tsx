@@ -5,7 +5,6 @@ import HistoricalFlowSection from "./components/HistoricalFlowSection";
 import TrackTradesSection from "./components/TrackTradesSection";
 import MembershipSection from "./components/MembershipSection";
 import DiscordSection from "./components/DiscordSection";
-import Footer from "./components/Footer";
 import ParticleEffect from "./components/ParticlesBackground/ParticlesBackground";
 
 export default function Home() {
