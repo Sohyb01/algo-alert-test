@@ -1,10 +1,12 @@
 "use client";
-import { filterUniqueSymbolsWhileKeepingHighestTradeValueOfEachSymbol } from "../lib/functions";
+import {
+  fetchApiData,
+  filterUniqueSymbolsWhileKeepingHighestTradeValueOfEachSymbol,
+} from "../lib/functions";
 import { fakeTopGainersData, randomWidths } from "../lib/displaydata";
 import React, { useEffect, useState } from "react";
 import TopGainersHeroWidgetRow from "./TopGainersHeroWidgetRow";
 import { TopGainersRowProps } from "../lib/types";
-import { fetchApiDataOnServer } from "../lib/actions/fetchMainApiData";
 
 const TopGainersWidget = () => {
   const [apiData, setApiData] = useState<any>([]);
@@ -32,7 +34,7 @@ const TopGainersWidget = () => {
     // Dependencies array is empty to run the effect only once when the component mounts
   }, [activeIndex]);
 
-  fetchApiDataOnServer().then((realdata) => {
+  fetchApiData().then((realdata) => {
     setApiData(realdata); // Store it in the UseState
 
     const objects = // The top 8 Objects with only the required properties to be displayed
