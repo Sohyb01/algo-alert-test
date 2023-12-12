@@ -182,3 +182,7 @@ td, th, td, tbody, table {
 .zebrabg:nth-child(1){
   background: rgb(30 41 59 ) !important
 }
+
+.tablebutton{
+  @apply px-4 py-2 rounded-[6px] border-white border-[1px] border-solid text-center hover:bg-slate-600 duration-100
+}

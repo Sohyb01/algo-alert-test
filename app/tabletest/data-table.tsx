@@ -45,6 +45,15 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className="w-full lg:max-w-[596px] xl:max-w-[860px] max-h-[80vh] scroll-styling rounded-[16px] text-white">
+      {/* Pagination controls and pages label? */}
+      <div className="flex gap-4 py-4 w-full justify-end">
+        <button className="tablebutton" onClick={() => table.previousPage()}>
+          Previous
+        </button>
+        <button className="tablebutton" onClick={() => table.nextPage()}>
+          Next
+        </button>
+      </div>
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -87,8 +96,6 @@ export function DataTable<TData, TValue>({
           )}
         </TableBody>
       </Table>
-      <button onClick={() => table.previousPage()}>Previous</button>
-      <button onClick={() => table.nextPage()}>Next</button>
     </div>
   );
 }
