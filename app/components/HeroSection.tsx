@@ -2,6 +2,7 @@ import React from "react";
 import { HeroSectionData } from "../lib/displaydata";
 import TopGainersHeroWidget from "./TopGainersHeroWidget";
 import ParticleEffect from "./ParticlesBackground/ParticlesBackground";
+import Link from "next/link";
 
 const HeroSection = () => {
   return (
@@ -21,12 +22,15 @@ const HeroSection = () => {
         </div>
         {/* Buttons */}
         <div className="flex items-center w-full justify-start gap-8">
-          <a href="#" className="btn-1 gradient-bg-1 glow-shadow">
+          <Link
+            href="/api/auth/signin"
+            className="btn-1 gradient-bg-1 glow-shadow"
+          >
             Sign Up
-          </a>
-          <a href="#" className="btn-1 border-teal-400 border-2">
+          </Link>
+          <Link href="#pricing" className="btn-1 border-teal-400 border-2">
             Pricing
-          </a>
+          </Link>
         </div>
       </div>
       {/* Top Gainers Widget */}

@@ -1,4 +1,4 @@
-import { TopPurchasesRowProps } from "./types";
+import { DatatableRowProps, TopPurchasesRowProps } from "./types";
 
 export function getOptionsMarketStatus() {
   // Set the options market hours in Eastern Time (ET)
@@ -166,3 +166,15 @@ export const getTopHottestOptionsByTotalSize = (
 
   return top5Objects;
 };
+
+export async function convertPropertiesToNumbers(array: any) {
+  array.forEach((obj: any) => {
+    obj["d: Strike"] = parseFloat(obj["d: Strike"]);
+    obj["g: Size"] = parseInt(obj["g: Size"].replace(/,/g, ""), 10);
+    obj["h: Price"] = parseFloat(obj["h: Price"]);
+    obj["k: Spot Price"] = parseFloat(obj["k: Spot Price"]);
+    obj["l: Volume"] = parseInt(obj["l: Volume"].replace(/,/g, ""), 10);
+    obj["m: Open Interest"] = parseInt(obj["m: Open Interest"], 10);
+  });
+  return array;
+}

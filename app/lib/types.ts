@@ -2,11 +2,11 @@ export type DatatableRowProps = {
   date_and_time: string; // "b: Time" -
   symbol: string; // "a: Symbol" -
   expiration_date: string; // "e: Exp Date" -
-  strike_price: string; // "d: Strike" -
+  strike_price: number; // "d: Strike" -
   contract: "CALL" | "PUT"; // "c: C/P" -
-  size: string; // "g: Size" -
-  price: string; // "h: Price" -
-  premium: string; // "trade_value" -
+  size: number; // "g: Size" -
+  price: number; // "h: Price" -
+  premium: number; // "trade_value" -
   execution: "BID" | "MID" | "ASK"; // "f: Side" -
   DTE: string; // "j: DTE" -
 };
@@ -49,3 +49,17 @@ export type TopGainersRowProps = {
   };
   isActive?: boolean;
 };
+
+export const defaultColumns = [
+  { accessorKey: "b: Time", header: "Time" },
+  { accessorKey: "a: Symbol", header: "Ticker" },
+  { accessorKey: "e: Exp Date", header: "Expiration" },
+  { accessorKey: "d: Strike", header: "Strike Price" },
+  { accessorKey: "c: C/P", header: "Contract" },
+  { accessorKey: "g: Size", header: "Size" },
+  { accessorKey: "h: Price", header: "Price" },
+  { accessorKey: "trade_value", header: "Premium" },
+  { accessorKey: "f: Side", header: "Execution" },
+  { accessorKey: "j: DTE", header: "DTE" },
+  // ... Define other columns similarly
+];

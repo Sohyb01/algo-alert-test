@@ -1,8 +1,12 @@
+import { redirect } from "next/navigation"; // In order to redirect in case of not being authorized
+import { getServerSession } from "next-auth";
+
 import DashboardTopGainersWidget from "../components/DashboardTopGainersWidget";
 import DashboardHottestOptionsWidget from "../components/DashboardHottestOptionsWidget";
 import DashboardMainDataTable from "../components/DashboardMainDataTable";
 import DashboardContractsWidget from "../components/DashboardContractsWidget";
 import {
+  convertPropertiesToNumbers,
   fetchApiData,
   fetchHottestOptionsApiData,
   filterUniqueSymbolsWhileKeepingHighestTradeValueOfEachSymbol,
@@ -11,6 +15,8 @@ import {
 } from "../lib/functions";
 import Image from "next/image";
 import Loading from "../components/Loading";
+import { DataTable } from "../tabletest/data-table";
+import { columns } from "../tabletest/columns";
 
 const getTopGainersWidgetData = async (data: any) => {
   const objects = // The top 8 Objects with only the required properties to be displayed
@@ -77,6 +83,12 @@ const analyzeTrades = async (trades: any) => {
 
 // Main component
 const DashboardPage = async () => {
+  // OAuth Authentication:
+  // const session = await getServerSession();
+  // if (!session || !session.user) {
+  //   redirect("/api/auth/signin");
+  // }
+
   // Fetch the Main API data (not the hottest options!)
   const baseApiData = await fetchApiData();
 
@@ -87,6 +99,8 @@ const DashboardPage = async () => {
   const hottestOptions = await getHottestOptionsData(secondApiData);
 
   const contractsData = await analyzeTrades(baseApiData);
+
+  const mainTableData = await convertPropertiesToNumbers(baseApiData);
 
   return (
     <main className="min-h-[100vh] py-8 pt-[164px] flex flex-col lg:flex-row items-center lg:items-start w-full overflow-hidden section gap-4">
@@ -120,7 +134,8 @@ const DashboardPage = async () => {
               </div>
             </div>
             <DashboardContractsWidget data={contractsData} />
-            <DashboardMainDataTable data={baseApiData} />
+            <DataTable data={mainTableData} columns={columns} />
+            {/* <DashboardMainDataTable data={baseApiData} /> */}
           </div>
         </>
       ) : (
