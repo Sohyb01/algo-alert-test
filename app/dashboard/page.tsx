@@ -3,7 +3,6 @@ import { getServerSession } from "next-auth";
 
 import DashboardTopGainersWidget from "../components/DashboardTopGainersWidget";
 import DashboardHottestOptionsWidget from "../components/DashboardHottestOptionsWidget";
-import DashboardMainDataTable from "../components/DashboardMainDataTable";
 import DashboardContractsWidget from "../components/DashboardContractsWidget";
 import {
   convertPropertiesToNumbers,
@@ -15,8 +14,8 @@ import {
 } from "../lib/functions";
 import Image from "next/image";
 import Loading from "../components/Loading";
-import { DataTable } from "../tabletest/data-table";
-import { columns } from "../tabletest/columns";
+import { DataTable } from "../components/Table/data-table";
+import { columns } from "../components/Table/columns";
 
 const getTopGainersWidgetData = async (data: any) => {
   const objects = // The top 8 Objects with only the required properties to be displayed

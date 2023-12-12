@@ -1,8 +1,8 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { DatatableRowProps } from "../lib/types";
-import { formatNumberWithCommas } from "../lib/functions";
+import { DatatableRowProps } from "../../lib/types";
+import { formatNumberWithCommas } from "../../lib/functions";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 
 export const columns: ColumnDef<DatatableRowProps>[] = [
