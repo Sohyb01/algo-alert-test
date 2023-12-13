@@ -88,6 +88,8 @@ const DashboardPage = async () => {
     redirect("/api/auth/signin");
   }
 
+  console.log(session);
+
   // Fetch the Main API data (not the hottest options!)
   const baseApiData = await fetchApiData();
 
