@@ -111,5 +111,9 @@ td, th, td, tbody, table {
 }
 
 .tablebutton{
-  @apply px-4 py-2 rounded-[6px] border-white border-[1px] border-solid text-center hover:bg-slate-600 duration-100
+  @apply px-4 py-2 rounded-[6px] border-white border-[1px] border-solid text-center hover:bg-slate-600 duration-100 text-sm
+}
+
+.tableheader{
+ @apply flex items-center text-neutral-300 w-[120px] hover:text-white duration-100
 }

@@ -83,10 +83,10 @@ const analyzeTrades = async (trades: any) => {
 // Main component
 const DashboardPage = async () => {
   // OAuth Authentication:
-  // const session = await getServerSession();
-  // if (!session || !session.user) {
-  //   redirect("/api/auth/signin");
-  // }
+  const session = await getServerSession();
+  if (!session || !session.user) {
+    redirect("/api/auth/signin");
+  }
 
   // Fetch the Main API data (not the hottest options!)
   const baseApiData = await fetchApiData();

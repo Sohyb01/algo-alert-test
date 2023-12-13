@@ -11,7 +11,7 @@ export const columns: ColumnDef<DatatableRowProps>[] = [
     header: ({ column }) => {
       return (
         <button
-          className="flex items-center text-neutral-300 w-[120px]"
+          className="tableheader"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Time
@@ -35,7 +35,7 @@ export const columns: ColumnDef<DatatableRowProps>[] = [
     header: ({ column }) => {
       return (
         <button
-          className="flex items-center text-neutral-300 w-[120px]"
+          className="tableheader"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Ticker
@@ -52,7 +52,7 @@ export const columns: ColumnDef<DatatableRowProps>[] = [
     header: ({ column }) => {
       return (
         <button
-          className="flex items-center text-neutral-300 w-[120px]"
+          className="tableheader"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Expiration
@@ -66,7 +66,7 @@ export const columns: ColumnDef<DatatableRowProps>[] = [
     header: ({ column }) => {
       return (
         <button
-          className="flex items-center text-neutral-300 w-[120px]"
+          className="tableheader"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Strike
@@ -80,7 +80,7 @@ export const columns: ColumnDef<DatatableRowProps>[] = [
     header: ({ column }) => {
       return (
         <button
-          className="flex items-center text-neutral-300 w-[120px]"
+          className="tableheader"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Contract
@@ -101,7 +101,7 @@ export const columns: ColumnDef<DatatableRowProps>[] = [
     header: ({ column }) => {
       return (
         <button
-          className="flex items-center text-neutral-300 w-[120px]"
+          className="tableheader"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Size
@@ -115,7 +115,7 @@ export const columns: ColumnDef<DatatableRowProps>[] = [
     header: ({ column }) => {
       return (
         <button
-          className="flex items-center text-neutral-300 w-[120px]"
+          className="tableheader"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Price
@@ -129,7 +129,7 @@ export const columns: ColumnDef<DatatableRowProps>[] = [
     header: ({ column }) => {
       return (
         <button
-          className="flex items-center text-neutral-300 w-[120px]"
+          className="tableheader"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Premium

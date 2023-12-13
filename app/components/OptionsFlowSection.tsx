@@ -58,16 +58,16 @@ const OptionsFlowSection = () => {
               <path
                 d="M19.5714 36.7143C29.0392 36.7143 36.7143 29.0392 36.7143 19.5714C36.7143 10.1037 29.0392 2.42857 19.5714 2.42857C10.1037 2.42857 2.42859 10.1037 2.42859 19.5714C2.42859 29.0392 10.1037 36.7143 19.5714 36.7143Z"
                 stroke="#2DD4BF"
-                stroke-width="4"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="4"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
               <path
                 d="M31.6858 31.6857L39.5715 39.5714M19.5715 12.4286V8.14285M19.5715 12.4286C17.2001 12.4286 15.2858 12.4286 15.2858 15.2857C15.2858 19.5714 23.8572 19.5714 23.8572 23.8571C23.8572 26.7143 21.9429 26.7143 19.5715 26.7143M19.5715 12.4286C21.9429 12.4286 23.8572 13.5143 23.8572 15.2857M15.2858 23.8571C15.2858 26 17.2001 26.7143 19.5715 26.7143M19.5715 26.7143V31"
                 stroke="#2DD4BF"
-                stroke-width="4"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="4"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
             </svg>
             <div>
