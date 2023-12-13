@@ -16,6 +16,7 @@ import Image from "next/image";
 import Loading from "../components/Loading";
 import { DataTable } from "../components/Table/data-table";
 import { columns } from "../components/Table/columns";
+import prisma from "../lib/prisma";
 
 const getTopGainersWidgetData = async (data: any) => {
   const objects = // The top 8 Objects with only the required properties to be displayed
@@ -82,13 +83,16 @@ const analyzeTrades = async (trades: any) => {
 
 // Main component
 const DashboardPage = async () => {
+  const users = await prisma.user.findMany();
+  console.log("Users: ", users);
+
   // OAuth Authentication:
   const session = await getServerSession();
   if (!session || !session.user) {
     redirect("/api/auth/signin");
   }
 
-  console.log(session);
+  // console.log(session);
 
   // Fetch the Main API data (not the hottest options!)
   const baseApiData = await fetchApiData();

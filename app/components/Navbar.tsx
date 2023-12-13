@@ -6,7 +6,6 @@ import { getServerSession } from "next-auth";
 
 const Navbar = async () => {
   const session = await getServerSession();
-  console.log(session);
 
   return (
     <div className="flex justify-center fixed top-0 w-full z-[1000] blur-bg border-b-[1px] border-slate-700">
