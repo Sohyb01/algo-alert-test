@@ -74,7 +74,7 @@ export const MembershipSectionData = {
   ],
 };
 export const DiscordSectionData = {
-  sub: "Connect with other traders and ask questions in our Discord Communty",
+  sub: "Connect with other traders and ask questions in our Discord Communty. On joining, you can choose one option to stream data for, for free!",
   imageUrl: "/white-discord.svg",
 };
 export const FooterData = {
@@ -206,4 +206,44 @@ export const randomWidths = [
   { number: 52, string: "w-[52%]" },
   { number: 33, string: "w-[33%]" },
   { number: 27, string: "w-[27%]" },
+];
+
+// Plans data
+
+export const subscriptions = [
+  {
+    planType: "Free",
+    price: "$0",
+    benefits: ["Lorem Ipsum dolor sit amet", "Lorem Ipsum dolor sit amet"],
+    nonbenefits: [
+      "Lorem Ipsum dolor sit amet",
+      "Lorem Ipsum dolor sit amet",
+      "Lorem Ipsum dolor sit amet",
+    ],
+  },
+  {
+    planType: "Monthly",
+    price: "$20",
+    benefits: [
+      "Lorem Ipsum dolor sit amet",
+      "Lorem Ipsum dolor sit amet",
+      "Lorem Ipsum dolor sit amet",
+      "Lorem Ipsum dolor sit amet",
+    ],
+    nonbenefits: ["Lorem Ipsum dolor sit amet"],
+    priceId: "price_1ONATOCJ7W2t3weqWLqxr0hc",
+  },
+  {
+    planType: "Yearly",
+    price: "$200",
+    benefits: [
+      "Lorem Ipsum dolor sit amet",
+      "Lorem Ipsum dolor sit amet",
+      "Lorem Ipsum dolor sit amet",
+      "Lorem Ipsum dolor sit amet",
+      "Lorem Ipsum dolor sit amet",
+    ],
+    nonbenefits: [],
+    priceId: "price_1ONAVCCJ7W2t3weqYpKhQ0kd",
+  },
 ];

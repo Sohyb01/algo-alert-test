@@ -3,9 +3,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { NavbarLinks, logoImgPath } from "../lib/displaydata";
 import { getServerSession } from "next-auth";
+import { authOptions } from "../api/auth/[...nextauth]/options";
 
 const Navbar = async () => {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
 
   return (
     <div className="flex justify-center fixed top-0 w-full z-[1000] blur-bg border-b-[1px] border-slate-700">

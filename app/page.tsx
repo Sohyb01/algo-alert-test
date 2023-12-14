@@ -6,8 +6,9 @@ import TrackTradesSection from "./components/TrackTradesSection";
 import MembershipSection from "./components/MembershipSection";
 import DiscordSection from "./components/DiscordSection";
 import ParticleEffect from "./components/ParticlesBackground/ParticlesBackground";
+import { getServerSession } from "next-auth";
 
-export default function Home() {
+export default async function Home() {
   return (
     <main className="min-h-[100vh] flex flex-col items-center w-full overflow-hidden">
       <HeroSection />
