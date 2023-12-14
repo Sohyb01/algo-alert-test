@@ -1,7 +1,6 @@
 import React from "react";
 import { HeroSectionData } from "../lib/displaydata";
 import TopGainersHeroWidget from "./TopGainersHeroWidget";
-import ParticleEffect from "./ParticlesBackground/ParticlesBackground";
 import Link from "next/link";
 
 const HeroSection = () => {

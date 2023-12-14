@@ -1,7 +1,26 @@
 "use client";
+import getStripe from "@/lib/utils";
 import React from "react";
 
 const MembershipCard = (props: any) => {
+  //
+  const handleCreateCheckoutSession = async (productId: string) => {
+    const res = await fetch("/api/stripe/checkout-session", {
+      method: "POST",
+      body: JSON.stringify(productId),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const checkoutSession = await res.json().then((value) => {
+      return value.session;
+    });
+    const stripe = await getStripe();
+    const { error } = await stripe!.redirectToCheckout({
+      sessionId: checkoutSession.id,
+    });
+  };
+
   return (
     <div className="flex flex-col items-center px-8 py-12 gap-8 rounded-[64px] w-[320px] lg:w-full  lg:min-w-[0px] membership glow-shadow">
       {/* Title Row */}
@@ -59,7 +78,8 @@ const MembershipCard = (props: any) => {
       </div>
       <div className="w-full h-0.5 bg-slate-600"></div>
       <button
-        onClick={() => console.log(props.membership.priceId)}
+        // onClick={() => console.log("test")}
+        onClick={() => handleCreateCheckoutSession(props.membership.priceId)}
         className="btn-1 gradient-bg-1"
       >
         Purchase
