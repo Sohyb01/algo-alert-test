@@ -35,7 +35,8 @@ export async function POST(req: NextRequest) {
       },
     ],
     success_url:
-      process.env.NEXT_PUBLIC_WEBSITE_URL + `?session_id={CHECKOUT_SESSION_ID}`,
+      `${process.env.NEXT_PUBLIC_WEBSITE_URL}` +
+      `?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: process.env.NEXT_PUBLIC_WEBSITE_URL,
     subscription_data: {
       metadata: {
