@@ -4,7 +4,6 @@ import { NextAuthOptions } from "next-auth";
 import { Adapter } from "next-auth/adapters";
 import GoogleProvider from "next-auth/providers/google";
 import Stripe from "stripe";
-import { data } from "autoprefixer";
 
 const prisma = new PrismaClient();
 
