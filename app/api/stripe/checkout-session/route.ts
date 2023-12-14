@@ -5,7 +5,6 @@ import { getServerSession } from "next-auth";
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
-  console.log("test");
 
   const stripe = new Stripe(`${process.env.STRIPE_SECRET_KEY!}`, {
     apiVersion: "2023-10-16",
@@ -14,6 +13,7 @@ export async function POST(req: NextRequest) {
   const session = await getServerSession(authOptions);
 
   if (!session?.user) {
+    console.log("no user");
     return NextResponse.json(
       {
         error: {
@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
 
   const checkoutSession = await stripe.checkout.sessions.create({
     mode: "subscription",
-    customer: session.user.stripeCustomerId,
+    customer: `${session.user.stripeCustomerId}`,
     line_items: [
       {
         price: body,
@@ -40,7 +40,7 @@ export async function POST(req: NextRequest) {
     cancel_url: `${process.env.NEXT_PUBLIC_WEBSITE_URL}`,
     subscription_data: {
       metadata: {
-        payingUserId: session.user.id,
+        payingUserId: `${session.user.id}`,
       },
     },
   });
