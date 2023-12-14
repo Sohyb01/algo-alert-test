@@ -9,7 +9,9 @@ export function cn(...inputs: ClassValue[]) {
 let stripePromise: Promise<Stripe | null>;
 const getStripe = () => {
   if (!stripePromise) {
-    stripePromise = loadStripe(`${process.env.STRIPE_PUBLISHABLE_KEY!}`);
+    stripePromise = loadStripe(
+      "pk_test_51NmOWMCJ7W2t3weqPgDQAiQBIEuZp4rNAphapt05icaCLoQu0cb087MCUIBGwzkBsHwDmNMT5RA6o0OREAkGCxjX00CNSy6UIM"
+    );
   }
   return stripePromise;
 };

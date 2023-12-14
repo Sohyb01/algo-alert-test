@@ -211,16 +211,16 @@ export const randomWidths = [
 // Plans data
 
 export const subscriptions = [
-  {
-    planType: "Free",
-    price: "$0",
-    benefits: ["Lorem Ipsum dolor sit amet", "Lorem Ipsum dolor sit amet"],
-    nonbenefits: [
-      "Lorem Ipsum dolor sit amet",
-      "Lorem Ipsum dolor sit amet",
-      "Lorem Ipsum dolor sit amet",
-    ],
-  },
+  // {
+  //   planType: "Free",
+  //   price: "$0",
+  //   benefits: ["Lorem Ipsum dolor sit amet", "Lorem Ipsum dolor sit amet"],
+  //   nonbenefits: [
+  //     "Lorem Ipsum dolor sit amet",
+  //     "Lorem Ipsum dolor sit amet",
+  //     "Lorem Ipsum dolor sit amet",
+  //   ],
+  // },
   {
     planType: "Monthly",
     price: "$20",
