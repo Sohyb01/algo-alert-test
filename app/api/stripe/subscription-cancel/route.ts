@@ -21,8 +21,8 @@ export async function GET(req: NextRequest) {
       { status: 401 }
     );
   }
+
   const stripeSubscriptionId = session.user.subscriptionID;
-  console.log(`testing, subscriptionID is: ${session.user.subscriptionID}`);
 
   const subscription = await stripe.subscriptions.update(stripeSubscriptionId, {
     cancel_at_period_end: true,

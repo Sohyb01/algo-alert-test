@@ -5,9 +5,25 @@ import { NavbarLinks, logoImgPath } from "../lib/displaydata";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/options";
 import CancelSubscriptionButton from "./CancelSubscriptionButton";
+import Stripe from "stripe";
 
 const Navbar = async () => {
   const session = await getServerSession(authOptions);
+
+  // Add a check to see if the user has already canceled
+  const stripe = new Stripe(`${process.env.STRIPE_SECRET_KEY!}`, {
+    apiVersion: "2023-10-16",
+  });
+
+  const stripeSubscriptionId =
+    session?.user?.subscriptionID !== null || undefined
+      ? session?.user?.subscriptionID
+      : null;
+  const userHasCanceled = stripeSubscriptionId
+    ? await stripe.subscriptions
+        .retrieve(stripeSubscriptionId)
+        .then((user) => user.cancel_at_period_end)
+    : true;
 
   return (
     <div className="flex justify-center fixed top-0 w-full z-[1000] blur-bg border-b-[1px] border-slate-700">
@@ -56,7 +72,7 @@ const Navbar = async () => {
                   >
                     Sign Out
                   </Link>
-                  {session.user.isActive && <CancelSubscriptionButton />}
+                  {!userHasCanceled && <CancelSubscriptionButton />}
                 </div>
               </div>
             )}
