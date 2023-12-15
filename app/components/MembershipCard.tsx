@@ -13,12 +13,18 @@ const MembershipCard = (props: any) => {
       },
     });
     const checkoutSession = await res.json().then((value) => {
+      if (value.error) {
+        // Perhaps add a react hot toast here!
+        alert("Please Sign In!");
+      }
       return value.session;
     });
-    const stripe = await getStripe();
-    const { error } = await stripe!.redirectToCheckout({
-      sessionId: checkoutSession.id,
-    });
+    if (checkoutSession) {
+      const stripe = await getStripe();
+      const { error } = await stripe!.redirectToCheckout({
+        sessionId: checkoutSession.id,
+      });
+    }
   };
 
   return (
