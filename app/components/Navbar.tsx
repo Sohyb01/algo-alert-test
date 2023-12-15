@@ -4,6 +4,7 @@ import Image from "next/image";
 import { NavbarLinks, logoImgPath } from "../lib/displaydata";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/options";
+import CancelSubscriptionButton from "./CancelSubscriptionButton";
 
 const Navbar = async () => {
   const session = await getServerSession(authOptions);
@@ -55,6 +56,7 @@ const Navbar = async () => {
                   >
                     Sign Out
                   </Link>
+                  {session.user.isActive && <CancelSubscriptionButton />}
                 </div>
               </div>
             )}
