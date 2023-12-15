@@ -39,10 +39,13 @@ const webhookHandler = async (req: NextRequest) => {
 
     // getting to the data we want from the event
     const subscription = event.data.object as Stripe.Subscription;
+    console.log(`Subscription: ${subscription}`);
     const subscriptionId = subscription.id;
+    console.log(`Subscription: ${subscriptionId}`);
 
     switch (event.type) {
       case "customer.subscription.created":
+        console.log(`customer.subscription.created detected`);
         await prisma.user.update({
           where: {
             stripeCustomerId: subscription.customer as string,
@@ -54,6 +57,7 @@ const webhookHandler = async (req: NextRequest) => {
         });
         break;
       case "customer.subscription.deleted":
+        console.log(`customer.subscription.deleted detected`);
         await prisma.user.update({
           where: {
             stripeCustomerId: subscription.customer as string,
