@@ -1,29 +1,35 @@
 "use client";
 import getStripe from "@/lib/utils";
 import React from "react";
+import { checkIfSubscribed } from "../actions/checkIfSubscribed";
 
 const MembershipCard = (props: any) => {
   //
   const handleCreateCheckoutSession = async (productId: string) => {
-    const res = await fetch("/api/stripe/checkout-session", {
-      method: "POST",
-      body: JSON.stringify(productId),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const checkoutSession = await res.json().then((value) => {
-      if (value.error) {
-        // Perhaps add a react hot toast here!
-        alert("Please Sign In!");
-      }
-      return value.session;
-    });
-    if (checkoutSession) {
-      const stripe = await getStripe();
-      const { error } = await stripe!.redirectToCheckout({
-        sessionId: checkoutSession.id,
+    const customerHasSubscription = await checkIfSubscribed();
+    if (customerHasSubscription) {
+      alert("You already have an active plan!");
+    } else {
+      const res = await fetch("/api/stripe/checkout-session", {
+        method: "POST",
+        body: JSON.stringify(productId),
+        headers: {
+          "Content-Type": "application/json",
+        },
       });
+      const checkoutSession = await res.json().then((value) => {
+        if (value.error) {
+          // Perhaps add a react hot toast here!
+          alert("Please Sign In!");
+        }
+        return value.session;
+      });
+      if (checkoutSession) {
+        const stripe = await getStripe();
+        const { error } = await stripe!.redirectToCheckout({
+          sessionId: checkoutSession.id,
+        });
+      }
     }
   };
 

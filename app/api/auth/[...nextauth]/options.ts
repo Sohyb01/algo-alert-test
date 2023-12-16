@@ -11,11 +11,11 @@ export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma) as Adapter,
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      clientId: `${process.env.GOOGLE_CLIENT_ID!}`,
+      clientSecret: `${process.env.GOOGLE_CLIENT_SECRET!}`,
     }),
   ],
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: `${process.env.NEXTAUTH_SECRET}`,
   callbacks: {
     async session({ session, user }) {
       session!.user!.id = user.id;
@@ -27,7 +27,7 @@ export const authOptions: NextAuthOptions = {
   },
   events: {
     createUser: async ({ user }) => {
-      const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+      const stripe = new Stripe(`${process.env.STRIPE_SECRET_KEY!}`, {
         apiVersion: "2023-10-16",
       });
 

@@ -1,4 +1,7 @@
+import Stripe from "stripe";
+import { authOptions } from "../api/auth/[...nextauth]/options";
 import { DatatableRowProps, TopPurchasesRowProps } from "./types";
+import { getServerSession } from "next-auth";
 
 export function getOptionsMarketStatus() {
   // Set the options market hours in Eastern Time (ET)
@@ -178,3 +181,80 @@ export async function convertPropertiesToNumbers(array: any) {
   });
   return array;
 }
+
+export const getStripeSubscriptionName = async () => {
+  const session = await getServerSession(authOptions);
+  if (!session?.user?.subscriptionID) {
+    return null;
+  } else {
+    const stripe = new Stripe(`${process.env.STRIPE_SECRET_KEY!}`, {
+      apiVersion: "2023-10-16",
+    });
+    // Retrieve the subscription
+    const subscription = await stripe.subscriptions.retrieve(
+      session?.user?.subscriptionID
+    );
+
+    // Assuming the subscription has at least one item
+    // Get the price ID from the first item
+    const priceId = subscription.items.data[0].price.id;
+
+    // Retrieve the price object
+    const price = await stripe.prices.retrieve(priceId);
+
+    // Retrieve the product ID from the price object
+    const productId = price.product;
+
+    // Retrieve the product object
+    const product = await stripe.products.retrieve(productId as string);
+
+    // Get the product name
+    return product.name;
+  }
+};
+
+export const getStripePlanEndDate = async () => {
+  const session = await getServerSession(authOptions);
+  if (!session?.user?.subscriptionID) {
+    return null;
+  } else {
+    const stripe = new Stripe(`${process.env.STRIPE_SECRET_KEY!}`, {
+      apiVersion: "2023-10-16",
+    });
+    // Retrieve the subscription
+    const subscription = await stripe.subscriptions.retrieve(
+      session?.user?.subscriptionID
+    );
+
+    // Get the end of the current period
+    const periodEnd = subscription.current_period_end;
+
+    // Convert the timestamp to a readable date format
+    const endDate = new Date(periodEnd * 1000).toLocaleString();
+
+    return endDate;
+  }
+};
+
+export const checkIfUserHasAlreadyCanceled = async () => {
+  const session = await getServerSession(authOptions);
+  if (!session?.user?.subscriptionID) {
+    return null;
+  } else {
+    const stripe = new Stripe(`${process.env.STRIPE_SECRET_KEY!}`, {
+      apiVersion: "2023-10-16",
+    });
+    const hasCanceled = await stripe.subscriptions
+      .retrieve(session?.user?.subscriptionID)
+      .then((user) => user.cancel_at_period_end);
+    return hasCanceled;
+  }
+};
+// Check if user is subscribed, if so return subscription
+//
+//
+//
+//
+//
+//
+//

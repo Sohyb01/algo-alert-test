@@ -6,6 +6,12 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/options";
 import CancelSubscriptionButton from "./CancelSubscriptionButton";
 import Stripe from "stripe";
+import UserButton from "./UserButton";
+import {
+  checkIfUserHasAlreadyCanceled,
+  getStripePlanEndDate,
+  getStripeSubscriptionName,
+} from "../lib/functions";
 
 const Navbar = async () => {
   const session = await getServerSession(authOptions);
@@ -19,11 +25,12 @@ const Navbar = async () => {
     session?.user?.subscriptionID !== null || undefined
       ? session?.user?.subscriptionID
       : null;
-  const userHasCanceled = stripeSubscriptionId
-    ? await stripe.subscriptions
-        .retrieve(stripeSubscriptionId)
-        .then((user) => user.cancel_at_period_end)
-    : true;
+
+  const subscriptionName = await getStripeSubscriptionName();
+  const subscriptionEndDate = await getStripePlanEndDate();
+
+  const userHasCanceled = await checkIfUserHasAlreadyCanceled();
+  console.log(`User has canceled: ${userHasCanceled}`);
 
   return (
     <div className="flex justify-center fixed top-0 w-full z-[1000] blur-bg border-b-[1px] border-slate-700">
@@ -60,19 +67,42 @@ const Navbar = async () => {
                 {/* Dropdown */}
                 <div
                   tabIndex={0}
-                  className="dropdown-content z-[1] menu flex flex-col text-start gap-4 p-4 bg-slate-900 glow-shadow rounded-[16px] text-sm"
+                  className="dropdown-content z-[1] menu flex flex-col text-start gap-8 p-8 bg-slate-950 glow-shadow rounded-[32px] text-sm w-[299px]"
                 >
-                  <p>
-                    <span className="text-neutral-300">Signed in as</span>{" "}
-                    {session.user.email}
-                  </p>
-                  <Link
-                    href="/api/auth/signout"
-                    className="underline text-red-300"
-                  >
-                    Sign Out
-                  </Link>
-                  {!userHasCanceled && <CancelSubscriptionButton />}
+                  {/* Signed in as and Sign Out */}
+                  <div className="flex flex-col text-start gap-2">
+                    <p>
+                      <span className="text-neutral-300">Signed in as</span>{" "}
+                      {session.user.email}
+                    </p>
+                    <Link
+                      href="/api/auth/signout"
+                      className="underline text-red-300"
+                    >
+                      Sign Out
+                    </Link>
+                  </div>
+                  {!userHasCanceled && subscriptionEndDate && (
+                    <div className="flex flex-col text-start items-start gap-4">
+                      <p className="text-neutral-300">
+                        You are currently subscribed to the {subscriptionName}{" "}
+                        plan, which will end & be renewed on{" "}
+                        <span className="text-white">
+                          {subscriptionEndDate!.split(",")[0]}
+                        </span>
+                      </p>
+                      <CancelSubscriptionButton />
+                    </div>
+                  )}
+                  {userHasCanceled && subscriptionEndDate && (
+                    <p className="text-neutral-300">
+                      You have canceled your {subscriptionName} plan. Your
+                      access to the previous subscription will end on {}
+                      <span className="text-white">
+                        {subscriptionEndDate!.split(",")[0]}
+                      </span>
+                    </p>
+                  )}
                 </div>
               </div>
             )}
