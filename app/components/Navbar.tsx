@@ -30,7 +30,7 @@ const Navbar = async () => {
   const subscriptionEndDate = await getStripePlanEndDate();
 
   const userHasCanceled = await checkIfUserHasAlreadyCanceled();
-  console.log(`User has canceled: ${userHasCanceled}`);
+  // console.log(`User has canceled: ${userHasCanceled}`);
 
   return (
     <div className="flex justify-center fixed top-0 w-full z-[1000] blur-bg border-b-[1px] border-slate-700">

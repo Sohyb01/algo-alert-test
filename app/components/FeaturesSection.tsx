@@ -14,7 +14,7 @@ const FeaturesSection = () => {
         <p className="text-neutral-200 text-lg">{FeaturesSectionData.sub}</p>
       </div>
       {/* Image */}
-      <div className="relative w-full aspect-[328/125]">
+      <div className="relative w-full aspect-[763/711]">
         <Image src={FeaturesSectionData.imageUrl} alt="Image of Backend" fill />
       </div>
     </section>

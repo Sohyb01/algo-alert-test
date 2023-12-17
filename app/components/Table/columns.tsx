@@ -30,23 +30,7 @@ export const columns: ColumnDef<DatatableRowProps>[] = [
       );
     },
   },
-  {
-    accessorKey: "a: Symbol",
-    header: ({ column }) => {
-      return (
-        <button
-          className="tableheader"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Ticker
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </button>
-      );
-    },
-    cell: ({ row }) => {
-      return <span>{`${row.getValue("a: Symbol")}`}</span>;
-    },
-  },
+  { accessorKey: "a: Symbol", header: "Ticker" },
   {
     accessorKey: "e: Exp Date",
     header: ({ column }) => {
@@ -163,4 +147,60 @@ export const columns: ColumnDef<DatatableRowProps>[] = [
     },
   },
   { accessorKey: "j: DTE", header: "DTE" },
+  {
+    accessorKey: "l: Volume",
+    header: ({ column }) => {
+      return (
+        <button
+          className="tableheader"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Volume
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </button>
+      );
+    },
+  },
+  {
+    accessorKey: "m: Open Interest",
+    header: ({ column }) => {
+      return (
+        <button
+          className="tableheader"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Open Interest
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </button>
+      );
+    },
+  },
+  {
+    accessorKey: "k: Spot Price",
+    header: ({ column }) => {
+      return (
+        <button
+          className="tableheader"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Spot Price
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </button>
+      );
+    },
+  },
+  {
+    accessorKey: "n: Trade",
+    header: ({ column }) => {
+      return (
+        <button
+          className="tableheader"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Trade
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </button>
+      );
+    },
+  },
 ];

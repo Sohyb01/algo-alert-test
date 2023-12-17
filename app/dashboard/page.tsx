@@ -7,7 +7,6 @@ import DashboardContractsWidget from "../components/DashboardContractsWidget";
 import {
   convertPropertiesToNumbers,
   fetchApiData,
-  fetchFreeApiData,
   fetchHottestOptionsApiData,
   filterUniqueSymbolsWhileKeepingHighestTradeValueOfEachSymbol,
   getOptionsMarketStatus,
@@ -96,9 +95,6 @@ const DashboardPage = async () => {
   // Fetch the Main API data (not the hottest options!)
   const baseApiData = await fetchApiData();
 
-  const freeApiData = await fetchFreeApiData();
-  console.log("free:", freeApiData);
-
   const secondApiData = await fetchHottestOptionsApiData();
 
   const topPremium = await getTopGainersWidgetData(baseApiData);
@@ -128,17 +124,10 @@ const DashboardPage = async () => {
                   {getOptionsMarketStatus()}
                 </span>
               </h2>
-              {/* Buttons (Refresh and Filters) */}
-              <div className="flex items-center gap-8 text-base">
-                <button className="underline flex items-center gap-1.5">
-                  Refresh
-                  <Image src="/Refresh.svg" width={16} height={16} alt="" />
-                </button>
-                <button className="px-6 py-2 rounded-full bg-teal-500 flex items-center gap-1">
-                  Filter
-                  <Image src="/Filter.svg" width={24} height={24} alt="" />
-                </button>
-              </div>
+              <button className="underline flex items-center gap-1.5">
+                Refresh
+                <Image src="/Refresh.svg" width={16} height={16} alt="" />
+              </button>
             </div>
             <DashboardContractsWidget data={contractsData} />
             <DataTable data={mainTableData} columns={columns} />

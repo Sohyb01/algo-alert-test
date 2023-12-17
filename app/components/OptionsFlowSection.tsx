@@ -82,7 +82,7 @@ const OptionsFlowSection = () => {
         </div>
       </div>
       {/* Image */}
-      <div className="relative w-full aspect-video">
+      <div className="relative w-full aspect-[1180/895]">
         <Image
           src={OptionsFlowSectionData.imageUrl}
           alt="Image of Backend"

@@ -247,3 +247,5 @@ export const subscriptions = [
     priceId: "price_1ONAVCCJ7W2t3weqYpKhQ0kd",
   },
 ];
+
+export const freeSymbol = "SPX";

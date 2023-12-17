@@ -11,7 +11,7 @@ const DashboardTopGainersWidget = (data: any) => {
       {/* Title row */}
       <div className="flex items-center text-start w-full text-neutral-200">
         <div className="w-full text-base">Name</div>
-        <div className="w-full text-base">Call</div>
+        <div className="w-full text-base">Call / Put</div>
         <div className="w-full text-base">Premium</div>
       </div>
       {/* Table */}
