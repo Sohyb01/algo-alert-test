@@ -3,12 +3,16 @@
 import {
   ColumnDef,
   SortingState,
+  ColumnFiltersState,
+  getFilteredRowModel,
   flexRender,
   getCoreRowModel,
   getSortedRowModel,
   getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+
+import { Input } from "@/components/ui/input";
 
 import {
   Table,
@@ -30,6 +34,9 @@ export function DataTable<TData, TValue>({
   data,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+    []
+  );
 
   const table = useReactTable({
     data,
@@ -38,13 +45,45 @@ export function DataTable<TData, TValue>({
     getPaginationRowModel: getPaginationRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
+    onColumnFiltersChange: setColumnFilters,
+    getFilteredRowModel: getFilteredRowModel(),
     state: {
       sorting,
+      columnFilters,
     },
   });
 
   return (
-    <div className="w-full lg:max-w-[596px] xl:max-w-[860px] max-h-[80vh] scroll-styling rounded-[16px] text-white">
+    <div className="w-full lg:max-w-[596px] xl:max-w-[860px] scroll-styling rounded-[16px] text-white">
+      {/* Filters Container */}
+      <div className="flex gap-4 items-center">
+        {/* Ticker Filter */}
+        <div className="flex items-center py-4">
+          <Input
+            placeholder="Filter ticker..."
+            value={
+              (table.getColumn("a: Symbol")?.getFilterValue() as string) ?? ""
+            }
+            onChange={(event) =>
+              table.getColumn("a: Symbol")?.setFilterValue(event.target.value)
+            }
+            className="max-w-sm"
+          />
+        </div>
+        {/* Execution Filter */}
+        <div className="flex items-center py-4">
+          <Input
+            placeholder="Filter execution..."
+            value={
+              (table.getColumn("f: Side")?.getFilterValue() as string) ?? ""
+            }
+            onChange={(event) =>
+              table.getColumn("f: Side")?.setFilterValue(event.target.value)
+            }
+            className="max-w-sm"
+          />
+        </div>
+      </div>
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
