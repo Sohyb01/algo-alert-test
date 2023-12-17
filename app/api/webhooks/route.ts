@@ -7,7 +7,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2023-10-16",
 });
 
-const webhookSecret: string = process.env.STRIPE_WEBHOOK_SECRET!;
+// const webhookSecret: string = process.env.STRIPE_WEBHOOK_SECRET!;
 
 const webhookHandler = async (req: NextRequest) => {
   try {
@@ -17,7 +17,11 @@ const webhookHandler = async (req: NextRequest) => {
     let event: Stripe.Event;
 
     try {
-      event = stripe.webhooks.constructEvent(buf, sig, webhookSecret);
+      event = stripe.webhooks.constructEvent(
+        buf,
+        sig,
+        "whsec_1893d27ac107181551524fe8e5e2d67094fc02003977dcd7544ec8eb1b1b9ce2" // Secret goes here
+      );
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : "Unknown error";
       // On error, log and return the error message.
