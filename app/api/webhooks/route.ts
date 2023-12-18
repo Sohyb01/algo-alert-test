@@ -1,73 +1,97 @@
 import Stripe from "stripe";
-import { NextApiRequest, NextApiResponse } from "next";
+import prisma from "@/app/lib/prisma";
+import { NextRequest, NextResponse } from "next/server";
 
-const handler = async (
-  req: NextApiRequest,
-  res: NextApiResponse
-): Promise<void> => {
-  const stripe = new Stripe(`${process.env.STRIPE_SECRET_KEY!}`);
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+  // https://github.com/stripe/stripe-node#configuration
+  apiVersion: "2023-10-16",
+});
 
-  const webhookSecret: string = `${process.env.STRIPE_WEBHOOK_SECRET!}`;
+const webhookSecret: string = process.env.STRIPE_WEBHOOK_SECRET!;
 
-  if (req.method === "POST") {
-    const sig = req.headers["stripe-signature"];
-    console.log(`sig: ${sig}`);
+const webhookHandler = async (req: NextRequest) => {
+  console.log(`request: ${req}`);
+  console.log(`sig: ${req.headers.get("stripe-signature")}`);
+  try {
+    const buf = await req.text();
+    const sig = req.headers.get("stripe-signature")!;
 
     let event: Stripe.Event;
 
     try {
-      const body = await buffer(req);
-      event = stripe.webhooks.constructEvent(body, `${sig}`, webhookSecret);
+      event = stripe.webhooks.constructEvent(
+        buf,
+        sig,
+        webhookSecret! // Secret goes here
+      );
     } catch (err) {
-      // On error, log and return the error message
-      console.log(`❌ Error message: ${err}`);
-      res.status(400).send(`Webhook Error: ${err}`);
-      return;
+      const errorMessage = err instanceof Error ? err.message : "Unknown error";
+      // On error, log and return the error message.
+      if (err! instanceof Error) console.log(err);
+      console.log(`buf: ${buf}, sig: ${sig}, secret: ${webhookSecret}`);
+      console.log(`❌ Error message: ${errorMessage}`);
+
+      return NextResponse.json(
+        {
+          error: {
+            message: `Webhook Error: ${errorMessage}`,
+          },
+        },
+        { status: 400 }
+      );
     }
 
-    // Successfully constructed event
+    // Successfully constructed event.
     console.log("✅ Success:", event.id);
 
-    // Cast event data to Stripe object
-    if (event.type === "payment_intent.succeeded") {
-      const stripeObject: Stripe.PaymentIntent = event.data
-        .object as Stripe.PaymentIntent;
-      console.log(`💰 PaymentIntent status: ${stripeObject.status}`);
-    } else if (event.type === "charge.succeeded") {
-      const charge = event.data.object as Stripe.Charge;
-      console.log(`💵 Charge id: ${charge.id}`);
-    } else {
-      console.warn(`🤷‍♀️ Unhandled event type: ${event.type}`);
+    // getting to the data we want from the event
+    const subscription = event.data.object as Stripe.Subscription;
+    console.log(`Subscription: ${subscription}`);
+    const subscriptionId = subscription.id;
+    console.log(`Subscription: ${subscriptionId}`);
+
+    switch (event.type) {
+      case "customer.subscription.created":
+        console.log(`customer.subscription.created detected`);
+        await prisma.user.update({
+          where: {
+            stripeCustomerId: subscription.customer as string,
+          },
+          data: {
+            isActive: true,
+            subscriptionID: subscriptionId,
+          },
+        });
+        break;
+      case "customer.subscription.deleted":
+        console.log(`customer.subscription.deleted detected`);
+        await prisma.user.update({
+          where: {
+            stripeCustomerId: subscription.customer as string,
+          },
+          data: {
+            isActive: false,
+          },
+        });
+        break;
+
+      default:
+        console.warn(`🤷‍♀️ Unhandled event type: ${event.type}`);
+        break;
     }
 
-    // Return a response to acknowledge receipt of the event
-    res.json({ received: true });
-  } else {
-    res.setHeader("Allow", "POST");
-    res.status(405).end("Method Not Allowed");
+    // Return a response to acknowledge receipt of the event.
+    return NextResponse.json({ received: true });
+  } catch {
+    return NextResponse.json(
+      {
+        error: {
+          message: `Method Not Allowed`,
+        },
+      },
+      { status: 405 }
+    ).headers.set("Allow", "POST");
   }
 };
 
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
-
-const buffer = (req: NextApiRequest) => {
-  return new Promise<Buffer>((resolve, reject) => {
-    const chunks: Buffer[] = [];
-
-    req.on("data", (chunk: Buffer) => {
-      chunks.push(chunk);
-    });
-
-    req.on("end", () => {
-      resolve(Buffer.concat(chunks));
-    });
-
-    req.on("error", reject);
-  });
-};
-
-export default handler;
+export { webhookHandler as POST };
