@@ -2,16 +2,12 @@ import Stripe from "stripe";
 import prisma from "@/app/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
-const stripe = new Stripe(
-  "sk_test_51NmOWMCJ7W2t3wequXqTXJBCdT9XvSbYmNF35N6ZXbvOJubvaypVPgGgvJEypDTJs5hIHx68EwvXSqvGPmo55fOH00gLD5vwJH",
-  {
-    // https://github.com/stripe/stripe-node#configuration
-    apiVersion: "2023-10-16",
-  }
-);
+const stripe = new Stripe(`${process.env.STRIPE_SECRET_KEY!}`, {
+  // https://github.com/stripe/stripe-node#configuration
+  apiVersion: "2023-10-16",
+});
 
-const webhookSecret: string =
-  "whsec_1893d27ac107181551524fe8e5e2d67094fc02003977dcd7544ec8eb1b1b9ce2";
+const webhookSecret: string = `${process.env.STRIPE_WEBHOOK_SECRET!}`;
 
 const webhookHandler = async (req: NextRequest) => {
   console.log(`request: ${req}`);
