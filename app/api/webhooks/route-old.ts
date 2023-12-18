@@ -1,31 +1,45 @@
 import Stripe from "stripe";
 import prisma from "@/app/lib/prisma";
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextRequest, NextResponse } from "next/server";
 
-const handler = async (
-  req: NextApiRequest,
-  res: NextApiResponse
-): Promise<void> => {
-  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+  // https://github.com/stripe/stripe-node#configuration
+  apiVersion: "2023-10-16",
+});
 
-  const webhookSecret: string = process.env.STRIPE_WEBHOOK_SECRET!;
+const webhookSecret: string = process.env.STRIPE_WEBHOOK_SECRET!;
 
-  if (req.method === "POST") {
-    const sig = req.headers["stripe-signature"];
+const webhookHandler = async (req: NextRequest) => {
+  try {
+    const buf = await req.text();
+    const sig = req.headers.get("stripe-signature")!;
 
     let event: Stripe.Event;
 
     try {
-      const body = await buffer(req);
-      event = stripe.webhooks.constructEvent(body, sig!, webhookSecret);
+      event = stripe.webhooks.constructEvent(
+        buf,
+        sig,
+        webhookSecret! // Secret goes here
+      );
     } catch (err) {
-      // On error, log and return the error message
-      console.log(`❌ Error message: ${err}`);
-      res.status(400).send(`Webhook Error: ${err}`);
-      return;
+      const errorMessage = err instanceof Error ? err.message : "Unknown error";
+      // On error, log and return the error message.
+      if (err! instanceof Error) console.log(err);
+      console.log(`buf: ${buf}, sig: ${sig}, secret: ${webhookSecret}`);
+      console.log(`❌ Error message: ${errorMessage}`);
+
+      return NextResponse.json(
+        {
+          error: {
+            message: `Webhook Error: ${errorMessage}`,
+          },
+        },
+        { status: 400 }
+      );
     }
 
-    // Successfully constructed event
+    // Successfully constructed event.
     console.log("✅ Success:", event.id);
 
     // getting to the data we want from the event
@@ -65,27 +79,17 @@ const handler = async (
     }
 
     // Return a response to acknowledge receipt of the event.
-    res.json({ received: true });
-  } else {
-    res.setHeader("Allow", "POST");
-    res.status(405).end("Method Not Allowed");
+    return NextResponse.json({ received: true });
+  } catch {
+    return NextResponse.json(
+      {
+        error: {
+          message: `Method Not Allowed`,
+        },
+      },
+      { status: 405 }
+    ).headers.set("Allow", "POST");
   }
 };
 
-const buffer = (req: NextApiRequest) => {
-  return new Promise<Buffer>((resolve, reject) => {
-    const chunks: Buffer[] = [];
-
-    req.on("data", (chunk: Buffer) => {
-      chunks.push(chunk);
-    });
-
-    req.on("end", () => {
-      resolve(Buffer.concat(chunks));
-    });
-
-    req.on("error", reject);
-  });
-};
-
-export { handler as POST };
+export { webhookHandler as POST };
