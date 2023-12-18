@@ -1,6 +1,7 @@
 import Stripe from "stripe";
 import prisma from "@/app/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
+import { buffer } from "stream/consumers";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   // https://github.com/stripe/stripe-node#configuration
@@ -20,12 +21,13 @@ const webhookHandler = async (req: NextRequest) => {
       event = stripe.webhooks.constructEvent(
         buf,
         sig,
-        process.env.STRIPE_WEBHOOK_SECRET! // Secret goes here
+        process.env.webhookSecret! // Secret goes here
       );
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : "Unknown error";
       // On error, log and return the error message.
       if (err! instanceof Error) console.log(err);
+      console.log(`buf: ${buf}, sig: ${sig}, secret: ${webhookSecret}`);
       console.log(`❌ Error message: ${errorMessage}`);
 
       return NextResponse.json(
