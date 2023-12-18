@@ -6,9 +6,9 @@ const handler = async (
   req: NextApiRequest,
   res: NextApiResponse
 ): Promise<void> => {
-  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+  const stripe = new Stripe(`${process.env.STRIPE_SECRET_KEY!}`);
 
-  const webhookSecret: string = process.env.STRIPE_WEBHOOK_SECRET!;
+  const webhookSecret: string = `${process.env.STRIPE_SECRET_KEY!}`;
 
   if (req.method === "POST") {
     const sig = req.headers["stripe-signature"];
