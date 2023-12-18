@@ -10,8 +10,8 @@ const stripe = new Stripe(`${process.env.STRIPE_SECRET_KEY!}`, {
 const webhookSecret: string = `${process.env.STRIPE_WEBHOOK_SECRET!}`;
 
 const webhookHandler = async (req: NextRequest) => {
-  console.log(`request: ${req}`);
-  console.log(`sig: ${req.headers.get("stripe-signature")}`);
+  // console.log(`request: ${req}`);
+  // console.log(`sig: ${req.headers.get("stripe-signature")}`);
   try {
     const buf = await req.text();
     const sig = req.headers.get("stripe-signature")!;
@@ -28,8 +28,8 @@ const webhookHandler = async (req: NextRequest) => {
       const errorMessage = err instanceof Error ? err.message : "Unknown error";
       // On error, log and return the error message.
       if (err! instanceof Error) console.log(err);
-      console.log(`buf: ${buf}, sig: ${sig}, secret: ${webhookSecret}`);
-      console.log(`❌ Error message: ${errorMessage}`);
+      // console.log(`buf: ${buf}, sig: ${sig}, secret: ${webhookSecret}`);
+      // console.log(`❌ Error message: ${errorMessage}`);
 
       return NextResponse.json(
         {
@@ -42,17 +42,17 @@ const webhookHandler = async (req: NextRequest) => {
     }
 
     // Successfully constructed event.
-    console.log("✅ Success:", event.id);
+    // console.log("✅ Success:", event.id);
 
     // getting to the data we want from the event
     const subscription = event.data.object as Stripe.Subscription;
-    console.log(`Subscription: ${subscription}`);
+    // console.log(`Subscription: ${subscription}`);
     const subscriptionId = subscription.id;
-    console.log(`Subscription: ${subscriptionId}`);
+    // console.log(`Subscription: ${subscriptionId}`);
 
     switch (event.type) {
       case "customer.subscription.created":
-        console.log(`customer.subscription.created detected`);
+        // console.log(`customer.subscription.created detected`);
         await prisma.user.update({
           where: {
             stripeCustomerId: subscription.customer as string,
@@ -64,7 +64,7 @@ const webhookHandler = async (req: NextRequest) => {
         });
         break;
       case "customer.subscription.deleted":
-        console.log(`customer.subscription.deleted detected`);
+        // console.log(`customer.subscription.deleted detected`);
         await prisma.user.update({
           where: {
             stripeCustomerId: subscription.customer as string,

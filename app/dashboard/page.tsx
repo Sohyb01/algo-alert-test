@@ -16,7 +16,6 @@ import Image from "next/image";
 import Loading from "../components/Loading";
 import { DataTable } from "../components/Table/data-table";
 import { columns } from "../components/Table/columns";
-import prisma from "../lib/prisma";
 import { authOptions } from "../api/auth/[...nextauth]/options";
 
 const getTopGainersWidgetData = async (data: any) => {
@@ -85,12 +84,12 @@ const analyzeTrades = async (trades: any) => {
 // Main component
 const DashboardPage = async () => {
   // OAuth Authentication:
-  // const session = await getServerSession(authOptions);
-  // if (!session || !session.user) {
-  //   redirect("/api/auth/signin");
-  // } else if (!session.user.isActive) {
-  //   redirect("/free-option");
-  // }
+  const session = await getServerSession(authOptions);
+  if (!session || !session.user) {
+    redirect("/api/auth/signin");
+  } else if (!session.user.isActive) {
+    redirect("/free-option");
+  }
 
   // Fetch the Main API data (not the hottest options!)
   const baseApiData = await fetchApiData();
