@@ -1,5 +1,4 @@
 import Stripe from "stripe";
-import prisma from "@/app/lib/prisma";
 import { NextApiRequest, NextApiResponse } from "next";
 
 const handler = async (
@@ -8,16 +7,17 @@ const handler = async (
 ): Promise<void> => {
   const stripe = new Stripe(`${process.env.STRIPE_SECRET_KEY!}`);
 
-  const webhookSecret: string = `${process.env.STRIPE_SECRET_KEY!}`;
+  const webhookSecret: string = `${process.env.STRIPE_WEBHOOK_SECRET!}`;
 
   if (req.method === "POST") {
     const sig = req.headers["stripe-signature"];
+    console.log(`sig: ${sig}`);
 
     let event: Stripe.Event;
 
     try {
       const body = await buffer(req);
-      event = stripe.webhooks.constructEvent(body, `${sig!}`, webhookSecret);
+      event = stripe.webhooks.constructEvent(body, `${sig}`, webhookSecret);
     } catch (err) {
       // On error, log and return the error message
       console.log(`❌ Error message: ${err}`);
@@ -28,48 +28,30 @@ const handler = async (
     // Successfully constructed event
     console.log("✅ Success:", event.id);
 
-    // getting to the data we want from the event
-    const subscription = event.data.object as Stripe.Subscription;
-    console.log(`Subscription: ${subscription}`);
-    const subscriptionId = subscription.id;
-    console.log(`Subscription: ${subscriptionId}`);
-
-    switch (event.type) {
-      case "customer.subscription.created":
-        console.log(`customer.subscription.created detected`);
-        await prisma.user.update({
-          where: {
-            stripeCustomerId: subscription.customer as string,
-          },
-          data: {
-            isActive: true,
-            subscriptionID: subscriptionId,
-          },
-        });
-        break;
-      case "customer.subscription.deleted":
-        console.log(`customer.subscription.deleted detected`);
-        await prisma.user.update({
-          where: {
-            stripeCustomerId: subscription.customer as string,
-          },
-          data: {
-            isActive: false,
-          },
-        });
-        break;
-
-      default:
-        console.warn(`🤷‍♀️ Unhandled event type: ${event.type}`);
-        break;
+    // Cast event data to Stripe object
+    if (event.type === "payment_intent.succeeded") {
+      const stripeObject: Stripe.PaymentIntent = event.data
+        .object as Stripe.PaymentIntent;
+      console.log(`💰 PaymentIntent status: ${stripeObject.status}`);
+    } else if (event.type === "charge.succeeded") {
+      const charge = event.data.object as Stripe.Charge;
+      console.log(`💵 Charge id: ${charge.id}`);
+    } else {
+      console.warn(`🤷‍♀️ Unhandled event type: ${event.type}`);
     }
 
-    // Return a response to acknowledge receipt of the event.
+    // Return a response to acknowledge receipt of the event
     res.json({ received: true });
   } else {
     res.setHeader("Allow", "POST");
     res.status(405).end("Method Not Allowed");
   }
+};
+
+export const config = {
+  api: {
+    bodyParser: false,
+  },
 };
 
 const buffer = (req: NextApiRequest) => {
@@ -88,4 +70,4 @@ const buffer = (req: NextApiRequest) => {
   });
 };
 
-export { handler as POST };
+export default handler;
