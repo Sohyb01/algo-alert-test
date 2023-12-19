@@ -38,7 +38,7 @@ export function DataTable<TData, TValue>({
     []
   );
 
-  const [pageSize, setPageSize] = React.useState(1000);
+  const [pageSize, setPageSize] = React.useState(12);
 
   const table = useReactTable({
     data,
