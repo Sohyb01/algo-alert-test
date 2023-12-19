@@ -12,6 +12,9 @@
   backdrop-filter: blur(8px);
   background-color: rgba(0, 0, 0, 0.5);
 }
+.widtheq{
+  width: calc(100% - 420px);
+}
 
 .bodybg{
   background-image: url(../public/AllBGs.png);

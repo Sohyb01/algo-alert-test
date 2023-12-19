@@ -54,7 +54,7 @@ export function DataTable<TData, TValue>({
   });
 
   return (
-    <div className="w-full lg:max-w-[596px] xl:max-w-[860px] scroll-styling rounded-[16px] text-white">
+    <div className="w-full max-w-[100%] scroll-styling rounded-[16px] text-white">
       {/* Filters Container */}
       <div className="flex gap-4 items-center">
         {/* Ticker Filter */}

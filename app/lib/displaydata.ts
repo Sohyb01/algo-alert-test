@@ -248,4 +248,4 @@ export const subscriptions = [
   },
 ];
 
-export const freeSymbol = "SPX";
+export const freeSymbol = "SPY";

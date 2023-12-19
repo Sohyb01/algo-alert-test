@@ -105,16 +105,16 @@ const DashboardPage = async () => {
   const mainTableData = await convertPropertiesToNumbers(baseApiData);
 
   return (
-    <main className="min-h-[100vh] py-8 pt-[164px] flex flex-col lg:flex-row items-center lg:items-start w-full overflow-hidden section gap-4">
+    <main className="min-h-[100vh] py-8 pt-[164px] flex flex-col lg:flex-row items-center lg:items-start overflow-hidden gap-4 px-4 md:px-8 xl:px-20 w-full">
       {baseApiData !== undefined && baseApiData.length > 0 ? (
         <>
           {/* Left Side - Top Gainers, Hottest Options*/}
-          <div className="flex flex-col gap-4 w-full lg:max-w-[404px]">
+          <div className="flex flex-col gap-4 w-full lg:max-w-[404px] lg:min-w-[404px]">
             <DashboardTopGainersWidget data={topPremium} />
             <DashboardHottestOptionsWidget data={hottestOptions} />
           </div>
           {/* Right Side - Refresh/Filters Widget, Contract (Green/Red) Widgets, Main Data Table */}
-          <div className="flex flex-col gap-4 w-full lg:max-w-[596px] xl:max-w-[860px]">
+          <div className="flex flex-col gap-4 lg:widtheq">
             {/* Filters Widget */}
             <div className="flex items-center justify-between p-6 glowbg rounded-[16px] text-white glow-shadow-white">
               <h2 className="flex items-center text-lg font-bold gap-4">
