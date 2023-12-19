@@ -23,6 +23,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import * as React from "react";
+import { useState } from "react";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];

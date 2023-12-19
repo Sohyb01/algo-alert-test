@@ -9,7 +9,6 @@ import {
   fetchApiData,
   fetchHottestOptionsApiData,
   filterUniqueSymbolsWhileKeepingHighestTradeValueOfEachSymbol,
-  getOptionsMarketStatus,
   getTopHottestOptionsByTotalSize,
 } from "../lib/functions";
 import Image from "next/image";
@@ -17,6 +16,7 @@ import Loading from "../components/Loading";
 import { DataTable } from "../components/Table/data-table";
 import { columns } from "../components/Table/columns";
 import { authOptions } from "../api/auth/[...nextauth]/options";
+import DataTableContainer from "../components/DataTableContainer";
 
 const getTopGainersWidgetData = async (data: any) => {
   const objects = // The top 8 Objects with only the required properties to be displayed
@@ -114,14 +114,11 @@ const DashboardPage = async () => {
             <DashboardHottestOptionsWidget data={hottestOptions} />
           </div>
           {/* Right Side - Refresh/Filters Widget, Contract (Green/Red) Widgets, Main Data Table */}
-          <div className="flex flex-col gap-4 lg:widtheq">
+          <div className="flex flex-col gap-4 widtheq">
             {/* Filters Widget */}
             <div className="flex items-center justify-between p-6 glowbg rounded-[16px] text-white glow-shadow-white">
               <h2 className="flex items-center text-lg font-bold gap-4">
                 Options Order Flow{" "}
-                <span className="text-neutral-300 text-sm">
-                  {getOptionsMarketStatus()}
-                </span>
               </h2>
               <button className="underline flex items-center gap-1.5">
                 Refresh
@@ -129,8 +126,7 @@ const DashboardPage = async () => {
               </button>
             </div>
             <DashboardContractsWidget data={contractsData} />
-            <DataTable data={mainTableData} columns={columns} />
-            {/* <DashboardMainDataTable data={baseApiData} /> */}
+            <DataTableContainer data={mainTableData} columns={columns} />
           </div>
         </>
       ) : (
