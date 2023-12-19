@@ -12,8 +12,11 @@
   backdrop-filter: blur(8px);
   background-color: rgba(0, 0, 0, 0.5);
 }
-.widtheq{
+
+@media screen and (min-width: 1080px ){
+  .widtheq{
   width: calc(100% - 420px);
+  }
 }
 
 .bodybg{
