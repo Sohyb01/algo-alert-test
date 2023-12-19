@@ -153,8 +153,12 @@ export const filterUniqueSymbolsWhileKeepingHighestTradeValueOfEachSymbol = (
 };
 
 export const formatNumberWithCommas = (number: number | string) => {
+  let num;
+  typeof number === "number"
+    ? (num = Math.round(number))
+    : (num = Math.round(parseInt(number)));
   // Convert the number to a string
-  let numberString = String(number);
+  let numberString = String(num);
 
   // Split the string into integer and decimal parts (if any)
   let parts = numberString.split(".");

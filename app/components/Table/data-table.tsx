@@ -23,7 +23,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import * as React from "react";
-import { useState } from "react";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -39,6 +38,8 @@ export function DataTable<TData, TValue>({
     []
   );
 
+  const [pageSize, setPageSize] = React.useState(1000);
+
   const table = useReactTable({
     data,
     columns,
@@ -51,6 +52,10 @@ export function DataTable<TData, TValue>({
     state: {
       sorting,
       columnFilters,
+      pagination: {
+        pageIndex: 0, // You can manage pageIndex similarly if needed
+        pageSize, // Set the pageSize from the state
+      },
     },
   });
 

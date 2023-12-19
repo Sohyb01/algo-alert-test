@@ -8,8 +8,7 @@ const FeaturesSection = () => {
       {/* Header, Subheader */}
       <div className="flex flex-col text-start items-start gap-4 w-full lg:max-w-[579px]">
         <h2 className="font-bold text-3xl lg:text-4xl title capitalize">
-          Features that make it <span className="text-teal-400">Easy</span> for
-          you
+          <span className="text-teal-400">User-Friendly</span> Interface
         </h2>
         <p className="text-neutral-200 text-lg">{FeaturesSectionData.sub}</p>
       </div>

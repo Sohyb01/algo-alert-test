@@ -49,7 +49,7 @@ const Footer = () => {
       <div className="w-full h-0.5 bg-neutral-500"></div>
       {/* Copyright and Socials Container */}
       <div className="flex flex-col items-start md:flex-row justify-between gap-y-10 md:items-center">
-        <p className="text-white text-base">Copyright @ 2022 {businessName}</p>
+        <p className="text-white text-base">Copyright @ 2024 {businessName}</p>
         {/* Socials Container */}
         <div className="flex gap-4">
           {socialMedias.map((social, index) => (

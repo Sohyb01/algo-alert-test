@@ -21,11 +21,11 @@ export const OptionsFlowSectionData = {
   bubble2_text: "Navigate and access our data with ease",
 };
 export const FeaturesSectionData = {
-  sub: "Some features require a premium membership, others only require an account.",
+  sub: "A clean, intuitive interface makes it easy for both beginners and experienced traders to navigate and utilize the platform effectively.",
   imageUrl: "/Category.png",
 };
 export const HistoricalFlowSectionData = {
-  sub: "Some features require a premium membership, others only require an account.",
+  sub: "Continuous improvement and updates to ensure the platform stays at the cutting edge of options flow analysis.",
   imageUrl: "/historicalflow.png",
 };
 export const TrackTradesSectionData = {

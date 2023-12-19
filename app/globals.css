@@ -12,7 +12,14 @@
   backdrop-filter: blur(8px);
   background-color: rgba(0, 0, 0, 0.5);
 }
-
+.widtheq{
+  width: 100%;
+}
+.tableheight{
+  height: 800px !important;
+  max-height: 800px !important;
+  overflow: scroll !important;
+}
 @media screen and (min-width: 1080px ){
   .widtheq{
   width: calc(100% - 420px);
