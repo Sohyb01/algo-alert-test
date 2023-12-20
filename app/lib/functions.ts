@@ -43,10 +43,86 @@ export function getOptionsMarketStatus() {
 
   // Format the date as 'YYYY-MM-DD'
   const formattedDate = lastOpenMarketDate.toISOString().split("T")[0];
+  console.log(`date format: ${formattedDate}`);
 
   return formattedDate;
 }
 
+export function getPastMonthsWeekDays() {
+  const EASTERN_TIME_OFFSET = -5; // Eastern Standard Time (EST) offset from UTC
+  let currentDate = new Date();
+  currentDate.setHours(currentDate.getHours() + EASTERN_TIME_OFFSET);
+
+  // Exclude the current date
+  currentDate.setDate(currentDate.getDate() - 1);
+
+  let pastDates = [];
+  let oneMonthAgo = new Date(
+    currentDate.getFullYear(),
+    currentDate.getMonth() - 1,
+    currentDate.getDate()
+  );
+
+  // Iterate through the days, going back one month
+  for (
+    let d = new Date(currentDate);
+    d > oneMonthAgo;
+    d.setDate(d.getDate() - 1)
+  ) {
+    // Check if the day is not Saturday (6) or Sunday (0)
+    if (d.getDay() !== 6 && d.getDay() !== 0) {
+      // Format the date as YYYY-MM-DD
+      let formattedDate =
+        d.getFullYear() +
+        "-" +
+        ("0" + (d.getMonth() + 1)).slice(-2) +
+        "-" +
+        ("0" + d.getDate()).slice(-2);
+      pastDates.push(formattedDate);
+    }
+  }
+
+  return pastDates;
+}
+
+export async function fetchApiDataByDate(date: string) {
+  try {
+    const response = await fetch(
+      `https://alphasweeps-ae44af8990fe.herokuapp.com/api/data/largest_trades?date=${date}`
+    );
+
+    if (!response.ok) {
+      throw new Error(`Error fetching API Data: ${response.status}`);
+    }
+    const data = await response.json();
+
+    let allPagesData = [...data["data"]];
+    // console.log("length before looping: ", allPagesData.length);
+    // console.log("remaining before looping: ", data["remaining_pages"]);
+
+    if (data["remaining_pages"] > 0) {
+      for (let i = 2; i < data["remaining_pages"] + 2; i++) {
+        // console.log("fetching page no.", i);
+        const additionalPageOfData = await fetch(
+          `https://alphasweeps-ae44af8990fe.herokuapp.com/api/data/largest_trades?date=${date}&page=${i}`
+        );
+        // console.log("fetched page no.", i, "!");
+        const additionalPageJSON = await additionalPageOfData.json();
+        allPagesData = allPagesData.concat(additionalPageJSON["data"]);
+        // console.log("length: ", allPagesData.length);
+        // console.log("remaining pages: ", additionalPageJSON["remaining_pages"]);
+      }
+    }
+
+    // console.log("done fetching pages!");
+
+    return allPagesData.reverse();
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
+
+// Fetches the latest available API data
 export async function fetchApiData() {
   const lastMarketDate = getOptionsMarketStatus();
   try {
