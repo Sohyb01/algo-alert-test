@@ -43,7 +43,6 @@ export function getOptionsMarketStatus() {
 
   // Format the date as 'YYYY-MM-DD'
   const formattedDate = lastOpenMarketDate.toISOString().split("T")[0];
-  console.log(`date format: ${formattedDate}`);
 
   return formattedDate;
 }

@@ -1,7 +1,11 @@
 "use client";
 import React, { useState } from "react";
 import { DataTable } from "./Table/data-table";
-import { fetchApiDataByDate, getPastMonthsWeekDays } from "../lib/functions";
+import {
+  fetchApiDataByDate,
+  getOptionsMarketStatus,
+  getPastMonthsWeekDays,
+} from "../lib/functions";
 import Loading from "../loading";
 
 const DataTableContainer = (props: any) => {
@@ -20,13 +24,20 @@ const DataTableContainer = (props: any) => {
 
   return (
     <div className="flex flex-col items-start">
-      {/* Input and label */}
+      {/* Date Input and label */}
       <div className="flex gap-2 items-center text-start text-white text-base">
         <p>Current date:</p>
         <select
           className="scroll-styling bg-slate-950 p-1"
           onChange={handleSelectChange}
         >
+          <option
+            className="bg-slate-900 hover:bg-slate-700"
+            value={getOptionsMarketStatus()}
+            selected
+          >
+            {getOptionsMarketStatus()}
+          </option>
           {datesArray.map((date, index) => (
             <option
               className="bg-slate-900 hover:bg-slate-700"
