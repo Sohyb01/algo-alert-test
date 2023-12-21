@@ -38,8 +38,6 @@ export function DataTable<TData, TValue>({
     []
   );
 
-  const [currentPage, setCurrentPage] = React.useState(1);
-
   const table = useReactTable({
     data,
     columns,
@@ -47,7 +45,7 @@ export function DataTable<TData, TValue>({
     getPaginationRowModel: getPaginationRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
-    onColumnFiltersChange: setColumnFilters,
+    onGlobalFilterChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
     state: {
       sorting,
@@ -133,13 +131,13 @@ export function DataTable<TData, TValue>({
       {/* Pagination controls and pages label? */}
       <div className="flex gap-4 py-4 w-full justify-end items-center">
         <p>
-          Page {currentPage} out of {table.getPageCount()}
+          page {table.getState().pagination.pageIndex + 1} out of{" "}
+          {table.getPageCount()}
         </p>
         <button
           disabled={!table.getCanPreviousPage()}
           className="tablebutton"
           onClick={() => {
-            setCurrentPage(currentPage - 1);
             table.previousPage();
           }}
         >
@@ -149,8 +147,6 @@ export function DataTable<TData, TValue>({
           disabled={!table.getCanNextPage()}
           className="tablebutton"
           onClick={() => {
-            setCurrentPage(currentPage + 1);
-
             table.nextPage();
           }}
         >
