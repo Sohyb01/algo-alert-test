@@ -52,6 +52,14 @@ export function DataTable<TData, TValue>({
       columnFilters,
     },
   });
+  React.useEffect(() => {
+    table.setSorting([
+      {
+        id: "b: Time",
+        desc: false,
+      },
+    ]);
+  }, [table]);
 
   return (
     <div className="w-full max-w-[100%] scroll-styling rounded-[16px] text-white">
