@@ -33,8 +33,7 @@ const DataTableContainer = (props: any) => {
         >
           <option
             className="bg-slate-900 hover:bg-slate-700"
-            value={getOptionsMarketStatus()}
-            selected
+            defaultValue={getOptionsMarketStatus()}
           >
             {getOptionsMarketStatus()}
           </option>

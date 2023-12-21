@@ -38,7 +38,7 @@ export function DataTable<TData, TValue>({
     []
   );
 
-  const [pageSize, setPageSize] = React.useState(12);
+  const [currentPage, setCurrentPage] = React.useState(1);
 
   const table = useReactTable({
     data,
@@ -52,42 +52,40 @@ export function DataTable<TData, TValue>({
     state: {
       sorting,
       columnFilters,
-      pagination: {
-        pageIndex: 0, // You can manage pageIndex similarly if needed
-        pageSize, // Set the pageSize from the state
-      },
     },
   });
 
   return (
     <div className="w-full max-w-[100%] scroll-styling rounded-[16px] text-white">
-      {/* Filters Container */}
-      <div className="flex gap-4 items-center">
-        {/* Ticker Filter */}
-        <div className="flex items-center py-4">
-          <Input
-            placeholder="Filter ticker..."
-            value={
-              (table.getColumn("a: Symbol")?.getFilterValue() as string) ?? ""
-            }
-            onChange={(event) =>
-              table.getColumn("a: Symbol")?.setFilterValue(event.target.value)
-            }
-            className="max-w-sm"
-          />
-        </div>
-        {/* Execution Filter */}
-        <div className="flex items-center py-4">
-          <Input
-            placeholder="Filter execution..."
-            value={
-              (table.getColumn("f: Side")?.getFilterValue() as string) ?? ""
-            }
-            onChange={(event) =>
-              table.getColumn("f: Side")?.setFilterValue(event.target.value)
-            }
-            className="max-w-sm"
-          />
+      <div className="flex gap-4 py-4 w-full justify-between items-center">
+        {/* Filters Container */}
+        <div className="flex gap-4 items-center">
+          {/* Ticker Filter */}
+          <div className="flex items-center py-4">
+            <Input
+              placeholder="Filter ticker..."
+              value={
+                (table.getColumn("a: Symbol")?.getFilterValue() as string) ?? ""
+              }
+              onChange={(event) =>
+                table.getColumn("a: Symbol")?.setFilterValue(event.target.value)
+              }
+              className="max-w-sm"
+            />
+          </div>
+          {/* Execution Filter */}
+          <div className="flex items-center py-4">
+            <Input
+              placeholder="Filter execution..."
+              value={
+                (table.getColumn("f: Side")?.getFilterValue() as string) ?? ""
+              }
+              onChange={(event) =>
+                table.getColumn("f: Side")?.setFilterValue(event.target.value)
+              }
+              className="max-w-sm"
+            />
+          </div>
         </div>
       </div>
       <Table>
@@ -133,11 +131,29 @@ export function DataTable<TData, TValue>({
         </TableBody>
       </Table>
       {/* Pagination controls and pages label? */}
-      <div className="flex gap-4 py-4 w-full justify-end">
-        <button className="tablebutton" onClick={() => table.previousPage()}>
+      <div className="flex gap-4 py-4 w-full justify-end items-center">
+        <p>
+          Page {currentPage} out of {table.getPageCount()}
+        </p>
+        <button
+          disabled={!table.getCanPreviousPage()}
+          className="tablebutton"
+          onClick={() => {
+            setCurrentPage(currentPage - 1);
+            table.previousPage();
+          }}
+        >
           Previous
         </button>
-        <button className="tablebutton" onClick={() => table.nextPage()}>
+        <button
+          disabled={!table.getCanNextPage()}
+          className="tablebutton"
+          onClick={() => {
+            setCurrentPage(currentPage + 1);
+
+            table.nextPage();
+          }}
+        >
           Next
         </button>
       </div>
