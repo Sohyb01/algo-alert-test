@@ -22,12 +22,12 @@ export default async function Home() {
   //   session?.user?.subscriptionID!
   // );
 
-  const subscriptions = await stripe.subscriptions.list({
-    customer: `${session?.user?.stripeCustomerId!}`,
-  });
+  // const subscriptions = await stripe.subscriptions.list({
+  //   customer: `${session?.user?.stripeCustomerId!}`,
+  // });
 
   // console.log(subscription.items.data);
-  console.log(subscriptions.data[0].items.data[0].id);
+  // console.log(subscriptions.data[0].items.data[0].id);
 
   return (
     <main className="min-h-[100vh] flex flex-col items-center w-full overflow-hidden">

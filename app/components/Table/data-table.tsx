@@ -52,6 +52,7 @@ export function DataTable<TData, TValue>({
       columnFilters,
     },
   });
+
   React.useEffect(() => {
     table.setSorting([
       {
@@ -59,6 +60,7 @@ export function DataTable<TData, TValue>({
         desc: false,
       },
     ]);
+    table.setPageSize(1000);
   }, [table]);
 
   return (
@@ -94,52 +96,60 @@ export function DataTable<TData, TValue>({
           </div>
         </div>
       </div>
-      <Table>
-        <TableHeader>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow className="lightglowbg" key={headerGroup.id}>
-              {headerGroup.headers.map((header) => {
-                return (
-                  <TableHead key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                  </TableHead>
-                );
-              })}
-            </TableRow>
-          ))}
-        </TableHeader>
-        <TableBody>
-          {table.getRowModel().rows?.length ? (
-            table.getRowModel().rows.map((row) => (
-              <TableRow
-                key={row.id}
-                data-state={row.getIsSelected() && "selected"}
-              >
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
-                ))}
+      <div className="h-[800px] relative overflow-auto scroll-styling">
+        <Table className="overflow-x-auto scroll-styling glow-shadow-white rounded-[8px]">
+          <TableHeader className="sticky top-0">
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableRow className="lightglowbg" key={headerGroup.id}>
+                {headerGroup.headers.map((header) => {
+                  return (
+                    <TableHead key={header.id}>
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                    </TableHead>
+                  );
+                })}
               </TableRow>
-            ))
-          ) : (
-            <TableRow>
-              <TableCell colSpan={columns.length} className="h-24 text-center">
-                No results.
-              </TableCell>
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
+            ))}
+          </TableHeader>
+          <TableBody>
+            {table.getRowModel().rows?.length ? (
+              table.getRowModel().rows.map((row) => (
+                <TableRow
+                  key={row.id}
+                  data-state={row.getIsSelected() && "selected"}
+                >
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell key={cell.id}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center"
+                >
+                  No results.
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </div>
       {/* Pagination controls and pages label? */}
       <div className="flex gap-4 py-4 w-full justify-end items-center">
         <p>
-          page {table.getState().pagination.pageIndex + 1} out of{" "}
+          Page {table.getState().pagination.pageIndex + 1} out of{" "}
           {table.getPageCount()}
         </p>
         <button

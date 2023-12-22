@@ -4,6 +4,7 @@ import Image from "next/image";
 import {
   NavbarLinks,
   logoImgPath,
+  monthlySubscriptionPriceId,
   yearlySubscriptionPriceId,
 } from "../lib/displaydata";
 import { getServerSession } from "next-auth";
@@ -98,7 +99,7 @@ const Navbar = async () => {
                           {subscriptionEndDate!.split(",")[0]}
                         </span>
                       </p>
-                      {currentPlanPriceId !== yearlySubscriptionPriceId && (
+                      {currentPlanPriceId === monthlySubscriptionPriceId && (
                         <UpgradeToYearlyButton />
                       )}
                       <CancelSubscriptionButton />
