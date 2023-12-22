@@ -12,6 +12,7 @@ import {
   getStripePlanEndDate,
   getStripeSubscriptionName,
 } from "../lib/functions";
+import UpgradeToYearlyButton from "./UpgradeToYearlyButton";
 
 const Navbar = async () => {
   const session = await getServerSession(authOptions);
@@ -92,6 +93,7 @@ const Navbar = async () => {
                         </span>
                       </p>
                       <CancelSubscriptionButton />
+                      <UpgradeToYearlyButton />
                     </div>
                   )}
                   {userHasCanceled && subscriptionEndDate && (

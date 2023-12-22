@@ -338,6 +338,34 @@ export const checkIfUserHasAlreadyCanceled = async () => {
     return hasCanceled;
   }
 };
+
+export const getUserPlanPriceId = async () => {
+  const stripe = new Stripe(`${process.env.STRIPE_SECRET_KEY!}`, {
+    apiVersion: "2023-10-16",
+  });
+
+  const session = await getServerSession(authOptions);
+
+  const subscriptions = await stripe.subscriptions.list({
+    customer: `${session?.user?.stripeCustomerId!}`,
+  });
+
+  return subscriptions.data[0].items.data[0].price.id;
+};
+
+export const geUserPlanItemId = async () => {
+  const stripe = new Stripe(`${process.env.STRIPE_SECRET_KEY!}`, {
+    apiVersion: "2023-10-16",
+  });
+
+  const session = await getServerSession(authOptions);
+
+  const subscription = await stripe.subscriptions.list({
+    customer: `${session?.user?.stripeCustomerId!}`,
+  });
+
+  return subscription.data[0].items.data[0].id;
+};
 // Check if user is subscribed, if so return subscription
 //
 //

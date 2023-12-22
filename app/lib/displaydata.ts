@@ -210,6 +210,9 @@ export const randomWidths = [
 
 // Plans data
 
+export const monthlySubscriptionPriceId = "price_1ONATOCJ7W2t3weqWLqxr0hc";
+export const yearlySubscriptionPriceId = "price_1ONAVCCJ7W2t3weqYpKhQ0kd";
+
 export const subscriptions = [
   // {
   //   planType: "Free",
@@ -231,7 +234,7 @@ export const subscriptions = [
       "Lorem Ipsum dolor sit amet",
     ],
     nonbenefits: ["Lorem Ipsum dolor sit amet"],
-    priceId: "price_1ONATOCJ7W2t3weqWLqxr0hc",
+    priceId: monthlySubscriptionPriceId,
   },
   {
     planType: "Yearly",
@@ -244,7 +247,7 @@ export const subscriptions = [
       "Lorem Ipsum dolor sit amet",
     ],
     nonbenefits: [],
-    priceId: "price_1ONAVCCJ7W2t3weqYpKhQ0kd",
+    priceId: yearlySubscriptionPriceId,
   },
 ];
 
