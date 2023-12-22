@@ -22,7 +22,7 @@ const UpgradeToYearlyButton = () => {
   return (
     <button
       onClick={upgradeSubscription}
-      className="text-white px-4 rounded-full py-2 border-red-400 border-[1px] border-solid"
+      className="text-white px-4 rounded-full py-2 border-teal-400 border-[1px] border-solid"
     >
       Upgrade to Yearly Subscription
     </button>

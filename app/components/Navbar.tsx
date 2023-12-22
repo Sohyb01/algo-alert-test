@@ -1,7 +1,11 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { NavbarLinks, logoImgPath } from "../lib/displaydata";
+import {
+  NavbarLinks,
+  logoImgPath,
+  yearlySubscriptionPriceId,
+} from "../lib/displaydata";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/options";
 import CancelSubscriptionButton from "./CancelSubscriptionButton";
@@ -11,6 +15,7 @@ import {
   checkIfUserHasAlreadyCanceled,
   getStripePlanEndDate,
   getStripeSubscriptionName,
+  getUserPlanPriceId,
 } from "../lib/functions";
 import UpgradeToYearlyButton from "./UpgradeToYearlyButton";
 
@@ -32,6 +37,7 @@ const Navbar = async () => {
 
   const userHasCanceled = await checkIfUserHasAlreadyCanceled();
   // console.log(`User has canceled: ${userHasCanceled}`);
+  const currentPlanPriceId = await getUserPlanPriceId();
 
   return (
     <div className="flex justify-center fixed top-0 w-full z-[1000] blur-bg border-b-[1px] border-slate-700">
@@ -92,8 +98,10 @@ const Navbar = async () => {
                           {subscriptionEndDate!.split(",")[0]}
                         </span>
                       </p>
+                      {currentPlanPriceId !== yearlySubscriptionPriceId && (
+                        <UpgradeToYearlyButton />
+                      )}
                       <CancelSubscriptionButton />
-                      <UpgradeToYearlyButton />
                     </div>
                   )}
                   {userHasCanceled && subscriptionEndDate && (
