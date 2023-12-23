@@ -1,6 +1,7 @@
 import React from "react";
 import { MembershipSectionData, subscriptions } from "../lib/displaydata";
 import MembershipCard from "./MembershipCard";
+import MembershipSwitchCard from "./MembershipSwitchCard";
 
 const MembershipSection = () => {
   return (
@@ -15,11 +16,12 @@ const MembershipSection = () => {
       </h2>
       {/* Memberships Container */}
       <div className="flex flex-row flex-wrap lg:flex-nowrap gap-4 lg:gap-8 gap-y-10 items-center justify-center w-full">
-        {subscriptions.map((membership: any, index: number) => (
+        {/* {subscriptions.map((membership: any, index: number) => (
           // Membership
 
           <MembershipCard membership={membership} key={index} />
-        ))}
+        ))} */}
+        <MembershipSwitchCard />
       </div>
     </section>
   );

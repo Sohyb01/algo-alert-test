@@ -2,6 +2,8 @@ import Stripe from "stripe";
 import { authOptions } from "../api/auth/[...nextauth]/options";
 import { DatatableRowProps, TopPurchasesRowProps } from "./types";
 import { getServerSession } from "next-auth";
+import { checkIfSubscribed } from "../actions/checkIfSubscribed";
+import getStripe from "@/lib/utils";
 
 export function getOptionsMarketStatus() {
   // Set the options market hours in Eastern Time (ET)
@@ -367,11 +369,31 @@ export const geUserPlanItemId = async () => {
 
   return subscription.data[0].items.data[0].id;
 };
-// Check if user is subscribed, if so return subscription
-//
-//
-//
-//
-//
-//
-//
+
+export const handleCreateCheckoutSession = async (productId: string) => {
+  const customerHasSubscription = await checkIfSubscribed();
+  if (customerHasSubscription) {
+    alert("You already have an active plan!");
+  } else {
+    const res = await fetch("/api/stripe/checkout-session", {
+      method: "POST",
+      body: JSON.stringify(productId),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const checkoutSession = await res.json().then((value) => {
+      if (value.error) {
+        // Perhaps add a react hot toast here!
+        alert("Please Sign In!");
+      }
+      return value.session;
+    });
+    if (checkoutSession) {
+      const stripe = await getStripe();
+      const { error } = await stripe!.redirectToCheckout({
+        sessionId: checkoutSession.id,
+      });
+    }
+  }
+};
