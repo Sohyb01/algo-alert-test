@@ -25,6 +25,15 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  // Console logging for error on vercel
+  console.log(`session --> ${session}`);
+  console.log(`---------------`);
+  console.log(`session.user --> ${session.user}`);
+  console.log(`---------------`);
+  console.log(
+    `session.user.stripeCustomerId --> ${session.user.stripeCustomerId}`
+  );
+
   const checkoutSession = await stripe.checkout.sessions.create({
     mode: "subscription",
     customer: `${session.user.stripeCustomerId}`,
