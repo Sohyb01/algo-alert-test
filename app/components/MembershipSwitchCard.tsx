@@ -8,7 +8,6 @@ const MembershipSwitchCard = () => {
 
   return (
     <>
-      {/* {planType === "monthly" ? <></> : <></>} */}
       <div className="flex flex-col items-center px-8 py-12 gap-8 rounded-[64px] w-[320px] lg:w-full max-w-[405px] membership glow-shadow">
         {/* Switch container */}
         <div className="flex gap-2 items-center text-white">

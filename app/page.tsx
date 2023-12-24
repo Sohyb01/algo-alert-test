@@ -8,24 +8,6 @@ import DiscordSection from "./components/DiscordSection";
 import ParticleEffect from "./components/ParticlesBackground/ParticlesBackground";
 
 export default async function Home() {
-  // const stripe = new Stripe(`${process.env.STRIPE_SECRET_KEY!}`, {
-  //   apiVersion: "2023-10-16",
-  // });
-
-  // const session = await getServerSession(authOptions);
-  // Add a check to see if the user is already subscribed
-
-  // const subscription = await stripe.subscriptions.retrieve(
-  //   session?.user?.subscriptionID!
-  // );
-
-  // const subscriptions = await stripe.subscriptions.list({
-  //   customer: `${session?.user?.stripeCustomerId!}`,
-  // });
-
-  // console.log(subscription.items.data);
-  // console.log(subscriptions.data[0].items.data[0].id);
-
   return (
     <main className="min-h-[100vh] flex flex-col items-center w-full overflow-hidden">
       <HeroSection />
