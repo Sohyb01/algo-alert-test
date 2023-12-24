@@ -9,13 +9,14 @@ import ParticleEffect from "./components/ParticlesBackground/ParticlesBackground
 import { getServerSession } from "next-auth";
 import Stripe from "stripe";
 import { authOptions } from "./api/auth/[...nextauth]/options";
+import { notify } from "./lib/functions";
 
 export default async function Home() {
-  const stripe = new Stripe(`${process.env.STRIPE_SECRET_KEY!}`, {
-    apiVersion: "2023-10-16",
-  });
+  // const stripe = new Stripe(`${process.env.STRIPE_SECRET_KEY!}`, {
+  //   apiVersion: "2023-10-16",
+  // });
 
-  const session = await getServerSession(authOptions);
+  // const session = await getServerSession(authOptions);
   // Add a check to see if the user is already subscribed
 
   // const subscription = await stripe.subscriptions.retrieve(

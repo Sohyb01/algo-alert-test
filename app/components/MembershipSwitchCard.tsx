@@ -5,6 +5,7 @@ import { handleCreateCheckoutSession } from "../lib/functions";
 
 const MembershipSwitchCard = () => {
   const [planType, setPlanType] = useState("monthly");
+
   return (
     <>
       {/* {planType === "monthly" ? <></> : <></>} */}

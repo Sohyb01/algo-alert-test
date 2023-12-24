@@ -10,8 +10,8 @@ const CancelSubscriptionButton = () => {
       const res = await fetch("/api/stripe/subscription-cancel");
       const { subscription } = await res.json();
       if (subscription.cancel_at_period_end) {
-        revalidatePathManually("/");
         toast("Subscription canceled successfully!");
+        revalidatePathManually("/");
       }
     } catch (error) {
       toast("An error as occurred, please try again or contact a moderator.");

@@ -26,22 +26,30 @@ import {
 export async function NavbarDialog() {
   const session = await getServerSession(authOptions);
 
-  // Add a check to see if the user has already canceled
-  const stripe = new Stripe(`${process.env.STRIPE_SECRET_KEY!}`, {
-    apiVersion: "2023-10-16",
-  });
+  // // Add a check to see if the user has already canceled
+  // const stripe = new Stripe(`${process.env.STRIPE_SECRET_KEY!}`, {
+  //   apiVersion: "2023-10-16",
+  // });
 
-  const stripeSubscriptionId =
-    session?.user?.subscriptionID !== null || undefined
-      ? session?.user?.subscriptionID
-      : null;
+  // const stripeSubscriptionId =
+  //   session?.user?.subscriptionID !== null || undefined
+  //     ? session?.user?.subscriptionID
+  //     : null;
 
-  const subscriptionName = await getStripeSubscriptionName();
-  const subscriptionEndDate = await getStripePlanEndDate();
+  const subscriptionName = session?.user?.isActive
+    ? await getStripeSubscriptionName()
+    : null;
+  const subscriptionEndDate = session?.user?.isActive
+    ? await getStripePlanEndDate()
+    : null;
 
-  const userHasCanceled = await checkIfUserHasAlreadyCanceled();
+  const userHasCanceled = session?.user?.isActive
+    ? await checkIfUserHasAlreadyCanceled()
+    : null;
   // console.log(`User has canceled: ${userHasCanceled}`);
-  const currentPlanPriceId = await getUserPlanPriceId();
+  const currentPlanPriceId = session?.user?.isActive
+    ? await getUserPlanPriceId()
+    : null;
 
   return (
     <Dialog>
@@ -62,6 +70,13 @@ export async function NavbarDialog() {
             <Link href="/api/auth/signout" className="underline text-red-300">
               Sign Out
             </Link>
+            {!session?.user?.isActive && (
+              <div className="flex flex-col text-start items-start gap-4">
+                <p className="text-neutral-300 text-base">
+                  You are not currently subscribed to any plan.
+                </p>
+              </div>
+            )}
             {!userHasCanceled && subscriptionEndDate && (
               <div className="flex flex-col text-start items-start gap-4">
                 <p className="text-neutral-300 text-base">

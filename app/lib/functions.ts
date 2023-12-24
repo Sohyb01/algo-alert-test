@@ -4,6 +4,7 @@ import { DatatableRowProps, TopPurchasesRowProps } from "./types";
 import { getServerSession } from "next-auth";
 import { checkIfSubscribed } from "../actions/checkIfSubscribed";
 import getStripe from "@/lib/utils";
+import toast from "react-hot-toast";
 
 export function getOptionsMarketStatus() {
   // Set the options market hours in Eastern Time (ET)
@@ -396,4 +397,17 @@ export const handleCreateCheckoutSession = async (productId: string) => {
       });
     }
   }
+};
+
+export const notify = () => {
+  toast("Hello World!", {
+    // Options
+    duration: 8000,
+    position: "top-center",
+    // Customize styles
+    style: {},
+    className: "",
+    // Custom icon or react component
+    // icon: "👏",
+  });
 };
