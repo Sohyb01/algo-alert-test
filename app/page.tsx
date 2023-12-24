@@ -6,10 +6,6 @@ import TrackTradesSection from "./components/TrackTradesSection";
 import MembershipSection from "./components/MembershipSection";
 import DiscordSection from "./components/DiscordSection";
 import ParticleEffect from "./components/ParticlesBackground/ParticlesBackground";
-import { getServerSession } from "next-auth";
-import Stripe from "stripe";
-import { authOptions } from "./api/auth/[...nextauth]/options";
-import { notify } from "./lib/functions";
 
 export default async function Home() {
   // const stripe = new Stripe(`${process.env.STRIPE_SECRET_KEY!}`, {

@@ -9,6 +9,8 @@ export async function POST(req: NextRequest) {
     `process.env.STRIPE_SECRET_KEY --->${process.env.STRIPE_SECRET_KEY!}`
   );
   console.log(`---------------------------`);
+  console.log(`body --->${body!}`);
+  console.log(`---------------------------`);
   const stripe = new Stripe(`${process.env.STRIPE_SECRET_KEY!}`, {
     apiVersion: "2023-10-16",
   });

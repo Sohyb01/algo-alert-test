@@ -393,21 +393,8 @@ export const handleCreateCheckoutSession = async (productId: string) => {
     if (checkoutSession) {
       const stripe = await getStripe();
       const { error } = await stripe!.redirectToCheckout({
-        sessionId: checkoutSession.id,
+        sessionId: `${checkoutSession.id}`,
       });
     }
   }
-};
-
-export const notify = () => {
-  toast("Hello World!", {
-    // Options
-    duration: 8000,
-    position: "top-center",
-    // Customize styles
-    style: {},
-    className: "",
-    // Custom icon or react component
-    // icon: "👏",
-  });
 };

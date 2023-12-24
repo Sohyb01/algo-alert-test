@@ -9,6 +9,7 @@ export function cn(...inputs: ClassValue[]) {
 let stripePromise: Promise<Stripe | null>;
 const getStripe = () => {
   if (!stripePromise) {
+    console.log(`publishable key --> ${process.env.STRIPE_PUBLISHABLE_KEY}`);
     stripePromise = loadStripe(`${process.env.STRIPE_PUBLISHABLE_KEY}`);
   }
   return stripePromise;
