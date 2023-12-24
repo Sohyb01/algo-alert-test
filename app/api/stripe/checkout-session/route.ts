@@ -5,7 +5,10 @@ import { getServerSession } from "next-auth";
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
-
+  console.log(
+    `process.env.STRIPE_SECRET_KEY --->${process.env.STRIPE_SECRET_KEY!}`
+  );
+  console.log(`---------------------------`);
   const stripe = new Stripe(`${process.env.STRIPE_SECRET_KEY!}`, {
     apiVersion: "2023-10-16",
   });
@@ -24,15 +27,6 @@ export async function POST(req: NextRequest) {
       { status: 401 }
     );
   }
-
-  // Console logging for error on vercel
-  console.log(`session --> ${session}`);
-  console.log(`---------------`);
-  console.log(`session.user --> ${session.user}`);
-  console.log(`---------------`);
-  console.log(
-    `session.user.stripeCustomerId --> ${session.user.stripeCustomerId}`
-  );
 
   const checkoutSession = await stripe.checkout.sessions.create({
     mode: "subscription",
