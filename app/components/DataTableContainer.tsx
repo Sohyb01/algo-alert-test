@@ -22,6 +22,7 @@ const DataTableContainer = (props: any) => {
       setLoading(false);
     }
   };
+
   getTodaysData();
 
   const handleSelectChange = async (event: { target: { value: any } }) => {
@@ -35,31 +36,29 @@ const DataTableContainer = (props: any) => {
   return (
     <div className="flex flex-col items-start">
       {/* Date Input and label */}
-      {!loading && (
-        <div className="flex gap-2 items-center text-start text-white text-base">
-          <p>Current date:</p>
-          <select
-            className="scroll-styling bg-slate-950 p-1"
-            onChange={handleSelectChange}
+      <div className="flex gap-2 items-center text-start text-white text-base">
+        <p>Current date:</p>
+        <select
+          className="scroll-styling bg-slate-950 p-1"
+          onChange={handleSelectChange}
+        >
+          <option
+            className="bg-slate-900 hover:bg-slate-700"
+            defaultValue={getOptionsMarketStatus()}
           >
+            {getOptionsMarketStatus()}
+          </option>
+          {datesArray.map((date, index) => (
             <option
               className="bg-slate-900 hover:bg-slate-700"
-              defaultValue={getOptionsMarketStatus()}
+              key={index}
+              value={date}
             >
-              {getOptionsMarketStatus()}
+              {date}
             </option>
-            {datesArray.map((date, index) => (
-              <option
-                className="bg-slate-900 hover:bg-slate-700"
-                key={index}
-                value={date}
-              >
-                {date}
-              </option>
-            ))}
-          </select>
-        </div>
-      )}
+          ))}
+        </select>
+      </div>
       {loading || dayData.length === 0 ? (
         <LoadingSmall />
       ) : (
