@@ -16,8 +16,10 @@ const DataTableContainer = (props: any) => {
   const datesArray = getPastMonthsWeekDays();
 
   const getTodaysData = async () => {
-    const todaysData = await fetchApiData();
-    setDayData(todaysData);
+    if (dayData.length === 0) {
+      const todaysData = await fetchApiData();
+      setDayData(todaysData);
+    }
   };
   getTodaysData();
 
