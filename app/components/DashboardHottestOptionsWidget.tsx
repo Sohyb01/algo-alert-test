@@ -1,9 +1,16 @@
 // Hottest Options / Top Purchases
 import React from "react";
 import LoadingSmall from "./LoadingSmall";
-import { formatNumberWithCommas } from "../lib/functions";
+import {
+  fetchHottestOptionsApiData,
+  formatNumberWithCommas,
+  getHottestOptionsData,
+} from "../lib/functions";
 
-const DashboardHottestOptionsWidget = (data: any) => {
+const DashboardHottestOptionsWidget = async () => {
+  const secondApiData = await fetchHottestOptionsApiData();
+
+  const hottestOptions = await getHottestOptionsData(secondApiData);
   return (
     <div className="z-10 flex flex-col items-center text-start text-white rounded-[16px] bg-slate-700 px-4 py-6 glowbg gap-4 glow-shadow">
       <h5 className="text-lg font-bold w-full">Hottest Options</h5>
@@ -14,11 +21,11 @@ const DashboardHottestOptionsWidget = (data: any) => {
         <div className="w-full text-base">CALLS % / PUTS %</div>
       </div>
       {/* Actual Table */}
-      {data.data.length > 0 ? (
+      {hottestOptions.length > 0 ? (
         <div className="overflow-x-scroll w-full scroll-styling">
           <table className="table-pin-cols w-full">
             <tbody>
-              {data.data.map((item: any, index: any) => {
+              {hottestOptions.map((item: any, index: any) => {
                 const callsRatio =
                   Math.round((1000 * item.calls) / (item.calls + item.puts)) /
                   10;
