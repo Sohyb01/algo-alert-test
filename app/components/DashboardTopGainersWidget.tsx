@@ -1,28 +1,10 @@
-"use client";
-import { randomWidths } from "../lib/displaydata";
-import React, { useState } from "react";
+import { fakeTopGainersData, randomWidths } from "../lib/displaydata";
+import React from "react";
+import { TopGainersRowProps } from "../lib/types";
 import { DashboardTopGainersWidgetRow } from "./DashboardTopGainersWidgetRow";
 import LoadingSmall from "./LoadingSmall";
-import {
-  fetchApiData,
-  fetchApiDataByDate,
-  getTopGainersWidgetData,
-} from "../lib/functions";
 
-const DashboardTopGainersWidget = (props: { date: string | null }) => {
-  const [topPremium, setTopPremium] = useState<any>([]);
-
-  const getTopPremiumData = async () => {
-    if (topPremium.length === 0) {
-      const baseApiData = props.date
-        ? await fetchApiDataByDate(props.date)
-        : await fetchApiData();
-      const topPremium = await getTopGainersWidgetData(baseApiData);
-      setTopPremium(topPremium);
-    }
-  };
-  getTopPremiumData();
-
+const DashboardTopGainersWidget = (data: any) => {
   return (
     <div className="flex flex-col items-center text-start text-white rounded-[16px] bg-slate-700 px-4 py-6 glowbg gap-4 glow-shadow">
       <h5 className="text-lg font-bold w-full">Top Gainers</h5>
@@ -33,10 +15,10 @@ const DashboardTopGainersWidget = (props: { date: string | null }) => {
         <div className="w-full text-base">Premium</div>
       </div>
       {/* Table */}
-      {topPremium.length > 0 ? (
+      {data.data.length > 0 ? (
         <div className="flex flex-col gap-2 w-full font-bold">
           {/* Row */}
-          {topPremium.map((item: any, index: number) => {
+          {data.data.map((item: any, index: number) => {
             return (
               <DashboardTopGainersWidgetRow
                 key={index}

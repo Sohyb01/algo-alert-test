@@ -4,9 +4,8 @@ import { DatatableRowProps, TopPurchasesRowProps } from "./types";
 import { getServerSession } from "next-auth";
 import { checkIfSubscribed } from "../actions/checkIfSubscribed";
 import getStripe from "@/lib/utils";
-import { getOptionsMarketStatusAsync } from "../actions/getTime";
-
-// Gets the date using an external time API for accurateness
+import toast from "react-hot-toast";
+export const maxDuration = 300;
 
 export function getOptionsMarketStatus() {
   // Set the options market hours in Eastern Time (ET)
@@ -128,10 +127,8 @@ export async function fetchApiDataByDate(date: string) {
 
 // Fetches the latest available API data
 export async function fetchApiData() {
-  // const lastMarketDateAsync = await getOptionsMarketStatusAsync();
   const lastMarketDate = getOptionsMarketStatus();
-  // console.log(`async: ${lastMarketDateAsync}`);
-  // console.log(`normal: ${lastMarketDate}`);
+  console.log("fetching!");
   try {
     const response = await fetch(
       `https://alphasweeps-ae44af8990fe.herokuapp.com/api/data/largest_trades?date=${lastMarketDate}`
@@ -146,21 +143,21 @@ export async function fetchApiData() {
       // console.log("length before looping: ", allPagesData.length);
       // console.log("remaining before looping: ", data["remaining_pages"]);
 
-      if (data["remaining_pages"] > 0) {
-        for (let i = 2; i < data["remaining_pages"] + 2; i++) {
-          // console.log("fetching page no.", i);
-          const additionalPageOfData = await fetch(
-            `https://alphasweeps-ae44af8990fe.herokuapp.com/api/data/largest_trades?date=${lastMarketDate}&page=${i}`
-          );
-          // console.log("fetched page no.", i, "!");
-          const additionalPageJSON = await additionalPageOfData.json();
-          allPagesData = allPagesData.concat(additionalPageJSON["data"]);
-          // console.log("length: ", allPagesData.length);
-          // console.log("remaining pages: ", additionalPageJSON["remaining_pages"]);
-        }
-      }
+      // if (data["remaining_pages"] > 0) {
+      //   for (let i = 2; i < data["remaining_pages"] + 2; i++) {
+      //     // console.log("fetching page no.", i);
+      //     const additionalPageOfData = await fetch(
+      //       `https://alphasweeps-ae44af8990fe.herokuapp.com/api/data/largest_trades?date=${lastMarketDate}&page=${i}`
+      //     );
+      //     // console.log("fetched page no.", i, "!");
+      //     const additionalPageJSON = await additionalPageOfData.json();
+      //     allPagesData = allPagesData.concat(additionalPageJSON["data"]);
+      //     // console.log("length: ", allPagesData.length);
+      //     // console.log("remaining pages: ", additionalPageJSON["remaining_pages"]);
+      //   }
+      // }
 
-      // console.log("done fetching pages!");
+      console.log("done fetching!");
 
       return allPagesData.reverse();
     }
@@ -178,15 +175,11 @@ export async function filterObjectsBySymbol(
   );
 }
 
-export const fetchHottestOptionsApiData = async (
-  date: string | undefined | null
-) => {
-  const lastMarketDate = await getOptionsMarketStatus();
+export const fetchHottestOptionsApiData = async () => {
+  const lastMarketDate = getOptionsMarketStatus();
   try {
     const response = await fetch(
-      `https://alphasweeps-ae44af8990fe.herokuapp.com/api/data/top-options?date=${
-        date ? date : lastMarketDate
-      }`
+      `https://alphasweeps-ae44af8990fe.herokuapp.com/api/data/top-options?date=${lastMarketDate}`
     );
 
     if (!response.ok) {
@@ -402,71 +395,8 @@ export const handleCreateCheckoutSession = async (productId: string) => {
     if (checkoutSession) {
       const stripe = await getStripe();
       const { error } = await stripe!.redirectToCheckout({
-        sessionId: checkoutSession.id,
+        sessionId: `${checkoutSession.id}`,
       });
     }
   }
-};
-
-export const getTopGainersWidgetData = async (data: any) => {
-  const objects = // The top 8 Objects with only the required properties to be displayed
-    filterUniqueSymbolsWhileKeepingHighestTradeValueOfEachSymbol([...data]); // Make a copy to avoid mutating original
-
-  objects.sort((a, b) => b.trade_value - a.trade_value); // Sort by trade_value property value
-
-  const top8 = objects.slice(0, 8).map((item) => ({
-    symbol: item["a: Symbol"],
-    contract: item["c: C/P"],
-    premium: item["trade_value"],
-  })); // The top 8 which will be displayed
-
-  return top8; // Store them in a UseState which will be displayed in the top gainers widget
-};
-export const getHottestOptionsData = async (data: any) => {
-  const objects = // The top Objects with only the required properties to be displayed
-    getTopHottestOptionsByTotalSize([...data]); // Make a copy to avoid mutating original
-  return objects;
-};
-export const analyzeTrades = async (trades: any) => {
-  // Initialize counters and sums
-  let callCount = 0;
-  let putCount = 0;
-  let callTradeSum = 0;
-  let putTradeSum = 0;
-
-  // Iterate through the array of objects
-  for (const trade of trades) {
-    // Check the value of the "c: C/P" property
-    if (trade["c: C/P"] === "CALL") {
-      callCount++;
-      callTradeSum += parseInt(trade["g: Size"]);
-    } else if (trade["c: C/P"] === "PUT") {
-      putCount++;
-      putTradeSum += parseInt(trade["g: Size"]);
-    }
-  }
-
-  let totalFlows = callCount + putCount;
-  const callFlowPercentage = Math.round(1000 * (callCount / totalFlows)) / 10;
-  const putFlowPercentage = Math.round(1000 * (putCount / totalFlows)) / 10;
-
-  let totalPremiums = callTradeSum + putTradeSum;
-  const callPremiumPercentage =
-    Math.round(1000 * (callTradeSum / totalPremiums)) / 10;
-  const putPremiumPercentage =
-    Math.round(1000 * (putTradeSum / totalPremiums)) / 10;
-
-  // Create and return the result object
-  const result = {
-    callFlows: callCount,
-    callFlowsPercentage: callFlowPercentage,
-    callPremiumSum: callTradeSum,
-    callPremiumPercentage: callPremiumPercentage,
-    putFlows: putCount,
-    putFlowsPercentage: putFlowPercentage,
-    putPremiumSum: putTradeSum,
-    putPremiumPercentage: putPremiumPercentage,
-  };
-
-  return result;
 };

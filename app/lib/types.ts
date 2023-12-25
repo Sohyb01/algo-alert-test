@@ -63,3 +63,9 @@ export const defaultColumns = [
   { accessorKey: "j: DTE", header: "DTE" },
   // ... Define other columns similarly
 ];
+
+// types/MyContextType.ts
+export interface ApiContextType {
+  state: any; // Replace 'any' with a more specific type for your state
+  updateContext: (newState: any) => void; // Again, replace 'any' with the specific type
+}

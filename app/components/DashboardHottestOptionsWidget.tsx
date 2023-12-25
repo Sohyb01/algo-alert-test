@@ -1,24 +1,9 @@
-"use client";
 // Hottest Options / Top Purchases
-import React, { useState } from "react";
+import React from "react";
 import LoadingSmall from "./LoadingSmall";
-import {
-  fetchHottestOptionsApiData,
-  formatNumberWithCommas,
-  getHottestOptionsData,
-} from "../lib/functions";
+import { formatNumberWithCommas } from "../lib/functions";
 
-const DashboardHottestOptionsWidget = (props: { date: string | null }) => {
-  const [hottestOptions, setHottestOptions] = useState<any>([]);
-
-  const getData = async () => {
-    if (hottestOptions.length === 0) {
-      const secondApiData = await fetchHottestOptionsApiData(props.date);
-      const hottestOptions = await getHottestOptionsData(secondApiData);
-      setHottestOptions(hottestOptions);
-    }
-  };
-  getData();
+const DashboardHottestOptionsWidget = (data: any) => {
   return (
     <div className="z-10 flex flex-col items-center text-start text-white rounded-[16px] bg-slate-700 px-4 py-6 glowbg gap-4 glow-shadow">
       <h5 className="text-lg font-bold w-full">Hottest Options</h5>
@@ -29,11 +14,11 @@ const DashboardHottestOptionsWidget = (props: { date: string | null }) => {
         <div className="w-full text-base">CALLS % / PUTS %</div>
       </div>
       {/* Actual Table */}
-      {hottestOptions.length > 0 ? (
+      {data.data.length > 0 ? (
         <div className="overflow-x-scroll w-full scroll-styling">
           <table className="table-pin-cols w-full">
             <tbody>
-              {hottestOptions.map((item: any, index: any) => {
+              {data.data.map((item: any, index: any) => {
                 const callsRatio =
                   Math.round((1000 * item.calls) / (item.calls + item.puts)) /
                   10;
@@ -58,9 +43,7 @@ const DashboardHottestOptionsWidget = (props: { date: string | null }) => {
                         {item.expiration_date}
                       </span>
                       <br />
-                      {item.calls > item.puts
-                        ? `${item.calls}, Call`
-                        : `${item.puts}, Put`}
+                      {item.calls > item.puts ? `Call` : `Put`}
                     </td>
                     <td className="p-0 w-full">
                       {formatNumberWithCommas(item.total_size)}

@@ -4,9 +4,9 @@ import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { getServerSession } from "next-auth";
-import SessionProvider from "./components/SessionProvider";
 import { authOptions } from "./api/auth/[...nextauth]/options";
 import { Toaster } from "react-hot-toast";
+import SessionProvider from "./components/SessionProvider";
 
 const poppins = Poppins({
   weight: ["400", "500", "600", "700"],
