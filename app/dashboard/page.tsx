@@ -17,6 +17,7 @@ import { DataTable } from "../components/Table/data-table";
 import { columns } from "../components/Table/columns";
 import { authOptions } from "../api/auth/[...nextauth]/options";
 import DataTableContainer from "../components/DataTableContainer";
+import { useEffect } from "react";
 
 const getTopGainersWidgetData = async (data: any) => {
   const objects = // The top 8 Objects with only the required properties to be displayed
@@ -92,17 +93,15 @@ const DashboardPage = async () => {
   }
 
   // Fetch the Main API data (not the hottest options!)
+
   const baseApiData = await fetchApiData();
 
-  const secondApiData = await fetchHottestOptionsApiData();
-
   const topPremium = await getTopGainersWidgetData(baseApiData);
-
-  const hottestOptions = await getHottestOptionsData(secondApiData);
-
   const contractsData = await analyzeTrades(baseApiData);
-
   const mainTableData = await convertPropertiesToNumbers(baseApiData);
+
+  const secondApiData = await fetchHottestOptionsApiData();
+  const hottestOptions = await getHottestOptionsData(secondApiData);
 
   return (
     <main className="min-h-[100vh] py-8 pt-[164px] flex flex-col lg:flex-row items-center lg:items-start overflow-hidden gap-4 px-4 md:px-8 xl:px-20 w-full">
