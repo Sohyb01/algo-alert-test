@@ -1,11 +1,19 @@
 // This is the Green / Red Widget on the dashboard
 import React from "react";
 import LoadingSmall from "./LoadingSmall";
-import { formatNumberWithCommas } from "../lib/functions";
+import {
+  analyzeTrades,
+  fetchApiData,
+  formatNumberWithCommas,
+} from "../lib/functions";
 
-const DashboardContractsWidget = (data: any) => {
+const DashboardContractsWidget = async () => {
+  const baseApiData = await fetchApiData();
+
+  const contractsData = await analyzeTrades(baseApiData);
+
   {
-    return Object.values(data.data).some((value) => Number.isNaN(value)) ? (
+    return Object.values(contractsData).some((value) => Number.isNaN(value)) ? (
       <LoadingSmall />
     ) : (
       <div className="flex gap-4 overflow-x-scroll scroll-styling py-2">
@@ -14,19 +22,21 @@ const DashboardContractsWidget = (data: any) => {
           <div className="flex flex-col text-center gap-2">
             <p className="text-sm font-bold text-neutral-200">CALLS FLOW</p>
             <p className="text-lg">
-              {formatNumberWithCommas(data.data.callFlows)}
+              {formatNumberWithCommas(contractsData.callFlows)}
             </p>
           </div>
           <div
             className="radial-progress text-green-400"
             style={{
               // @ts-ignore
-              "--value": `${data.data.callFlowsPercentage}`,
+              "--value": `${contractsData.callFlowsPercentage}`,
               "--size": "80px",
             }}
             role="progressbar"
           >
-            <span className="text-white">{data.data.callFlowsPercentage}%</span>
+            <span className="text-white">
+              {contractsData.callFlowsPercentage}%
+            </span>
           </div>
         </div>
         {/* PUTS FLOW - RED */}
@@ -34,19 +44,21 @@ const DashboardContractsWidget = (data: any) => {
           <div className="flex flex-col text-center gap-2">
             <p className="text-sm font-bold text-neutral-200">PUTS FLOW</p>
             <p className="text-lg">
-              {formatNumberWithCommas(data.data.putFlows)}
+              {formatNumberWithCommas(contractsData.putFlows)}
             </p>
           </div>
           <div
             className="radial-progress text-red-400"
             style={{
               // @ts-ignore
-              "--value": `${data.data.putFlowsPercentage}`,
+              "--value": `${contractsData.putFlowsPercentage}`,
               "--size": "80px",
             }}
             role="progressbar"
           >
-            <span className="text-white">{data.data.putFlowsPercentage}%</span>
+            <span className="text-white">
+              {contractsData.putFlowsPercentage}%
+            </span>
           </div>
         </div>
         {/* CALLS PREMIUM - GREEN */}
@@ -54,20 +66,20 @@ const DashboardContractsWidget = (data: any) => {
           <div className="flex flex-col text-center gap-2">
             <p className="text-sm font-bold text-neutral-200">CALLS PREMIUM</p>
             <p className="text-lg">
-              {formatNumberWithCommas(data.data.callPremiumSum)}
+              {formatNumberWithCommas(contractsData.callPremiumSum)}
             </p>
           </div>
           <div
             className="radial-progress text-green-400"
             style={{
               // @ts-ignore
-              "--value": `${data.data.callPremiumPercentage}`,
+              "--value": `${contractsData.callPremiumPercentage}`,
               "--size": "80px",
             }}
             role="progressbar"
           >
             <span className="text-white">
-              {data.data.callPremiumPercentage}%
+              {contractsData.callPremiumPercentage}%
             </span>
           </div>
         </div>
@@ -76,20 +88,20 @@ const DashboardContractsWidget = (data: any) => {
           <div className="flex flex-col text-center gap-2">
             <p className="text-sm font-bold text-neutral-200">PUTS PREMIUM</p>
             <p className="text-lg">
-              {formatNumberWithCommas(data.data.putPremiumSum)}
+              {formatNumberWithCommas(contractsData.putPremiumSum)}
             </p>
           </div>
           <div
             className="radial-progress text-red-400"
             style={{
               // @ts-ignore
-              "--value": `${data.data.putPremiumPercentage}`,
+              "--value": `${contractsData.putPremiumPercentage}`,
               "--size": "80px",
             }}
             role="progressbar"
           >
             <span className="text-white">
-              {data.data.putPremiumPercentage}%
+              {contractsData.putPremiumPercentage}%
             </span>
           </div>
         </div>

@@ -1,7 +1,8 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DataTable } from "./Table/data-table";
 import {
+  fetchApiData,
   fetchApiDataByDate,
   getOptionsMarketStatus,
   getPastMonthsWeekDays,
@@ -9,10 +10,16 @@ import {
 import Loading from "../loading";
 
 const DataTableContainer = (props: any) => {
+  const [dayData, setDayData] = useState<any>([]);
+  const [loading, setLoading] = useState(false);
+
   const datesArray = getPastMonthsWeekDays();
 
-  const [dayData, setDayData] = useState(props.data);
-  const [loading, setLoading] = useState(false);
+  const getTodaysData = async () => {
+    const todaysData = await fetchApiData();
+    setDayData(todaysData);
+  };
+  getTodaysData();
 
   const handleSelectChange = async (event: { target: { value: any } }) => {
     setLoading(true);
@@ -48,7 +55,7 @@ const DataTableContainer = (props: any) => {
           ))}
         </select>
       </div>
-      {loading ? (
+      {loading || dayData.length === 0 ? (
         <Loading />
       ) : (
         <DataTable data={dayData} columns={props.columns} />
