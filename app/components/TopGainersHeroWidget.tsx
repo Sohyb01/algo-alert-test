@@ -34,24 +34,26 @@ const TopGainersWidget = () => {
     // Dependencies array is empty to run the effect only once when the component mounts
   }, [activeIndex]);
 
-  fetchApiData().then((realdata) => {
-    setApiData(realdata); // Store it in the UseState
+  useEffect(() => {
+    fetchApiData().then((realdata) => {
+      setApiData(realdata); // Store it in the UseState
 
-    const objects = // The top 8 Objects with only the required properties to be displayed
-      filterUniqueSymbolsWhileKeepingHighestTradeValueOfEachSymbol([
-        ...apiData,
-      ]); // Make a copy to avoid mutating original
+      const objects = // The top 8 Objects with only the required properties to be displayed
+        filterUniqueSymbolsWhileKeepingHighestTradeValueOfEachSymbol([
+          ...apiData,
+        ]); // Make a copy to avoid mutating original
 
-    objects.sort((a, b) => b.trade_value - a.trade_value); // Sort by trade_value property value
+      objects.sort((a, b) => b.trade_value - a.trade_value); // Sort by trade_value property value
 
-    const top8 = objects.slice(0, 8).map((item) => ({
-      symbol: item["a: Symbol"],
-      contract: item["c: C/P"],
-      premium: item["trade_value"],
-    })); // The top 8 which will be displayed
+      const top8 = objects.slice(0, 8).map((item) => ({
+        symbol: item["a: Symbol"],
+        contract: item["c: C/P"],
+        premium: item["trade_value"],
+      })); // The top 8 which will be displayed
 
-    setTopPremium(top8); // Store them in a UseState which will be displayed in the top gainers widget
-  });
+      setTopPremium(top8); // Store them in a UseState which will be displayed in the top gainers widget
+    });
+  }, [apiData]);
 
   return (
     <div className="z-10 flex flex-col items-center text-start text-white rounded-[16px] bg-slate-700 px-4 py-6 glowbg min-w-[437px] lg:w-full gap-4 lg:max-w-[544px]">
