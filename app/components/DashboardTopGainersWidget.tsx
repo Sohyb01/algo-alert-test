@@ -3,7 +3,12 @@ import { randomWidths } from "../lib/displaydata";
 import React, { useState } from "react";
 import { DashboardTopGainersWidgetRow } from "./DashboardTopGainersWidgetRow";
 import LoadingSmall from "./LoadingSmall";
-import { fetchApiData, getTopGainersWidgetData } from "../lib/functions";
+import {
+  fetchApiData,
+  fetchApiDataByDate,
+  getOptionsMarketStatusAsync,
+  getTopGainersWidgetData,
+} from "../lib/functions";
 
 const DashboardTopGainersWidget = () => {
   const [topPremium, setTopPremium] = useState<any>([]);

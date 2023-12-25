@@ -11,6 +11,7 @@ import LoadingSmall from "./LoadingSmall";
 
 const DataTableContainer = (props: any) => {
   const [dayData, setDayData] = useState<any>([]);
+  const [latestDate, setLatestDate] = useState("");
   const [loading, setLoading] = useState(true);
 
   const datesArray = getPastMonthsWeekDays();
@@ -22,8 +23,17 @@ const DataTableContainer = (props: any) => {
       setLoading(false);
     }
   };
-
   getTodaysData();
+
+  const getTodaysDate = async () => {
+    const date = await getOptionsMarketStatus();
+    console.log(`last market date: ${date}`);
+    setLatestDate(`${date!}`);
+    setLoading(false);
+    if (latestDate === "") {
+    }
+  };
+  getTodaysDate();
 
   const handleSelectChange = async (event: { target: { value: any } }) => {
     setLoading(true);
@@ -42,12 +52,14 @@ const DataTableContainer = (props: any) => {
           className="scroll-styling bg-slate-950 p-1"
           onChange={handleSelectChange}
         >
-          <option
-            className="bg-slate-900 hover:bg-slate-700"
-            defaultValue={getOptionsMarketStatus()}
-          >
-            {getOptionsMarketStatus()}
-          </option>
+          {latestDate !== ("" || null) && (
+            <option
+              className="bg-slate-900 hover:bg-slate-700"
+              defaultValue={latestDate}
+            >
+              date here
+            </option>
+          )}
           {datesArray.map((date, index) => (
             <option
               className="bg-slate-900 hover:bg-slate-700"
@@ -59,7 +71,7 @@ const DataTableContainer = (props: any) => {
           ))}
         </select>
       </div>
-      {loading || dayData.length === 0 ? (
+      {loading ? (
         <LoadingSmall />
       ) : (
         <DataTable data={dayData} columns={props.columns} />
