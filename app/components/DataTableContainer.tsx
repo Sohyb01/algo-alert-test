@@ -11,7 +11,7 @@ import LoadingSmall from "./LoadingSmall";
 
 const DataTableContainer = (props: any) => {
   const [dayData, setDayData] = useState<any>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const datesArray = getPastMonthsWeekDays();
 
@@ -19,6 +19,7 @@ const DataTableContainer = (props: any) => {
     if (dayData.length === 0) {
       const todaysData = await fetchApiData();
       setDayData(todaysData);
+      setLoading(false);
     }
   };
   getTodaysData();
