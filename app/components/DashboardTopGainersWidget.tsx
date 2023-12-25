@@ -9,12 +9,14 @@ import {
   getTopGainersWidgetData,
 } from "../lib/functions";
 
-const DashboardTopGainersWidget = () => {
+const DashboardTopGainersWidget = (props: { date: string | null }) => {
   const [topPremium, setTopPremium] = useState<any>([]);
 
   const getTopPremiumData = async () => {
     if (topPremium.length === 0) {
-      const baseApiData = await fetchApiData();
+      const baseApiData = props.date
+        ? await fetchApiDataByDate(props.date)
+        : await fetchApiData();
       const topPremium = await getTopGainersWidgetData(baseApiData);
       setTopPremium(topPremium);
     }

@@ -8,12 +8,12 @@ import {
   getHottestOptionsData,
 } from "../lib/functions";
 
-const DashboardHottestOptionsWidget = () => {
+const DashboardHottestOptionsWidget = (props: { date: string | null }) => {
   const [hottestOptions, setHottestOptions] = useState<any>([]);
 
   const getData = async () => {
     if (hottestOptions.length === 0) {
-      const secondApiData = await fetchHottestOptionsApiData();
+      const secondApiData = await fetchHottestOptionsApiData(props.date);
       const hottestOptions = await getHottestOptionsData(secondApiData);
       setHottestOptions(hottestOptions);
     }

@@ -5,15 +5,18 @@ import LoadingSmall from "./LoadingSmall";
 import {
   analyzeTrades,
   fetchApiData,
+  fetchApiDataByDate,
   formatNumberWithCommas,
 } from "../lib/functions";
 
-const DashboardContractsWidget = () => {
+const DashboardContractsWidget = (props: { date: string | null }) => {
   const [contractsData, setContractsData] = useState<any>({});
 
   const getData = async () => {
     if (Object.keys(contractsData).length === 0) {
-      const baseApiData = await fetchApiData();
+      const baseApiData = props.date
+        ? await fetchApiDataByDate(props.date)
+        : await fetchApiData();
       const contractsData = await analyzeTrades(baseApiData);
       setContractsData(contractsData);
     }

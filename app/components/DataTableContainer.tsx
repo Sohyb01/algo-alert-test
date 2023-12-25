@@ -18,22 +18,14 @@ const DataTableContainer = (props: any) => {
 
   const getTodaysData = async () => {
     if (dayData.length === 0) {
-      const todaysData = await fetchApiData();
+      const todaysData = props.date
+        ? await fetchApiDataByDate(props.date)
+        : await fetchApiData();
       setDayData(todaysData);
       setLoading(false);
     }
   };
   getTodaysData();
-
-  const getTodaysDate = async () => {
-    const date = await getOptionsMarketStatus();
-    console.log(`last market date: ${date}`);
-    setLatestDate(`${date!}`);
-    setLoading(false);
-    if (latestDate === "") {
-    }
-  };
-  getTodaysDate();
 
   const handleSelectChange = async (event: { target: { value: any } }) => {
     setLoading(true);
