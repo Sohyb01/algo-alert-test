@@ -52,14 +52,14 @@ const DataTableContainer = (props: any) => {
           className="scroll-styling bg-slate-950 p-1"
           onChange={handleSelectChange}
         >
-          {latestDate !== ("" || null) && (
+          {/* {latestDate !== ("" || null) && (
             <option
               className="bg-slate-900 hover:bg-slate-700"
               defaultValue={latestDate}
             >
               date here
             </option>
-          )}
+          )} */}
           {datesArray.map((date, index) => (
             <option
               className="bg-slate-900 hover:bg-slate-700"
