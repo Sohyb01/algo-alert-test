@@ -1,5 +1,6 @@
+"use client";
 // Hottest Options / Top Purchases
-import React from "react";
+import React, { useState } from "react";
 import LoadingSmall from "./LoadingSmall";
 import {
   fetchHottestOptionsApiData,
@@ -7,10 +8,17 @@ import {
   getHottestOptionsData,
 } from "../lib/functions";
 
-const DashboardHottestOptionsWidget = async () => {
-  const secondApiData = await fetchHottestOptionsApiData();
+const DashboardHottestOptionsWidget = () => {
+  const [hottestOptions, setHottestOptions] = useState<any>([]);
 
-  const hottestOptions = await getHottestOptionsData(secondApiData);
+  const getData = async () => {
+    if (hottestOptions.length === 0) {
+      const secondApiData = await fetchHottestOptionsApiData();
+      const hottestOptions = await getHottestOptionsData(secondApiData);
+      setHottestOptions(hottestOptions);
+    }
+  };
+  getData();
   return (
     <div className="z-10 flex flex-col items-center text-start text-white rounded-[16px] bg-slate-700 px-4 py-6 glowbg gap-4 glow-shadow">
       <h5 className="text-lg font-bold w-full">Hottest Options</h5>

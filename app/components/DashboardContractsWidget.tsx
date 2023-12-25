@@ -1,5 +1,6 @@
+"use client";
 // This is the Green / Red Widget on the dashboard
-import React from "react";
+import React, { useState } from "react";
 import LoadingSmall from "./LoadingSmall";
 import {
   analyzeTrades,
@@ -7,13 +8,20 @@ import {
   formatNumberWithCommas,
 } from "../lib/functions";
 
-const DashboardContractsWidget = async () => {
-  const baseApiData = await fetchApiData();
+const DashboardContractsWidget = () => {
+  const [contractsData, setContractsData] = useState<any>({});
 
-  const contractsData = await analyzeTrades(baseApiData);
+  const getData = async () => {
+    if (Object.keys(contractsData).length === 0) {
+      const baseApiData = await fetchApiData();
+      const contractsData = await analyzeTrades(baseApiData);
+      setContractsData(contractsData);
+    }
+  };
+  getData();
 
   {
-    return Object.values(contractsData).some((value) => Number.isNaN(value)) ? (
+    return Object.keys(contractsData).length === 0 ? (
       <LoadingSmall />
     ) : (
       <div className="flex gap-4 overflow-x-scroll scroll-styling py-2">

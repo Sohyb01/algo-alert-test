@@ -7,7 +7,7 @@ import {
   getOptionsMarketStatus,
   getPastMonthsWeekDays,
 } from "../lib/functions";
-import Loading from "../loading";
+import LoadingSmall from "./LoadingSmall";
 
 const DataTableContainer = (props: any) => {
   const [dayData, setDayData] = useState<any>([]);
@@ -56,7 +56,7 @@ const DataTableContainer = (props: any) => {
         </select>
       </div>
       {loading || dayData.length === 0 ? (
-        <Loading />
+        <LoadingSmall />
       ) : (
         <DataTable data={dayData} columns={props.columns} />
       )}

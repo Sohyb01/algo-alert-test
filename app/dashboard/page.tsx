@@ -1,17 +1,8 @@
 import DashboardTopGainersWidget from "../components/DashboardTopGainersWidget";
 import DashboardHottestOptionsWidget from "../components/DashboardHottestOptionsWidget";
 import DashboardContractsWidget from "../components/DashboardContractsWidget";
-import {
-  analyzeTrades,
-  fetchApiData,
-  fetchHottestOptionsApiData,
-  filterUniqueSymbolsWhileKeepingHighestTradeValueOfEachSymbol,
-  getHottestOptionsData,
-  getTopGainersWidgetData,
-  getTopHottestOptionsByTotalSize,
-} from "../lib/functions";
+
 import Image from "next/image";
-import Loading from "../components/Loading";
 import { columns } from "../components/Table/columns";
 import DataTableContainer from "../components/DataTableContainer";
 import { getServerSession } from "next-auth";
@@ -27,7 +18,6 @@ const DashboardPage = async () => {
   } else if (!session.user.isActive) {
     redirect("/free-option");
   }
-
   return (
     <main className="min-h-[100vh] py-8 pt-[164px] flex flex-col lg:flex-row items-center lg:items-start overflow-hidden gap-4 px-4 md:px-8 xl:px-20 w-full">
       {/* Left Side - Top Gainers, Hottest Options*/}

@@ -1,13 +1,22 @@
-import { fakeTopGainersData, randomWidths } from "../lib/displaydata";
-import React from "react";
-import { TopGainersRowProps } from "../lib/types";
+"use client";
+import { randomWidths } from "../lib/displaydata";
+import React, { useState } from "react";
 import { DashboardTopGainersWidgetRow } from "./DashboardTopGainersWidgetRow";
 import LoadingSmall from "./LoadingSmall";
 import { fetchApiData, getTopGainersWidgetData } from "../lib/functions";
 
-const DashboardTopGainersWidget = async () => {
-  const baseApiData = await fetchApiData();
-  const topPremium = await getTopGainersWidgetData(baseApiData);
+const DashboardTopGainersWidget = () => {
+  const [topPremium, setTopPremium] = useState<any>([]);
+
+  const getTopPremiumData = async () => {
+    if (topPremium.length === 0) {
+      const baseApiData = await fetchApiData();
+      const topPremium = await getTopGainersWidgetData(baseApiData);
+      setTopPremium(topPremium);
+    }
+  };
+  getTopPremiumData();
+
   return (
     <div className="flex flex-col items-center text-start text-white rounded-[16px] bg-slate-700 px-4 py-6 glowbg gap-4 glow-shadow">
       <h5 className="text-lg font-bold w-full">Top Gainers</h5>
