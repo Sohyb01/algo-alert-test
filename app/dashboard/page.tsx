@@ -8,11 +8,6 @@ import DataTableContainer from "../components/DataTableContainer";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { authOptions } from "../api/auth/[...nextauth]/options";
-import {
-  fetchApiData,
-  fetchApiDataByDate,
-  getOptionsMarketStatusAsync,
-} from "../lib/functions";
 
 // Main component
 const DashboardPage = async () => {

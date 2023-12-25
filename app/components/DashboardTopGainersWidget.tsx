@@ -6,7 +6,6 @@ import LoadingSmall from "./LoadingSmall";
 import {
   fetchApiData,
   fetchApiDataByDate,
-  getOptionsMarketStatusAsync,
   getTopGainersWidgetData,
 } from "../lib/functions";
 
