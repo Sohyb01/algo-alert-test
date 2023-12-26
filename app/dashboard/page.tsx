@@ -21,7 +21,6 @@ import { DataTable } from "../components/Table/data-table";
 import { columns } from "../components/Table/columns";
 import { authOptions } from "../api/auth/[...nextauth]/options";
 import DataTableContainer from "../components/DataTableContainer";
-import { useEffect } from "react";
 
 // Main component
 const DashboardPage = async ({
