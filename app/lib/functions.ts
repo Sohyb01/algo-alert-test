@@ -4,7 +4,6 @@ import { DatatableRowProps, TopPurchasesRowProps } from "./types";
 import { getServerSession } from "next-auth";
 import { checkIfSubscribed } from "../actions/checkIfSubscribed";
 import getStripe from "@/lib/utils";
-import toast from "react-hot-toast";
 export const maxDuration = 300;
 
 export function getOptionsMarketStatus() {
