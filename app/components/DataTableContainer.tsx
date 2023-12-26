@@ -1,31 +1,18 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { DataTable } from "./Table/data-table";
 import {
-  fetchApiData,
   fetchApiDataByDate,
   getOptionsMarketStatus,
   getPastMonthsWeekDays,
 } from "../lib/functions";
-import LoadingSmall from "./LoadingSmall";
+import Loading from "../loading";
 
 const DataTableContainer = (props: any) => {
-  const [dayData, setDayData] = useState<any>([]);
-  const [latestDate, setLatestDate] = useState("");
-  const [loading, setLoading] = useState(true);
-
   const datesArray = getPastMonthsWeekDays();
 
-  const getTodaysData = async () => {
-    if (dayData.length === 0) {
-      const todaysData = props.date
-        ? await fetchApiDataByDate(props.date)
-        : await fetchApiData();
-      setDayData(todaysData);
-      setLoading(false);
-    }
-  };
-  getTodaysData();
+  const [dayData, setDayData] = useState(props.data);
+  const [loading, setLoading] = useState(false);
 
   const handleSelectChange = async (event: { target: { value: any } }) => {
     setLoading(true);
@@ -44,14 +31,12 @@ const DataTableContainer = (props: any) => {
           className="scroll-styling bg-slate-950 p-1"
           onChange={handleSelectChange}
         >
-          {/* {latestDate !== ("" || null) && (
-            <option
-              className="bg-slate-900 hover:bg-slate-700"
-              defaultValue={latestDate}
-            >
-              date here
-            </option>
-          )} */}
+          <option
+            className="bg-slate-900 hover:bg-slate-700"
+            defaultValue={getOptionsMarketStatus()}
+          >
+            {getOptionsMarketStatus()}
+          </option>
           {datesArray.map((date, index) => (
             <option
               className="bg-slate-900 hover:bg-slate-700"
@@ -64,7 +49,7 @@ const DataTableContainer = (props: any) => {
         </select>
       </div>
       {loading ? (
-        <LoadingSmall />
+        <Loading />
       ) : (
         <DataTable data={dayData} columns={props.columns} />
       )}

@@ -1,5 +1,5 @@
 "use server";
-export const getOptionsMarketStatusAsync = async () => {
+export const getOptionsMarketStatusOnServer = async () => {
   // Set the options market hours in Eastern Time (ET)
   const optionsMarketOpenHour = 9; // 9 AM
   const optionsMarketCloseHour = 16.5; // 4:30 PM
