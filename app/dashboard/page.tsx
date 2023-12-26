@@ -9,6 +9,7 @@ import {
   fetchApiData,
   fetchHottestOptionsApiData,
   filterUniqueSymbolsWhileKeepingHighestTradeValueOfEachSymbol,
+  getOptionsMarketStatusExternalApi,
   getTopHottestOptionsByTotalSize,
 } from "../lib/functions";
 import Image from "next/image";
@@ -85,12 +86,12 @@ const analyzeTrades = async (trades: any) => {
 // Main component
 const DashboardPage = async () => {
   // OAuth Authentication:
-  const session = await getServerSession(authOptions);
-  if (!session || !session.user) {
-    redirect("/api/auth/signin");
-  } else if (!session.user.isActive) {
-    redirect("/free-option");
-  }
+  // const session = await getServerSession(authOptions);
+  // if (!session || !session.user) {
+  //   redirect("/api/auth/signin");
+  // } else if (!session.user.isActive) {
+  //   redirect("/free-option");
+  // }
 
   // Fetch the Main API data (not the hottest options!)
 
@@ -102,6 +103,7 @@ const DashboardPage = async () => {
 
   const secondApiData = await fetchHottestOptionsApiData();
   const hottestOptions = await getHottestOptionsData(secondApiData);
+  const lastDate = await getOptionsMarketStatusExternalApi();
 
   return (
     <main className="min-h-[100vh] py-8 pt-[164px] flex flex-col lg:flex-row items-center lg:items-start overflow-hidden gap-4 px-4 md:px-8 xl:px-20 w-full">
@@ -125,7 +127,11 @@ const DashboardPage = async () => {
               </button>
             </div>
             <DashboardContractsWidget data={contractsData} />
-            <DataTableContainer data={mainTableData} columns={columns} />
+            <DataTableContainer
+              lastDate={lastDate}
+              data={mainTableData}
+              columns={columns}
+            />
           </div>
         </>
       ) : (

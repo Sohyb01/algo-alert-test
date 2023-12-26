@@ -4,6 +4,7 @@ import { DataTable } from "./Table/data-table";
 import {
   fetchApiDataByDate,
   getOptionsMarketStatus,
+  getOptionsMarketStatusExternalApi,
   getPastMonthsWeekDays,
 } from "../lib/functions";
 import Loading from "../loading";
@@ -33,9 +34,9 @@ const DataTableContainer = (props: any) => {
         >
           <option
             className="bg-slate-900 hover:bg-slate-700"
-            defaultValue={getOptionsMarketStatus()}
+            defaultValue={props.lastDate}
           >
-            {getOptionsMarketStatus()}
+            {props.lastDate}
           </option>
           {datesArray.map((date, index) => (
             <option
