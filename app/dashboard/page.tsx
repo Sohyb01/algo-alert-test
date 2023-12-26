@@ -5,11 +5,14 @@ import DashboardTopGainersWidget from "../components/DashboardTopGainersWidget";
 import DashboardHottestOptionsWidget from "../components/DashboardHottestOptionsWidget";
 import DashboardContractsWidget from "../components/DashboardContractsWidget";
 import {
+  analyzeTrades,
   convertPropertiesToNumbers,
   fetchApiData,
   fetchHottestOptionsApiData,
   filterUniqueSymbolsWhileKeepingHighestTradeValueOfEachSymbol,
+  getHottestOptionsData,
   getOptionsMarketStatusExternalApi,
+  getTopGainersWidgetData,
   getTopHottestOptionsByTotalSize,
 } from "../lib/functions";
 import Image from "next/image";
@@ -20,82 +23,32 @@ import { authOptions } from "../api/auth/[...nextauth]/options";
 import DataTableContainer from "../components/DataTableContainer";
 import { useEffect } from "react";
 
-const getTopGainersWidgetData = async (data: any) => {
-  const objects = // The top 8 Objects with only the required properties to be displayed
-    filterUniqueSymbolsWhileKeepingHighestTradeValueOfEachSymbol([...data]); // Make a copy to avoid mutating original
-
-  objects.sort((a, b) => b.trade_value - a.trade_value); // Sort by trade_value property value
-
-  const top8 = objects.slice(0, 8).map((item) => ({
-    symbol: item["a: Symbol"],
-    contract: item["c: C/P"],
-    premium: item["trade_value"],
-  })); // The top 8 which will be displayed
-
-  return top8; // Store them in a UseState which will be displayed in the top gainers widget
-};
-const getHottestOptionsData = async (data: any) => {
-  const objects = // The top Objects with only the required properties to be displayed
-    getTopHottestOptionsByTotalSize([...data]); // Make a copy to avoid mutating original
-  return objects;
-};
-const analyzeTrades = async (trades: any) => {
-  // Initialize counters and sums
-  let callCount = 0;
-  let putCount = 0;
-  let callTradeSum = 0;
-  let putTradeSum = 0;
-
-  // Iterate through the array of objects
-  for (const trade of trades) {
-    // Check the value of the "c: C/P" property
-    if (trade["c: C/P"] === "CALL") {
-      callCount++;
-      callTradeSum += parseInt(trade["g: Size"]);
-    } else if (trade["c: C/P"] === "PUT") {
-      putCount++;
-      putTradeSum += parseInt(trade["g: Size"]);
-    }
-  }
-
-  let totalFlows = callCount + putCount;
-  const callFlowPercentage = Math.round(1000 * (callCount / totalFlows)) / 10;
-  const putFlowPercentage = Math.round(1000 * (putCount / totalFlows)) / 10;
-
-  let totalPremiums = callTradeSum + putTradeSum;
-  const callPremiumPercentage =
-    Math.round(1000 * (callTradeSum / totalPremiums)) / 10;
-  const putPremiumPercentage =
-    Math.round(1000 * (putTradeSum / totalPremiums)) / 10;
-
-  // Create and return the result object
-  const result = {
-    callFlows: callCount,
-    callFlowsPercentage: callFlowPercentage,
-    callPremiumSum: callTradeSum,
-    callPremiumPercentage: callPremiumPercentage,
-    putFlows: putCount,
-    putFlowsPercentage: putFlowPercentage,
-    putPremiumSum: putTradeSum,
-    putPremiumPercentage: putPremiumPercentage,
-  };
-
-  return result;
-};
-
 // Main component
-const DashboardPage = async () => {
+const DashboardPage = async ({
+  searchParams,
+}: {
+  searchParams: {
+    [key: string]: string | string[] | undefined;
+  };
+}) => {
   // OAuth Authentication:
-  const session = await getServerSession(authOptions);
-  if (!session || !session.user) {
-    redirect("/api/auth/signin");
-  } else if (!session.user.isActive) {
-    redirect("/free-option");
-  }
+  // const session = await getServerSession(authOptions);
+  // if (!session || !session.user) {
+  //   redirect("/api/auth/signin");
+  // } else if (!session.user.isActive) {
+  //   redirect("/free-option");
+  // }
 
   // Fetch the Main API data (not the hottest options!)
 
-  const baseApiData = await fetchApiData();
+  const searchParamDate = Array.isArray(searchParams.date)
+    ? searchParams.date[0]
+    : searchParams.date;
+  console.log(searchParamDate);
+
+  const baseApiData = await fetchApiData(
+    searchParamDate ? searchParamDate : null
+  );
 
   const topPremium = await getTopGainersWidgetData(baseApiData);
   const contractsData = await analyzeTrades(baseApiData);
