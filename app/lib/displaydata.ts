@@ -210,9 +210,12 @@ export const randomWidths = [
 
 // Plans data
 
-// Currently on rexxor's stripe ids
-export const monthlySubscriptionPriceId = "price_1OQfQnJYh1nryesbAMFxUDLq";
-export const yearlySubscriptionPriceId = "price_1OQfSRJYh1nryesbg40E6Bma";
+// rexxor's stripe ids
+// export const monthlySubscriptionPriceId = "price_1OQfQnJYh1nryesbAMFxUDLq";
+// export const yearlySubscriptionPriceId = "price_1OQfSRJYh1nryesbg40E6Bma";
+// sohyb's testing ids
+export const monthlySubscriptionPriceId = "price_1ONATOCJ7W2t3weqWLqxr0hc";
+export const yearlySubscriptionPriceId = "price_1ONAVCCJ7W2t3weqYpKhQ0kd";
 
 export const subscriptions = [
   // {
