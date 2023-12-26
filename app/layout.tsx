@@ -5,8 +5,8 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]/options";
-import { Toaster } from "react-hot-toast";
 import SessionProvider from "./components/SessionProvider";
+import { ToastContainer } from "react-toastify";
 
 const poppins = Poppins({
   weight: ["400", "500", "600", "700"],
@@ -33,7 +33,7 @@ export default async function RootLayout({
         <SessionProvider session={session}>
           <Navbar />
           {children}
-          <Toaster />
+          <ToastContainer />
           <Footer />
         </SessionProvider>
       </body>

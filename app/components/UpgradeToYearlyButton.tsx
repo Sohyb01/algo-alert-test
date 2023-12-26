@@ -1,7 +1,7 @@
 "use client";
-import { revalidatePath } from "next/cache";
 import React from "react";
-import toast, { Toaster } from "react-hot-toast";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { revalidatePathManually } from "../actions/revalidatePath";
 
 const UpgradeToYearlyButton = () => {
@@ -14,8 +14,21 @@ const UpgradeToYearlyButton = () => {
         toast("Subscription upgraded successfully!");
       }
     } catch (error) {
-      toast("An error as occurred, please try again or contact a moderator.");
-      console.log(error);
+      // toast("An error as occurred, please try again or contact a moderator.");
+      // console.log(error);
+      toast.error(
+        "An error as occurred, please try again or contact a moderator.",
+        {
+          position: "bottom-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        }
+      );
     }
   };
 
