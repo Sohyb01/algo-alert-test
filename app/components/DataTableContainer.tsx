@@ -31,8 +31,6 @@ const DataTableContainer = (props: any) => {
   //   setLoading(false);
   // };
 
-  console.log("aaaaa");
-  console.log(searchParams.get("date"));
   return (
     <div className="flex flex-col items-start">
       {/* Date Input and label */}

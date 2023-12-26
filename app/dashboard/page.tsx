@@ -32,19 +32,18 @@ const DashboardPage = async ({
   };
 }) => {
   // OAuth Authentication:
-  // const session = await getServerSession(authOptions);
-  // if (!session || !session.user) {
-  //   redirect("/api/auth/signin");
-  // } else if (!session.user.isActive) {
-  //   redirect("/free-option");
-  // }
+  const session = await getServerSession(authOptions);
+  if (!session || !session.user) {
+    redirect("/api/auth/signin");
+  } else if (!session.user.isActive) {
+    redirect("/free-option");
+  }
 
   // Fetch the Main API data (not the hottest options!)
 
   const searchParamDate = Array.isArray(searchParams.date)
     ? searchParams.date[0]
     : searchParams.date;
-  console.log(searchParamDate);
 
   const baseApiData = await fetchApiData(
     searchParamDate ? searchParamDate : null
@@ -54,7 +53,9 @@ const DashboardPage = async ({
   const contractsData = await analyzeTrades(baseApiData);
   const mainTableData = await convertPropertiesToNumbers(baseApiData);
 
-  const secondApiData = await fetchHottestOptionsApiData();
+  const secondApiData = await fetchHottestOptionsApiData(
+    searchParamDate ? searchParamDate : null
+  );
   const hottestOptions = await getHottestOptionsData(secondApiData);
   const lastDate = await getOptionsMarketStatusExternalApi();
 

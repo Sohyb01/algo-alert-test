@@ -196,8 +196,6 @@ export async function fetchApiData(date?: string | null) {
 
       let allPagesData = [...data["data"]];
 
-      console.log("done fetching!");
-
       return allPagesData.reverse();
     }
   } catch (error) {
@@ -214,11 +212,13 @@ export async function filterObjectsBySymbol(
   );
 }
 
-export const fetchHottestOptionsApiData = async () => {
-  const lastMarketDate = getOptionsMarketStatus();
+export const fetchHottestOptionsApiData = async (date?: string | null) => {
+  const lastMarketDate = await getOptionsMarketStatusExternalApi();
   try {
     const response = await fetch(
-      `https://alphasweeps-ae44af8990fe.herokuapp.com/api/data/top-options?date=${lastMarketDate}`
+      `https://alphasweeps-ae44af8990fe.herokuapp.com/api/data/top-options?date=${
+        date ? date : lastMarketDate
+      }`
     );
 
     if (!response.ok) {
