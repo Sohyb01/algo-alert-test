@@ -17,6 +17,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import { redirectManually } from "../actions/redirectAction";
 
 const CancelSubscriptionButton = () => {
   const cancelSubscription = async () => {
@@ -24,30 +25,40 @@ const CancelSubscriptionButton = () => {
       const res = await fetch("/api/stripe/subscription-cancel");
       const { subscription } = await res.json();
       if (subscription.cancel_at_period_end) {
-        toast("Subscription canceled successfully!");
+        toast("Subscription Canceled.");
         revalidatePathManually("/");
+        redirectManually("/");
       }
     } catch (error) {
       toast("An error as occurred, please try again or contact a moderator.");
-      revalidatePath("/");
+      console.log(error);
+      revalidatePathManually("/");
+      redirectManually("/");
     }
   };
 
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="outline">Cancel Subscription</Button>
+        <Button className="text-white hover:bg-slate-700" variant="outline">
+          Cancel Subscription
+        </Button>
       </AlertDialogTrigger>
-      <AlertDialogContent>
+      <AlertDialogContent className="bg-slate-900 text-white">
         <AlertDialogHeader>
           <AlertDialogTitle>
             Are you sure you want to cancel your subscription?
           </AlertDialogTitle>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={cancelSubscription}>
-            Continue
+          <AlertDialogCancel className="hover:bg-slate-700 bg-slate-900">
+            Back
+          </AlertDialogCancel>
+          <AlertDialogAction
+            className="border-red-400 border-[1px] border-solid hover:bg-slate-700 bg-slate-900"
+            onClick={cancelSubscription}
+          >
+            Yes, Cancel my Subscription
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

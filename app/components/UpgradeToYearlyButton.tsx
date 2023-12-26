@@ -25,6 +25,7 @@ const UpgradeToYearlyButton = () => {
       if (subscription.status === 200) {
         // revalidatePathManually("/");
         toast.success("Subscription upgraded successfully!");
+        revalidatePathManually("/");
         redirectManually("/");
       }
     } catch (error) {
@@ -33,24 +34,34 @@ const UpgradeToYearlyButton = () => {
       toast.error(
         "An error as occurred, please try again or contact a moderator."
       );
+      console.log(error);
+      revalidatePathManually("/");
+      redirectManually("/");
     }
   };
 
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="outline">Upgrade to Yearly Subscription</Button>
+        <Button className="text-white" variant="outline">
+          Upgrade to Yearly Subscription
+        </Button>
       </AlertDialogTrigger>
-      <AlertDialogContent>
+      <AlertDialogContent className="bg-slate-900 text-white">
         <AlertDialogHeader>
           <AlertDialogTitle>
             Are you sure you want to upgrade your subscription?
           </AlertDialogTitle>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={upgradeSubscription}>
-            Continue
+          <AlertDialogCancel className="border-red-400 border-[1px] border-solid hover:bg-slate-700 bg-slate-900">
+            Cancel
+          </AlertDialogCancel>
+          <AlertDialogAction
+            className="hover:bg-teal-400 bg-slate-900 border-[1px] border-solid border-teal-400"
+            onClick={upgradeSubscription}
+          >
+            Upgrade
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
